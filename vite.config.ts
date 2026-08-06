@@ -12,4 +12,11 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    // maplibre-gl spawns its renderer as a module worker; esbuild's dep
+    // optimizer doesn't bundle that worker chunk correctly, which left the
+    // map canvas black. Excluding it from pre-bundling lets Vite serve it
+    // as native ESM instead.
+    optimizeDeps: { exclude: ["maplibre-gl"] },
+  },
 });

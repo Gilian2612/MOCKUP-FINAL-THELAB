@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Moon, Sun } from "lucide-react";
 
 import logo from "@/assets/the-lab-logo.png";
 import { useCart } from "@/context/CartContext";
+import { useTheme } from "@/context/ThemeContext";
 
 const links = [
   { label: "Fragrances", to: "/fragrances" },
@@ -36,6 +38,7 @@ export function Logo() {
 
 export default function SiteNav() {
   const { count, setDrawerOpen } = useCart();
+  const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export default function SiteNav() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "border-b border-border/60 bg-[rgba(10,9,8,0.88)] backdrop-blur-xl"
+          ? "border-b border-border/60 bg-neutral-900/80 backdrop-blur-xl"
           : "border-b border-transparent bg-transparent"
       }`}
     >
@@ -72,6 +75,20 @@ export default function SiteNav() {
         </nav>
 
         <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={
+              theme === "day" ? "Switch to night mode" : "Switch to day mode"
+            }
+            className="flex h-7 w-7 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+          >
+            {theme === "day" ? (
+              <Moon className="h-3.5 w-3.5" />
+            ) : (
+              <Sun className="h-3.5 w-3.5" />
+            )}
+          </button>
           <button
             type="button"
             className="label-caps hidden text-muted-foreground transition-colors hover:text-primary sm:block"

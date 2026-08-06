@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "@/context/CartContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import SiteNav from "@/components/SiteNav";
 import CartDrawer from "@/components/CartDrawer";
 import { Toaster } from "@/components/ui/sonner";
@@ -120,6 +121,12 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('the-lab-theme')==='day'){document.documentElement.classList.add('light')}}catch(e){}",
+          }}
+        />
         <HeadContent />
       </head>
       <body>
@@ -135,23 +142,25 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <CartProvider>
-        <SiteNav />
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-        <CartDrawer />
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            classNames: {
-              toast:
-                "!bg-[#14100D] !border !border-primary/60 !text-cream !rounded-[16px]",
-              title: "label-caps !text-primary",
-              description: "!text-muted-foreground",
-            },
-          }}
-        />
-      </CartProvider>
+      <ThemeProvider>
+        <CartProvider>
+          <SiteNav />
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+          <CartDrawer />
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              classNames: {
+                toast:
+                  "!bg-popover !border !border-primary/60 !text-cream !rounded-[16px]",
+                title: "label-caps !text-primary",
+                description: "!text-muted-foreground",
+              },
+            }}
+          />
+        </CartProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

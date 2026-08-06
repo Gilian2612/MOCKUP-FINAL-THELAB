@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
+import { MapPin } from "lucide-react";
 
 import logo from "@/assets/the-lab-logo.png";
 import heroImg from "@/assets/hero-desktop.png";
@@ -263,9 +264,20 @@ function Home() {
 
         <div className="space-y-8">
           <div className="clay p-4">
-            <p className="label-caps mb-3 px-1 text-primary">
-              The Lab Flagship / Dubai Mall
-            </p>
+            <div className="mb-3 flex items-center justify-between px-1">
+              <p className="label-caps text-primary">
+                The Lab Flagship / Dubai Mall
+              </p>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=25.1124,55.1713"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open The Lab Flagship / Dubai Mall in Google Maps"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+              >
+                <MapPin className="h-3.5 w-3.5" />
+              </a>
+            </div>
             <Suspense fallback={<div className="h-[260px] rounded-[20px] bg-muted" />}>
               <StockistMap
                 center={[55.1713, 25.1124]}
@@ -275,9 +287,20 @@ function Home() {
             </Suspense>
           </div>
           <div className="clay p-4">
-            <p className="label-caps mb-3 px-1 text-primary">
-              Yas Mall · Yas Island
-            </p>
+            <div className="mb-3 flex items-center justify-between px-1">
+              <p className="label-caps text-primary">
+                Yas Mall · Yas Island
+              </p>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=24.4667,54.3773"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Yas Mall · Yas Island in Google Maps"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+              >
+                <MapPin className="h-3.5 w-3.5" />
+              </a>
+            </div>
             <Suspense fallback={<div className="h-[260px] rounded-[20px] bg-muted" />}>
               <StockistMap
                 center={[54.3773, 24.4667]}
@@ -289,7 +312,7 @@ function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-border px-6 py-12 lg:px-20">
+      <footer className="border-t border-border bg-background px-6 py-12 lg:px-20">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
           <Logo />
           <p className="label-caps text-muted-foreground">

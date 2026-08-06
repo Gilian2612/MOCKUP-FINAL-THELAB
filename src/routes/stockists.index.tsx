@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
+import { MapPin } from "lucide-react";
 
 import { maps, stockists } from "@/lib/stockists";
 
@@ -51,7 +52,18 @@ function StockistsPage() {
         <div className="space-y-8">
           {maps.map((m) => (
             <div key={m.label} className="clay p-4">
-              <p className="label-caps mb-3 px-1 text-primary">{m.label}</p>
+              <div className="mb-3 flex items-center justify-between px-1">
+                <p className="label-caps text-primary">{m.label}</p>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${m.center[1]},${m.center[0]}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${m.label} in Google Maps`}
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+                >
+                  <MapPin className="h-3.5 w-3.5" />
+                </a>
+              </div>
               <Suspense
                 fallback={<div className="h-[260px] rounded-[20px] bg-muted" />}
               >
