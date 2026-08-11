@@ -41,7 +41,7 @@ function ProductPage() {
   return (
     <main className="min-h-screen bg-background pt-28">
       <div className="grid lg:grid-cols-2">
-        <div className="relative min-h-[520px] bg-[#14100D] lg:min-h-[calc(100vh-7rem)]">
+        <div className="relative min-h-[520px] bg-surface lg:min-h-[calc(100vh-7rem)]">
           <img
             src={product.image}
             alt={`${product.name} perfume bottle`}
@@ -96,7 +96,7 @@ function ProductPage() {
           </dl>
 
           <div className="mt-10 flex flex-wrap items-center gap-6">
-            <div className="inline-flex items-center gap-6 rounded-full bg-[#14100D] px-5 py-3 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8),inset_0_-1px_0_rgba(184,147,90,0.18)]">
+            <div className="inline-flex items-center gap-6 rounded-full bg-background px-5 py-3 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8),inset_0_-1px_0_rgba(182,170,132,0.16)]">
               <button
                 type="button"
                 aria-label="Decrease quantity"

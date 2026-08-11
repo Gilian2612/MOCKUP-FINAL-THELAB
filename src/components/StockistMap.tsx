@@ -28,7 +28,7 @@ export default function StockistMap({ center, zoom, label }: Props) {
 
       const el = document.createElement("div");
       el.style.cssText =
-        "width:14px;height:14px;border-radius:9999px;background:#B8935A;box-shadow:0 0 0 5px rgba(184,147,90,0.22);";
+        "width:14px;height:14px;border-radius:9999px;background:#B8A76A;box-shadow:0 0 0 5px rgba(184,167,106,0.22);";
 
       new maplibregl.Marker({ element: el })
         .setLngLat(center)

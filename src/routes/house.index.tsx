@@ -154,7 +154,7 @@ function HousePage() {
                 loading="lazy"
                 width={1000}
                 height={1000}
-                className={`w-full rounded-[20px] object-cover grayscale transition-all duration-700 hover:grayscale-0 hover:sepia ${
+                className={`w-full rounded-[20px] object-cover grayscale transition-all duration-700 hover:grayscale-0 ${
                   i % 3 === 1 ? "h-[420px]" : "h-[300px]"
                 }`}
               />

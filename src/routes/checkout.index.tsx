@@ -26,7 +26,7 @@ export const Route = createFileRoute("/checkout/")({
 });
 
 const field =
-  "mt-2 w-full rounded-[14px] bg-[#14100D] px-4 py-3 text-sm text-cream outline-none shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)] placeholder:text-muted-foreground/60 focus:ring-1 focus:ring-primary/50";
+  "mt-2 w-full rounded-[14px] bg-background px-4 py-3 text-sm text-cream outline-none shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)] placeholder:text-muted-foreground/60 focus:ring-1 focus:ring-primary/50";
 
 function CheckoutPage() {
   const { lines, setQty, subtotal, shipping, tax, total, clear } = useCart();
@@ -73,7 +73,7 @@ function CheckoutPage() {
                     <p className="mt-1 text-xs text-muted-foreground">
                       {formatAED(l.price)}
                     </p>
-                    <div className="mt-3 inline-flex items-center gap-5 rounded-full bg-[#14100D] px-4 py-1.5 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)]">
+                    <div className="mt-3 inline-flex items-center gap-5 rounded-full bg-background px-4 py-1.5 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)]">
                       <button
                         type="button"
                         aria-label={`Decrease ${l.name}`}
