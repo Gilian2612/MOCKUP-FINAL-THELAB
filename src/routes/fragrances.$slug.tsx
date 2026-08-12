@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { useCart } from "@/context/CartContext";
 import { getProduct, formatAED } from "@/lib/products";
+import { SpecAccordion, type SpecAccordionItem } from "@/components/SpecAccordion";
 
 export const Route = createFileRoute("/fragrances/$slug")({
   loader: ({ params }) => {
@@ -38,10 +39,55 @@ function ProductPage() {
   const { add } = useCart();
   const [qty, setQty] = useState(1);
 
+  const specItems: SpecAccordionItem[] = [
+    {
+      id: "notes",
+      label: "Notes",
+      content: (
+        <div className="flex flex-wrap gap-3 not-italic">
+          {product.notes.map((n) => (
+            <span
+              key={n}
+              className="rounded-full border border-primary/40 px-4 py-2 label-caps text-primary"
+            >
+              {n}
+            </span>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: "story",
+      label: "Story",
+      content: product.story,
+    },
+    {
+      id: "ingredients",
+      label: "Ingredients",
+      content: product.ingredients,
+    },
+    {
+      id: "concentration",
+      label: "Concentration",
+      content: (
+        <p>
+          {product.concentration}
+          <br />
+          {product.size} bottle
+        </p>
+      ),
+    },
+    {
+      id: "origin",
+      label: "Origin",
+      content: product.origin,
+    },
+  ];
+
   return (
     <main className="min-h-screen bg-background pt-28">
       <div className="grid lg:grid-cols-2">
-        <div className="relative min-h-[520px] bg-[#14100D] lg:min-h-[calc(100vh-7rem)]">
+        <div className="relative min-h-[520px] bg-surface lg:min-h-[calc(100vh-7rem)]">
           <img
             src={product.image}
             alt={`${product.name} perfume bottle`}
@@ -65,38 +111,10 @@ function ProductPage() {
           <h1 className="mt-4 font-display text-5xl text-cream sm:text-6xl">
             {product.name}
           </h1>
-          <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
-            {product.story}
-          </p>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            {product.notes.map((n: string) => (
-              <span
-                key={n}
-                className="rounded-full border border-primary/40 px-4 py-2 label-caps text-primary"
-              >
-                {n}
-              </span>
-            ))}
-          </div>
-
-          <dl className="mt-10 grid grid-cols-2 gap-6 border-y border-border py-6">
-            <div>
-              <dt className="label-caps text-muted-foreground">Concentration</dt>
-              <dd className="mt-2 font-display text-xl text-cream">
-                {product.concentration}
-              </dd>
-            </div>
-            <div>
-              <dt className="label-caps text-muted-foreground">Size</dt>
-              <dd className="mt-2 font-display text-xl text-cream">
-                {product.size}
-              </dd>
-            </div>
-          </dl>
+          <SpecAccordion items={specItems} />
 
           <div className="mt-10 flex flex-wrap items-center gap-6">
-            <div className="inline-flex items-center gap-6 rounded-full bg-[#14100D] px-5 py-3 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8),inset_0_-1px_0_rgba(184,147,90,0.18)]">
+            <div className="inline-flex items-center gap-6 rounded-full bg-background px-5 py-3 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8),inset_0_-1px_0_rgba(182,170,132,0.16)]">
               <button
                 type="button"
                 aria-label="Decrease quantity"
