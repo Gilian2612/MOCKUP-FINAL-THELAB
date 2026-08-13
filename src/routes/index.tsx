@@ -6,6 +6,7 @@ import logo from "@/assets/the-lab-logo.png";
 import heroImg from "@/assets/hero-desktop.png";
 import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
+import recurso1 from "@/assets/recurso-1.png";
 import { products, formatAED } from "@/lib/products";
 
 
@@ -72,64 +73,80 @@ function Logo() {
 
 function Home() {
   return (
-    <main className="min-h-screen bg-background">
-
-
-
-      {/* HERO */}
-      <section className="relative flex min-h-screen items-center overflow-hidden">
+    <main className="relative min-h-screen">
+      {/* FULL-PAGE BACKDROP — Recurso 1 */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      >
         <img
-          src={heroImg}
-          alt="The Lab Perfumes atelier"
-          width={1920}
-          height={1088}
-          className="absolute inset-0 h-full w-full object-cover sepia-photo"
+          src={recurso1}
+          alt=""
+          width={944}
+          height={1678}
+          className="h-full w-full scale-110 object-cover opacity-80 blur-sm"
         />
-        <div className="absolute inset-0 bg-background/40" />
-        <div className="copper-beam right-1/3" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/50" />
+      </div>
 
-        <div className="relative mx-auto w-full max-w-7xl px-6 pt-28">
-          <p className="label-caps text-primary">Est. Bogotá — Dubai</p>
-          <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[0.95] text-primary sm:text-7xl lg:text-[96px]">
-            Not a niche house <em className="italic">from</em> Colombia
-          </h1>
-          <p className="mt-8 max-w-md text-sm leading-relaxed text-muted-foreground">
-            Independent perfumery. Crafted between Colombia and Dubai.
-          </p>
 
-          <a
-            href="#collection"
-            className="group mt-12 inline-flex items-center gap-4"
-          >
-            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/50 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-              <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor">
-                <path d="M0 0l12 7-12 7z" />
-              </svg>
-            </span>
-            <span className="label-caps border-b border-primary pb-1 text-cream">
-              Discover the collection
-            </span>
-          </a>
-        </div>
 
-        <span className="absolute bottom-8 left-6 label-caps text-muted-foreground">
-          | Scroll to explore
-        </span>
+      {/* HERO — glass cristal panel */}
+      <section className="relative flex min-h-screen items-center overflow-hidden px-6 pb-24 pt-28 lg:px-20">
+        <div className="glass-surface relative mx-auto w-full max-w-7xl overflow-hidden rounded-3xl lg:rounded-[32px]">
+          <img
+            src={heroImg}
+            alt="The Lab Perfumes atelier"
+            width={1920}
+            height={1088}
+            className="absolute inset-0 h-full w-full object-cover sepia-photo opacity-45"
+          />
+          <div className="absolute inset-0 bg-background/40" />
+          <div className="copper-beam right-1/3 hidden lg:block" />
 
-        <div className="absolute right-6 top-1/2 hidden -translate-y-1/2 flex-col items-center gap-4 md:flex">
-          <span className="label-caps text-primary">01</span>
-          {[0, 1, 2, 3].map((i) => (
-            <span
-              key={i}
-              className={`h-1.5 w-1.5 rounded-full ${i === 0 ? "bg-primary" : "bg-muted-foreground/40"}`}
-            />
-          ))}
+          <div className="relative px-6 py-20 sm:px-10 lg:px-16 lg:py-24">
+            <p className="label-caps text-primary">Est. Bogotá — Dubai</p>
+            <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[0.95] text-primary sm:text-7xl lg:text-[96px]">
+              Not a niche house <em className="italic">from</em> Colombia
+            </h1>
+            <p className="mt-8 max-w-md text-sm leading-relaxed text-muted-foreground">
+              Independent perfumery. Crafted between Colombia and Dubai.
+            </p>
+
+            <a
+              href="#collection"
+              className="group mt-12 inline-flex items-center gap-4"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/50 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor">
+                  <path d="M0 0l12 7-12 7z" />
+                </svg>
+              </span>
+              <span className="label-caps border-b border-primary pb-1 text-cream">
+                Discover the collection
+              </span>
+            </a>
+          </div>
+
+          <span className="absolute bottom-6 left-6 label-caps text-muted-foreground">
+            | Scroll to explore
+          </span>
+
+          <div className="absolute right-6 top-1/2 hidden -translate-y-1/2 flex-col items-center gap-4 md:flex">
+            <span className="label-caps text-primary">01</span>
+            {[0, 1, 2, 3].map((i) => (
+              <span
+                key={i}
+                className={`h-1.5 w-1.5 rounded-full ${i === 0 ? "bg-primary" : "bg-muted-foreground/40"}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* FOUNDER */}
-      <section id="founder" className="grid lg:grid-cols-2">
-        <div className="flex flex-col justify-center px-6 py-24 lg:px-20">
+      <section id="founder" className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
+        <div className="flex flex-col justify-center">
           <p className="label-caps text-primary">The Founder</p>
           <h2 className="mt-6 font-display text-4xl text-cream sm:text-6xl">
             Mario Galindo
@@ -153,16 +170,15 @@ function Home() {
             ))}
           </ol>
         </div>
-        <div className="relative min-h-[520px]">
+        <div className="clay overflow-hidden p-2">
           <img
             src={marioImg}
             alt="Mario Galindo, founder of The Lab Perfumes"
             loading="lazy"
             width={912}
             height={1200}
-            className="absolute inset-0 h-full w-full object-cover sepia-photo"
+            className="h-[520px] w-full rounded-[22px] object-cover sepia-photo"
           />
-          <div className="absolute inset-0 bg-background/25" />
         </div>
       </section>
 

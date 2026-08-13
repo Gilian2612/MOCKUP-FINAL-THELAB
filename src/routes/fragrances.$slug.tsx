@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { useCart } from "@/context/CartContext";
 import { getProduct, formatAED } from "@/lib/products";
@@ -38,6 +39,7 @@ function ProductPage() {
   const { product } = Route.useLoaderData();
   const { add } = useCart();
   const [qty, setQty] = useState(1);
+  const reduceMotion = useReducedMotion();
 
   const specItems: SpecAccordionItem[] = [
     {
@@ -87,15 +89,49 @@ function ProductPage() {
   return (
     <main className="min-h-screen bg-background pt-28">
       <div className="grid lg:grid-cols-2">
-        <div className="relative min-h-[520px] bg-surface lg:min-h-[calc(100vh-7rem)]">
-          <img
-            src={product.image}
-            alt={`${product.name} perfume bottle`}
-            width={900}
-            height={1100}
-            className="absolute inset-0 h-full w-full object-cover sepia-photo"
+        <div className="relative isolate min-h-[520px] overflow-hidden lg:min-h-[calc(100vh-7rem)]">
+          <div aria-hidden="true" className="plate-backdrop absolute inset-0" />
+          <div
+            aria-hidden="true"
+            className="plate-frame pointer-events-none absolute inset-3 sm:inset-5"
           />
-          <div className="copper-beam right-1/4" />
+          <div
+            aria-hidden="true"
+            className="plate-floor absolute bottom-[12%] left-1/2 h-[5%] w-[44%] -translate-x-1/2 rounded-full"
+          />
+          <motion.div
+            initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="absolute inset-0"
+          >
+            <p
+              aria-hidden="true"
+              className="plate-ghost absolute inset-0 flex select-none items-center justify-center px-6 text-center text-[clamp(3.25rem,11vw,8.5rem)] uppercase"
+            >
+              {product.family}
+            </p>
+            <img
+              src={product.image}
+              alt={`${product.name} perfume bottle`}
+              width={1080}
+              height={1920}
+              className="absolute inset-0 h-full w-full object-contain"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-5 bottom-5 sm:inset-x-8 sm:bottom-7"
+            >
+              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5 border-t border-gold/25 pt-3">
+                <p className="label-caps text-gold/90">
+                  {product.chapter} · {product.family}
+                </p>
+                <p className="text-[0.6875rem] tracking-[0.22em] text-muted-foreground/90">
+                  {product.name}
+                </p>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         <div className="flex flex-col justify-center px-6 py-16 lg:px-20">
