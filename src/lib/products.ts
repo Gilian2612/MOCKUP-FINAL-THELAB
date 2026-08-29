@@ -218,5 +218,14 @@ export const products: Product[] = [
 export const getProduct = (slug: string) =>
   products.find((p) => p.slug === slug);
 
+export const getAdjacent = (slug: string) => {
+  const index = products.findIndex((p) => p.slug === slug);
+  if (index === -1) return null;
+  const total = products.length;
+  const prev = products[(index - 1 + total) % total];
+  const next = products[(index + 1) % total];
+  return { prev, next, index, total };
+};
+
 export const formatAED = (n: number) =>
   `${n.toLocaleString("en-US")} AED`;
