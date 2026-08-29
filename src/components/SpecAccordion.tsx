@@ -24,7 +24,7 @@ export function SpecAccordion({ items }: { items: SpecAccordionItem[] }) {
               "overflow-hidden rounded-3xl border-l-[3px] border-y border-r transition-colors duration-300",
               isOpen
                 ? "border-y-transparent border-r-transparent border-l-[#B8935A] bg-[#1A1614]"
-                : "border-y-border border-r-border border-l-transparent bg-transparent",
+                : "border-y-border border-r-border border-l-border bg-transparent",
             )}
           >
             <button

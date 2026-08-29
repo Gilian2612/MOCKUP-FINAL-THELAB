@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useState } from "react";
-import { MapPin } from "lucide-react";
+import { ChevronDown, ChevronUp, MapPin } from "lucide-react";
 
 import labLogo from "@/assets/the-lab-logo.svg";
 import heroImg from "@/assets/hero-desktop.png";
@@ -60,11 +60,16 @@ function Home() {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => {
+    const t = setTimeout(() => {
       setActive((prev) => (prev + 1) % allStockistPoints.length);
     }, 8000);
-    return () => clearInterval(t);
-  }, []);
+    return () => clearTimeout(t);
+  }, [active]);
+
+  const goToPrevStockist = () =>
+    setActive((prev) => (prev - 1 + allStockistPoints.length) % allStockistPoints.length);
+  const goToNextStockist = () =>
+    setActive((prev) => (prev + 1) % allStockistPoints.length);
 
   return (
     <main className="relative min-h-screen">
@@ -86,8 +91,8 @@ function Home() {
 
 
       {/* HERO — glass cristal panel */}
-      <section className="relative flex min-h-screen items-center overflow-hidden px-6 pb-24 pt-28 lg:px-20">
-        <div className="glass-surface relative mx-auto w-full max-w-7xl overflow-hidden rounded-3xl lg:rounded-[32px]">
+      <section className="relative flex min-h-screen items-center overflow-hidden pb-24 pt-28">
+        <div className="glass-surface relative w-full overflow-hidden">
           <img
             src={heroImg}
             alt="The Lab Perfumes atelier"
@@ -125,16 +130,6 @@ function Home() {
           <span className="absolute bottom-6 left-6 label-caps text-muted-foreground">
             | Scroll to explore
           </span>
-
-          <div className="absolute right-6 top-1/2 hidden -translate-y-1/2 flex-col items-center gap-4 md:flex">
-            <span className="label-caps text-primary">01</span>
-            {[0, 1, 2, 3].map((i) => (
-              <span
-                key={i}
-                className={`h-1.5 w-1.5 rounded-full ${i === 0 ? "bg-primary" : "bg-muted-foreground/40"}`}
-              />
-            ))}
-          </div>
         </div>
       </section>
 
@@ -266,26 +261,47 @@ function Home() {
               const n = String(active + 1).padStart(2, "0");
               const total = String(stockists.length).padStart(2, "0");
               return (
-                <div key={s.distributor} className="clay p-6">
-                  <div className="flex items-center justify-between">
-                    <p className="label-caps text-primary/80">{s.flag} {s.country}</p>
-                    <p className="label-caps text-muted-foreground">{n} / {total}</p>
+                <div key={s.distributor} className="clay flex gap-4 p-6">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="label-caps text-primary/80">{s.flag} {s.country}</p>
+                      <p className="label-caps text-muted-foreground">{n} / {total}</p>
+                    </div>
+                    <p className="mt-5 font-display text-3xl text-cream">{s.distributor}</p>
+                    <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
+                      {s.address}
+                    </p>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                        `${s.distributor}, ${s.address}`,
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open ${s.distributor} in Google Maps`}
+                      className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+                    >
+                      <MapPin className="h-4 w-4" />
+                    </a>
                   </div>
-                  <p className="mt-5 font-display text-3xl text-cream">{s.distributor}</p>
-                  <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
-                    {s.address}
-                  </p>
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                      `${s.distributor}, ${s.address}`,
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Open ${s.distributor} in Google Maps`}
-                    className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
-                  >
-                    <MapPin className="h-4 w-4" />
-                  </a>
+
+                  <div className="flex flex-col items-center justify-center gap-2 border-l border-border pl-4">
+                    <button
+                      type="button"
+                      onClick={goToPrevStockist}
+                      aria-label="Previous stockist"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+                    >
+                      <ChevronUp className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={goToNextStockist}
+                      aria-label="Next stockist"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
               );
             })()}
