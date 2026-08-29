@@ -1,16 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { MapPin } from "lucide-react";
 
-import logo from "@/assets/the-lab-logo.png";
+import labLogo from "@/assets/the-lab-logo.svg";
 import heroImg from "@/assets/hero-desktop.png";
 import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
-import recurso1 from "@/assets/recurso-1.png";
+import landingBg1 from "@/assets/landing-bg-1.png";
 import { products, formatAED } from "@/lib/products";
+import { stockists } from "@/lib/stockists";
+
+const allStockistPoints = stockists.map((s) => ({
+  center: s.coords,
+  label: `${s.distributor} — ${s.city}`,
+}));
 
 
-const StockistMap = lazy(() => import("@/components/StockistMap"));
+const StockistMapRotating = lazy(() => import("@/components/StockistMapRotating"));
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -38,53 +44,41 @@ export const Route = createFileRoute("/")({
 const featured = products.slice(0, 3);
 
 
-const stockists = [
-  { city: "Dubai", place: "The Lab Flagship — Dubai Mall, Fashion Avenue" },
-  { city: "Abu Dhabi", place: "Yas Mall · Yas Island" },
-  { city: "London", place: "Mayfair — 14 Dover Street" },
-  { city: "Paris", place: "Le Marais — 8 Rue de Turenne" },
-  { city: "New York", place: "SoHo — 112 Greene Street" },
-  { city: "Tokyo", place: "Aoyama — 5-2-1 Minami" },
-  { city: "Bogotá", place: "Zona G — Calle 70 #6-15" },
-];
+// Stockists data (real distributors) is imported from @/lib/stockists
 
 function Logo() {
   return (
-    <div className="flex items-center gap-3">
-      <img
-        src={logo}
-        alt="The Lab Perfumes"
-        width={40}
-        height={40}
-        className="h-10 w-10 object-contain"
-      />
-      <span className="leading-[0.95] text-primary">
-        <span className="block font-display text-sm italic">The</span>
-        <span className="block font-display text-lg font-semibold tracking-[0.18em]">
-          LAB
-        </span>
-        <span className="block label-caps text-[8px] text-primary/80">
-          Perfumes
-        </span>
-      </span>
-    </div>
+    <img
+      src={labLogo}
+      alt="The Lab Perfumes"
+      className="h-10 w-auto object-contain"
+    />
   );
 }
 
 function Home() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setActive((prev) => (prev + 1) % allStockistPoints.length);
+    }, 8000);
+    return () => clearInterval(t);
+  }, []);
+
   return (
     <main className="relative min-h-screen">
-      {/* FULL-PAGE BACKDROP — Recurso 1 */}
+      {/* FULL-PAGE BACKDROP — landing background */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
       >
         <img
-          src={recurso1}
+          src={landingBg1}
           alt=""
-          width={944}
-          height={1678}
-          className="h-full w-full scale-110 object-cover opacity-80 blur-sm"
+          width={939}
+          height={1668}
+          className="absolute inset-0 h-full w-full scale-110 object-cover blur-[3px] opacity-80"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/50" />
       </div>
@@ -266,66 +260,46 @@ function Home() {
           <h2 className="mt-6 font-display text-4xl text-cream sm:text-5xl">
             Where to <em className="italic">find us</em>
           </h2>
-          <ul className="mt-12 divide-y divide-border border-y border-border">
-            {stockists.map((s) => (
-              <li key={s.city} className="flex items-baseline justify-between gap-6 py-5">
-                <span className="font-display text-2xl text-cream">{s.city}</span>
-                <span className="text-right text-xs leading-relaxed text-muted-foreground">
-                  {s.place}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-12">
+            {(() => {
+              const s = stockists[active];
+              const n = String(active + 1).padStart(2, "0");
+              const total = String(stockists.length).padStart(2, "0");
+              return (
+                <div key={s.distributor} className="clay p-6">
+                  <div className="flex items-center justify-between">
+                    <p className="label-caps text-primary/80">{s.flag} {s.country}</p>
+                    <p className="label-caps text-muted-foreground">{n} / {total}</p>
+                  </div>
+                  <p className="mt-5 font-display text-3xl text-cream">{s.distributor}</p>
+                  <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
+                    {s.address}
+                  </p>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      `${s.distributor}, ${s.address}`,
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Open ${s.distributor} in Google Maps`}
+                    className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+                  >
+                    <MapPin className="h-4 w-4" />
+                  </a>
+                </div>
+              );
+            })()}
+          </div>
         </div>
 
-        <div className="space-y-8">
-          <div className="clay p-4">
-            <div className="mb-3 flex items-center justify-between px-1">
-              <p className="label-caps text-primary">
-                The Lab Flagship / Dubai Mall
-              </p>
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=25.1124,55.1713"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open The Lab Flagship / Dubai Mall in Google Maps"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
-              >
-                <MapPin className="h-3.5 w-3.5" />
-              </a>
-            </div>
-            <Suspense fallback={<div className="h-[260px] rounded-[20px] bg-muted" />}>
-              <StockistMap
-                center={[55.1713, 25.1124]}
-                zoom={14}
-                label="The Lab Flagship / Dubai Mall"
-              />
-            </Suspense>
-          </div>
-          <div className="clay p-4">
-            <div className="mb-3 flex items-center justify-between px-1">
-              <p className="label-caps text-primary">
-                Yas Mall · Yas Island
-              </p>
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=24.4667,54.3773"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open Yas Mall · Yas Island in Google Maps"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
-              >
-                <MapPin className="h-3.5 w-3.5" />
-              </a>
-            </div>
-            <Suspense fallback={<div className="h-[260px] rounded-[20px] bg-muted" />}>
-              <StockistMap
-                center={[54.3773, 24.4667]}
-                zoom={13}
-                label="Yas Mall · Yas Island"
-              />
-            </Suspense>
-          </div>
-        </div>
+        <Suspense
+          fallback={<div className="h-[440px] w-full rounded-[20px] bg-muted" />}
+        >
+          <StockistMapRotating
+            points={allStockistPoints}
+            active={active}
+          />
+        </Suspense>
       </section>
 
       <footer className="border-t border-border bg-background px-6 py-12 lg:px-20">

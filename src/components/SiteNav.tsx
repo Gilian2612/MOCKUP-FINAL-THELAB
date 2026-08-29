@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
-import logo from "@/assets/the-lab-logo.png";
+import labLogo from "@/assets/the-lab-logo.svg";
 import { useCart } from "@/context/CartContext";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -15,24 +15,11 @@ const links = [
 
 export function Logo() {
   return (
-    <span className="flex items-center gap-3">
-      <img
-        src={logo}
-        alt="The Lab Perfumes"
-        width={40}
-        height={40}
-        className="h-9 w-9 object-contain"
-      />
-      <span className="leading-[0.95] text-primary">
-        <span className="block font-display text-xs italic">The</span>
-        <span className="block font-display text-base font-semibold tracking-[0.18em]">
-          LAB
-        </span>
-        <span className="block label-caps text-[8px] text-primary/80">
-          Perfumes
-        </span>
-      </span>
-    </span>
+    <img
+      src={labLogo}
+      alt="The Lab Perfumes"
+      className="h-8 w-auto object-contain"
+    />
   );
 }
 
