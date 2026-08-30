@@ -17,7 +17,7 @@ export default function CartDrawer() {
       />
       <aside
         aria-label="Shopping bag"
-        className={`fixed right-0 top-0 z-[61] flex h-full w-full max-w-[420px] flex-col bg-[#14100D] shadow-[0_0_80px_rgba(0,0,0,0.9)] transition-transform duration-500 ${
+        className={`fixed right-0 top-0 z-[61] flex h-full w-full max-w-[420px] flex-col bg-surface shadow-[0_0_80px_rgba(0,0,0,0.9)] transition-transform duration-500 ${
           drawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

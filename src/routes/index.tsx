@@ -1,15 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
-import { MapPin } from "lucide-react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { ChevronDown, ChevronUp, MapPin } from "lucide-react";
 
-import logo from "@/assets/the-lab-logo.png";
+import labLogo from "@/assets/the-lab-logo.svg";
 import heroImg from "@/assets/hero-desktop.png";
 import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
+import landingBg1 from "@/assets/landing-bg-1.png";
 import { products, formatAED } from "@/lib/products";
+import { stockists } from "@/lib/stockists";
+
+const allStockistPoints = stockists.map((s) => ({
+  center: s.coords,
+  label: `${s.distributor} — ${s.city}`,
+}));
 
 
-const StockistMap = lazy(() => import("@/components/StockistMap"));
+const StockistMapRotating = lazy(() => import("@/components/StockistMapRotating"));
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -37,99 +44,98 @@ export const Route = createFileRoute("/")({
 const featured = products.slice(0, 3);
 
 
-const stockists = [
-  { city: "Dubai", place: "The Lab Flagship — Dubai Mall, Fashion Avenue" },
-  { city: "Abu Dhabi", place: "Yas Mall · Yas Island" },
-  { city: "London", place: "Mayfair — 14 Dover Street" },
-  { city: "Paris", place: "Le Marais — 8 Rue de Turenne" },
-  { city: "New York", place: "SoHo — 112 Greene Street" },
-  { city: "Tokyo", place: "Aoyama — 5-2-1 Minami" },
-  { city: "Bogotá", place: "Zona G — Calle 70 #6-15" },
-];
+// Stockists data (real distributors) is imported from @/lib/stockists
 
 function Logo() {
   return (
-    <div className="flex items-center gap-3">
-      <img
-        src={logo}
-        alt="The Lab Perfumes"
-        width={40}
-        height={40}
-        className="h-10 w-10 object-contain"
-      />
-      <span className="leading-[0.95] text-primary">
-        <span className="block font-display text-sm italic">The</span>
-        <span className="block font-display text-lg font-semibold tracking-[0.18em]">
-          LAB
-        </span>
-        <span className="block label-caps text-[8px] text-primary/80">
-          Perfumes
-        </span>
-      </span>
-    </div>
+    <img
+      src={labLogo}
+      alt="The Lab Perfumes"
+      className="h-10 w-auto object-contain"
+    />
   );
 }
 
 function Home() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setActive((prev) => (prev + 1) % allStockistPoints.length);
+    }, 8000);
+    return () => clearTimeout(t);
+  }, [active]);
+
+  const goToPrevStockist = () =>
+    setActive((prev) => (prev - 1 + allStockistPoints.length) % allStockistPoints.length);
+  const goToNextStockist = () =>
+    setActive((prev) => (prev + 1) % allStockistPoints.length);
+
   return (
-    <main className="min-h-screen bg-background">
-
-
-
-      {/* HERO */}
-      <section className="relative flex min-h-screen items-center overflow-hidden">
+    <main className="relative min-h-screen">
+      {/* FULL-PAGE BACKDROP — landing background */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      >
         <img
-          src={heroImg}
-          alt="The Lab Perfumes atelier"
-          width={1920}
-          height={1088}
-          className="absolute inset-0 h-full w-full object-cover sepia-photo"
+          src={landingBg1}
+          alt=""
+          width={939}
+          height={1668}
+          className="absolute inset-0 h-full w-full scale-110 object-cover blur-[3px] opacity-80"
         />
-        <div className="absolute inset-0 bg-background/40" />
-        <div className="copper-beam right-1/3" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/50" />
+      </div>
 
-        <div className="relative mx-auto w-full max-w-7xl px-6 pt-28">
-          <p className="label-caps text-primary">Est. Bogotá — Dubai</p>
-          <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[0.95] text-primary sm:text-7xl lg:text-[96px]">
-            Not a niche house <em className="italic">from</em> Colombia
-          </h1>
-          <p className="mt-8 max-w-md text-sm leading-relaxed text-muted-foreground">
-            Independent perfumery. Crafted between Colombia and Dubai.
-          </p>
 
-          <a
-            href="#collection"
-            className="group mt-12 inline-flex items-center gap-4"
-          >
-            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/50 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-              <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor">
-                <path d="M0 0l12 7-12 7z" />
-              </svg>
-            </span>
-            <span className="label-caps border-b border-primary pb-1 text-cream">
-              Discover the collection
-            </span>
-          </a>
-        </div>
 
-        <span className="absolute bottom-8 left-6 label-caps text-muted-foreground">
-          | Scroll to explore
-        </span>
+      {/* HERO — glass cristal panel */}
+      <section className="relative flex min-h-screen items-center overflow-hidden pb-24 pt-28">
+        <div className="glass-surface relative w-full overflow-hidden">
+          <img
+            src={heroImg}
+            alt="The Lab Perfumes atelier"
+            width={1920}
+            height={1088}
+            className="absolute inset-0 h-full w-full object-cover sepia-photo opacity-45"
+          />
+          <div className="absolute inset-0 bg-background/40" />
+          <div className="copper-beam right-1/3 hidden lg:block" />
 
-        <div className="absolute right-6 top-1/2 hidden -translate-y-1/2 flex-col items-center gap-4 md:flex">
-          <span className="label-caps text-primary">01</span>
-          {[0, 1, 2, 3].map((i) => (
-            <span
-              key={i}
-              className={`h-1.5 w-1.5 rounded-full ${i === 0 ? "bg-primary" : "bg-muted-foreground/40"}`}
-            />
-          ))}
+          <div className="relative px-6 py-20 sm:px-10 lg:px-16 lg:py-24">
+            <p className="label-caps text-primary">Est. Bogotá — Dubai</p>
+            <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[0.95] text-primary sm:text-7xl lg:text-[96px]">
+              Not a niche house <em className="italic">from</em> Colombia
+            </h1>
+            <p className="mt-8 max-w-md text-sm leading-relaxed text-muted-foreground">
+              Independent perfumery. Crafted between Colombia and Dubai.
+            </p>
+
+            <a
+              href="#collection"
+              className="group mt-12 inline-flex items-center gap-4"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/50 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor">
+                  <path d="M0 0l12 7-12 7z" />
+                </svg>
+              </span>
+              <span className="label-caps border-b border-primary pb-1 text-cream">
+                Discover the collection
+              </span>
+            </a>
+          </div>
+
+          <span className="absolute bottom-6 left-6 label-caps text-muted-foreground">
+            | Scroll to explore
+          </span>
         </div>
       </section>
 
       {/* FOUNDER */}
-      <section id="founder" className="grid lg:grid-cols-2">
-        <div className="flex flex-col justify-center px-6 py-24 lg:px-20">
+      <section id="founder" className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
+        <div className="flex flex-col justify-center">
           <p className="label-caps text-primary">The Founder</p>
           <h2 className="mt-6 font-display text-4xl text-cream sm:text-6xl">
             Mario Galindo
@@ -153,16 +159,15 @@ function Home() {
             ))}
           </ol>
         </div>
-        <div className="relative min-h-[520px]">
+        <div className="clay overflow-hidden p-2">
           <img
             src={marioImg}
             alt="Mario Galindo, founder of The Lab Perfumes"
             loading="lazy"
             width={912}
             height={1200}
-            className="absolute inset-0 h-full w-full object-cover sepia-photo"
+            className="h-[520px] w-full rounded-[22px] object-cover sepia-photo"
           />
-          <div className="absolute inset-0 bg-background/25" />
         </div>
       </section>
 
@@ -250,66 +255,67 @@ function Home() {
           <h2 className="mt-6 font-display text-4xl text-cream sm:text-5xl">
             Where to <em className="italic">find us</em>
           </h2>
-          <ul className="mt-12 divide-y divide-border border-y border-border">
-            {stockists.map((s) => (
-              <li key={s.city} className="flex items-baseline justify-between gap-6 py-5">
-                <span className="font-display text-2xl text-cream">{s.city}</span>
-                <span className="text-right text-xs leading-relaxed text-muted-foreground">
-                  {s.place}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-12">
+            {(() => {
+              const s = stockists[active];
+              const n = String(active + 1).padStart(2, "0");
+              const total = String(stockists.length).padStart(2, "0");
+              return (
+                <div key={s.distributor} className="clay flex gap-4 p-6">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="label-caps text-primary/80">{s.flag} {s.country}</p>
+                      <p className="label-caps text-muted-foreground">{n} / {total}</p>
+                    </div>
+                    <p className="mt-5 font-display text-3xl text-cream">{s.distributor}</p>
+                    <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
+                      {s.address}
+                    </p>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                        `${s.distributor}, ${s.address}`,
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open ${s.distributor} in Google Maps`}
+                      className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+                    >
+                      <MapPin className="h-4 w-4" />
+                    </a>
+                  </div>
+
+                  <div className="flex flex-col items-center justify-center gap-2 border-l border-border pl-4">
+                    <button
+                      type="button"
+                      onClick={goToPrevStockist}
+                      aria-label="Previous stockist"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+                    >
+                      <ChevronUp className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={goToNextStockist}
+                      aria-label="Next stockist"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
         </div>
 
-        <div className="space-y-8">
-          <div className="clay p-4">
-            <div className="mb-3 flex items-center justify-between px-1">
-              <p className="label-caps text-primary">
-                The Lab Flagship / Dubai Mall
-              </p>
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=25.1124,55.1713"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open The Lab Flagship / Dubai Mall in Google Maps"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
-              >
-                <MapPin className="h-3.5 w-3.5" />
-              </a>
-            </div>
-            <Suspense fallback={<div className="h-[260px] rounded-[20px] bg-muted" />}>
-              <StockistMap
-                center={[55.1713, 25.1124]}
-                zoom={14}
-                label="The Lab Flagship / Dubai Mall"
-              />
-            </Suspense>
-          </div>
-          <div className="clay p-4">
-            <div className="mb-3 flex items-center justify-between px-1">
-              <p className="label-caps text-primary">
-                Yas Mall · Yas Island
-              </p>
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=24.4667,54.3773"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open Yas Mall · Yas Island in Google Maps"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
-              >
-                <MapPin className="h-3.5 w-3.5" />
-              </a>
-            </div>
-            <Suspense fallback={<div className="h-[260px] rounded-[20px] bg-muted" />}>
-              <StockistMap
-                center={[54.3773, 24.4667]}
-                zoom={13}
-                label="Yas Mall · Yas Island"
-              />
-            </Suspense>
-          </div>
-        </div>
+        <Suspense
+          fallback={<div className="h-[440px] w-full rounded-[20px] bg-muted" />}
+        >
+          <StockistMapRotating
+            points={allStockistPoints}
+            active={active}
+          />
+        </Suspense>
       </section>
 
       <footer className="border-t border-border bg-background px-6 py-12 lg:px-20">
