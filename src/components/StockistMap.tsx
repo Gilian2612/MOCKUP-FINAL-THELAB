@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
 
 type Point = { center: [number, number]; label: string };
 
@@ -25,6 +26,7 @@ export default function StockistMap({ center, zoom = 12, label, points }: Props)
 
     (async () => {
       const maplibregl = await import("maplibre-gl");
+      maplibregl.setWorkerUrl(maplibreWorkerUrl);
       if (cancelled || !ref.current) return;
 
       const bounds = new maplibregl.LngLatBounds();
