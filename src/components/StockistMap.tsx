@@ -29,19 +29,37 @@ export default function StockistMap({ center, zoom = 12, label, points }: Props)
       maplibregl.setWorkerUrl(maplibreWorkerUrl);
       if (cancelled || !ref.current) return;
 
+      const container = ref.current;
+      const waitForSize = (node: HTMLElement) =>
+        new Promise<void>((resolve) => {
+          const check = () => {
+            const rect = node.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) resolve();
+            else requestAnimationFrame(check);
+          };
+          check();
+        });
+
+      await waitForSize(container);
+      if (cancelled) return;
+
       const bounds = new maplibregl.LngLatBounds();
       markers.forEach((m) => bounds.extend(m.center));
 
       const instance = new maplibregl.Map({
-        container: ref.current,
+        container,
         style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
         center: markers[0]?.center ?? center ?? [0, 0],
         zoom,
         attributionControl: false,
+        fadeDuration: 0,
       });
       map = instance;
       instance.on("error", (e: any) => console.error("[MAP]", e.error?.message ?? e));
       instance.on("load", () => console.log("[MAP] tiles loaded"));
+
+      const forceResize = () => instance.resize();
+      requestAnimationFrame(forceResize);
 
       const base = document.createElement("div");
       base.style.cssText =

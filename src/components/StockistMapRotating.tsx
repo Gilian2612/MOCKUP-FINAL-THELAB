@@ -36,20 +36,44 @@ export default function StockistMapRotating({
 
   useEffect(() => {
     let cancelled = false;
+
     (async () => {
       const maplibregl = await import("maplibre-gl");
       maplibregl.setWorkerUrl(maplibreWorkerUrl);
       if (cancelled || !ref.current) return;
+
+      const container = ref.current;
+
+      const waitForSize = (node: HTMLElement) =>
+        new Promise<void>((resolve) => {
+          const check = () => {
+            const rect = node.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) resolve();
+            else requestAnimationFrame(check);
+          };
+          check();
+        });
+
+      // Post-SSR/hydration: ensure layout is settled so the canvas gets a real size
+      // before MapLibre starts its render loop (fixes blank tiles on Vercel).
+      await waitForSize(container);
+      if (cancelled) return;
+
       const instance = new maplibregl.Map({
-        container: ref.current,
+        container,
         style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
         center: points[active]?.center ?? [0, 0],
         zoom,
         attributionControl: false,
+        fadeDuration: 0,
       });
       mapRef.current = instance;
       instance.on("error", (e: any) => console.error("[MAP]", e.error?.message ?? e));
       instance.on("load", () => console.log("[MAP] tiles loaded"));
+
+      // Force re-resize after mount so the canvas repaints once laid out.
+      const forceResize = () => instance.resize();
+      requestAnimationFrame(forceResize);
 
       const el = document.createElement("div");
       el.style.cssText =
