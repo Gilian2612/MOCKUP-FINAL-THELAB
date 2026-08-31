@@ -1,5 +1,5 @@
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import * as maplibregl from "maplibre-gl";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { createPerfumeMarkerElement } from "./perfumeMarker";
@@ -37,14 +37,12 @@ export default function StockistMapRotating({
   const mapRef = useRef<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const markerRef = useRef<any>(null);
-  const [diag, setDiag] = useState<string>("");
 
   useEffect(() => {
     let cancelled = false;
 
     (async () => {
       if (cancelled || !ref.current) return;
-      setDiag("2-ref ok");
 
       const container = ref.current;
 
@@ -62,7 +60,6 @@ export default function StockistMapRotating({
       // before MapLibre starts its render loop (fixes blank tiles on Vercel).
       await waitForSize(container);
       if (cancelled) return;
-      setDiag("3-size ok");
 
       try {
         const instance = new maplibregl.Map({
@@ -115,18 +112,14 @@ export default function StockistMapRotating({
           zoom,
           attributionControl: false,
           fadeDuration: 0,
-          workerCount: 0,
         });
         mapRef.current = instance;
-        setDiag("4-map created");
         instance.on("error", (e: any) => {
           const msg = e.error?.message ?? e.message ?? JSON.stringify(e);
           console.error("[MAP]", msg);
-          setDiag("ERR: " + msg);
         });
         instance.on("load", () => {
           console.log("[MAP] tiles loaded");
-          setDiag("5-TILES LOADED");
         });
 
       // Force re-resize after mount so the canvas repaints once laid out.
@@ -139,7 +132,6 @@ export default function StockistMapRotating({
         .addTo(instance);
       } catch (err: any) {
         console.error("[MAP] create", err);
-        setDiag("CREATE ERR: " + (err?.message ?? err));
       }
     })();
 
@@ -335,12 +327,6 @@ export default function StockistMapRotating({
           filter: "blur(6px)",
         }}
       />
-
-      {diag && (
-        <div className="absolute inset-x-0 bottom-24 z-50 px-4 text-center font-body text-xs leading-tight tracking-wide text-red-400">
-          {diag}
-        </div>
-      )}
     </div>
   );
 }
