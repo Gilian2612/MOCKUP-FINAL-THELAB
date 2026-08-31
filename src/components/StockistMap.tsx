@@ -98,7 +98,6 @@ export default function StockistMap({ center, zoom = 12, label, points }: Props)
         zoom,
         attributionControl: false,
         fadeDuration: 0,
-        workerCount: 0,
       });
       map = instance;
       instance.on("error", (e: any) => console.error("[MAP]", e.error?.message ?? e));
