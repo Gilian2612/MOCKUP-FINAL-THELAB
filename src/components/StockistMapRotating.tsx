@@ -1,6 +1,9 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
+import * as maplibregl from "maplibre-gl";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
+
+maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
 type Point = { center: [number, number]; label: string };
 
@@ -39,9 +42,8 @@ export default function StockistMapRotating({
     let cancelled = false;
 
     (async () => {
-      const maplibregl = await import("maplibre-gl");
-      maplibregl.setWorkerUrl(maplibreWorkerUrl);
       if (cancelled || !ref.current) return;
+      setDiag("2-ref ok");
 
       const container = ref.current;
 
@@ -59,26 +61,29 @@ export default function StockistMapRotating({
       // before MapLibre starts its render loop (fixes blank tiles on Vercel).
       await waitForSize(container);
       if (cancelled) return;
+      setDiag("3-size ok");
 
-      const instance = new maplibregl.Map({
-        container,
-        style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
-        center: points[active]?.center ?? [0, 0],
-        zoom,
-        attributionControl: false,
-        fadeDuration: 0,
-        workerCount: 0,
-      });
-      mapRef.current = instance;
-      instance.on("error", (e: any) => {
-        const msg = e.error?.message ?? e.message ?? JSON.stringify(e);
-        console.error("[MAP]", msg);
-        setDiag("ERR: " + msg);
-      });
-      instance.on("load", () => {
-        console.log("[MAP] tiles loaded");
-        setDiag("");
-      });
+      try {
+        const instance = new maplibregl.Map({
+          container,
+          style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+          center: points[active]?.center ?? [0, 0],
+          zoom,
+          attributionControl: false,
+          fadeDuration: 0,
+          workerCount: 0,
+        });
+        mapRef.current = instance;
+        setDiag("4-map created");
+        instance.on("error", (e: any) => {
+          const msg = e.error?.message ?? e.message ?? JSON.stringify(e);
+          console.error("[MAP]", msg);
+          setDiag("ERR: " + msg);
+        });
+        instance.on("load", () => {
+          console.log("[MAP] tiles loaded");
+          setDiag("5-TILES LOADED");
+        });
 
       // Force re-resize after mount so the canvas repaints once laid out.
       const forceResize = () => instance.resize();
@@ -90,6 +95,10 @@ export default function StockistMapRotating({
       markerRef.current = new maplibregl.Marker({ element: el })
         .setLngLat(points[active]?.center ?? [0, 0])
         .addTo(instance);
+      } catch (err: any) {
+        console.error("[MAP] create", err);
+        setDiag("CREATE ERR: " + (err?.message ?? err));
+      }
     })();
 
     return () => {
@@ -195,10 +204,6 @@ export default function StockistMapRotating({
           ref={ref}
           aria-label="Rotating stockist locations"
           className="h-full w-full overflow-hidden"
-          style={{
-            filter:
-              "grayscale(0.35) sepia(0.25) saturate(1.4) contrast(1.15) brightness(0.85)",
-          }}
         />
       </div>
 
@@ -290,7 +295,7 @@ export default function StockistMapRotating({
       />
 
       {diag && (
-        <div className="absolute inset-x-0 bottom-24 z-30 px-4 text-center font-body text-[10px] leading-tight tracking-wide text-red-400">
+        <div className="absolute inset-x-0 bottom-24 z-50 px-4 text-center font-body text-xs leading-tight tracking-wide text-red-400">
           {diag}
         </div>
       )}
