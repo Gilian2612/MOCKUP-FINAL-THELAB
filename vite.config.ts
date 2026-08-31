@@ -18,5 +18,8 @@ export default defineConfig({
     // map canvas black. Excluding it from pre-bundling lets Vite serve it
     // as native ESM instead.
     optimizeDeps: { exclude: ["maplibre-gl"] },
+    // maplibre-gl v6 loads its worker by URL and imports sibling chunks;
+    // resolve the ESM entry on the server and avoid CJS/ESM mismatch in SSR.
+    ssr: { noExternal: ["maplibre-gl"] },
   },
 });
