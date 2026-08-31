@@ -1,5 +1,5 @@
-await import("maplibre-gl/dist/maplibre-gl.css");
-import { useEffect, useRef } from "react";
+import "maplibre-gl/dist/maplibre-gl.css";
+import { useEffect, useRef, useState } from "react";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
 
 type Point = { center: [number, number]; label: string };
@@ -33,6 +33,7 @@ export default function StockistMapRotating({
   const mapRef = useRef<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const markerRef = useRef<any>(null);
+  const [diag, setDiag] = useState<string>("");
 
   useEffect(() => {
     let cancelled = false;
@@ -68,8 +69,15 @@ export default function StockistMapRotating({
         fadeDuration: 0,
       });
       mapRef.current = instance;
-      instance.on("error", (e: any) => console.error("[MAP]", e.error?.message ?? e));
-      instance.on("load", () => console.log("[MAP] tiles loaded"));
+      instance.on("error", (e: any) => {
+        const msg = e.error?.message ?? e.message ?? JSON.stringify(e);
+        console.error("[MAP]", msg);
+        setDiag("ERR: " + msg);
+      });
+      instance.on("load", () => {
+        console.log("[MAP] tiles loaded");
+        setDiag("");
+      });
 
       // Force re-resize after mount so the canvas repaints once laid out.
       const forceResize = () => instance.resize();
@@ -279,6 +287,12 @@ export default function StockistMapRotating({
           filter: "blur(6px)",
         }}
       />
+
+      {diag && (
+        <div className="absolute inset-x-0 bottom-24 z-30 px-4 text-center font-body text-[10px] leading-tight tracking-wide text-red-400">
+          {diag}
+        </div>
+      )}
     </div>
   );
 }
