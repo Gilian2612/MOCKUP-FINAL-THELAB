@@ -1,6 +1,9 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
+import * as maplibregl from "maplibre-gl";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
+
+maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
 type Point = { center: [number, number]; label: string };
 
@@ -39,9 +42,6 @@ export default function StockistMapRotating({
     let cancelled = false;
 
     (async () => {
-      const maplibregl = await import("maplibre-gl");
-      setDiag("1-import ok");
-      maplibregl.setWorkerUrl(maplibreWorkerUrl);
       if (cancelled || !ref.current) return;
       setDiag("2-ref ok");
 
