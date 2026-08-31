@@ -40,6 +40,8 @@ export default function StockistMap({ center, zoom = 12, label, points }: Props)
         attributionControl: false,
       });
       map = instance;
+      instance.on("error", (e: any) => console.error("[MAP]", e.error?.message ?? e));
+      instance.on("load", () => console.log("[MAP] tiles loaded"));
 
       const base = document.createElement("div");
       base.style.cssText =

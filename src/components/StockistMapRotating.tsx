@@ -48,6 +48,8 @@ export default function StockistMapRotating({
         attributionControl: false,
       });
       mapRef.current = instance;
+      instance.on("error", (e: any) => console.error("[MAP]", e.error?.message ?? e));
+      instance.on("load", () => console.log("[MAP] tiles loaded"));
 
       const el = document.createElement("div");
       el.style.cssText =
