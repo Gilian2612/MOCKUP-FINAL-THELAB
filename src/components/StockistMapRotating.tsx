@@ -67,6 +67,7 @@ export default function StockistMapRotating({
         zoom,
         attributionControl: false,
         fadeDuration: 0,
+        workerCount: 0,
       });
       mapRef.current = instance;
       instance.on("error", (e: any) => {
