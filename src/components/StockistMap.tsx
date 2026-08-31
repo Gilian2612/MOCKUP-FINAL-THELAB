@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as maplibregl from "maplibre-gl";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
+import { createPerfumeMarkerElement } from "./perfumeMarker";
 
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
@@ -49,7 +50,50 @@ export default function StockistMap({ center, zoom = 12, label, points }: Props)
 
       const instance = new maplibregl.Map({
         container,
-        style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+        style: {
+          version: 8,
+          sources: {
+            carto: {
+              type: "vector",
+              tiles: [
+                "https://tiles-a.basemaps.cartocdn.com/vectortiles/carto.streets/v1/{z}/{x}/{y}.mvt",
+              ],
+              maxzoom: 14,
+            },
+          },
+          layers: [
+            { id: "bg", type: "background", paint: { "background-color": "#0e0e0e" } },
+            {
+              id: "water",
+              type: "fill",
+              source: "carto",
+              "source-layer": "water",
+              paint: { "fill-color": "#11151f" },
+            },
+            {
+              id: "roads-minor",
+              type: "line",
+              source: "carto",
+              "source-layer": "transportation",
+              filter: ["!=", ["get", "class"], "motorway"],
+              paint: {
+                "line-color": "#232323",
+                "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.4, 14, 1.5],
+              },
+            },
+            {
+              id: "roads-major",
+              type: "line",
+              source: "carto",
+              "source-layer": "transportation",
+              filter: ["==", ["get", "class"], "motorway"],
+              paint: {
+                "line-color": "#3c4657",
+                "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.8, 14, 2.4],
+              },
+            },
+          ],
+        },
         center: markers[0]?.center ?? center ?? [0, 0],
         zoom,
         attributionControl: false,
@@ -63,9 +107,7 @@ export default function StockistMap({ center, zoom = 12, label, points }: Props)
       const forceResize = () => instance.resize();
       requestAnimationFrame(forceResize);
 
-      const base = document.createElement("div");
-      base.style.cssText =
-        "width:14px;height:14px;border-radius:9999px;background:#B8A76A;box-shadow:0 0 0 5px rgba(184,167,106,0.22);";
+      const base = createPerfumeMarkerElement();
 
       markers.forEach((m) => {
         const el = base.cloneNode(true) as HTMLElement;

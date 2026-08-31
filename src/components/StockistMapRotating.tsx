@@ -2,6 +2,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
 import * as maplibregl from "maplibre-gl";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
+import { createPerfumeMarkerElement } from "./perfumeMarker";
 
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
@@ -66,7 +67,50 @@ export default function StockistMapRotating({
       try {
         const instance = new maplibregl.Map({
           container,
-          style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+          style: {
+            version: 8,
+            sources: {
+              carto: {
+                type: "vector",
+                tiles: [
+                  "https://tiles-a.basemaps.cartocdn.com/vectortiles/carto.streets/v1/{z}/{x}/{y}.mvt",
+                ],
+                maxzoom: 14,
+              },
+            },
+            layers: [
+              { id: "bg", type: "background", paint: { "background-color": "#0e0e0e" } },
+              {
+                id: "water",
+                type: "fill",
+                source: "carto",
+                "source-layer": "water",
+                paint: { "fill-color": "#11151f" },
+              },
+              {
+                id: "roads-minor",
+                type: "line",
+                source: "carto",
+                "source-layer": "transportation",
+                filter: ["!=", ["get", "class"], "motorway"],
+                paint: {
+                  "line-color": "#232323",
+                  "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.4, 14, 1.5],
+                },
+              },
+              {
+                id: "roads-major",
+                type: "line",
+                source: "carto",
+                "source-layer": "transportation",
+                filter: ["==", ["get", "class"], "motorway"],
+                paint: {
+                  "line-color": "#3c4657",
+                  "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.8, 14, 2.4],
+                },
+              },
+            ],
+          },
           center: points[active]?.center ?? [0, 0],
           zoom,
           attributionControl: false,
@@ -89,9 +133,7 @@ export default function StockistMapRotating({
       const forceResize = () => instance.resize();
       requestAnimationFrame(forceResize);
 
-      const el = document.createElement("div");
-      el.style.cssText =
-        "width:14px;height:14px;border-radius:2px;background:linear-gradient(135deg,#F3E4B0,#B8A76A 55%,#7a6836);transform:rotate(45deg);box-shadow:0 0 0 1px rgba(255,255,255,0.4),0 0 0 5px rgba(184,167,106,0.22),0 0 16px rgba(184,167,106,0.85);";
+      const el = createPerfumeMarkerElement();
       markerRef.current = new maplibregl.Marker({ element: el })
         .setLngLat(points[active]?.center ?? [0, 0])
         .addTo(instance);
