@@ -7,7 +7,6 @@ import heroImg from "@/assets/hero-desktop.png";
 import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
 import landingBg1 from "@/assets/landing-bg-1.png";
-import { products, formatAED } from "@/lib/products";
 import { stockists } from "@/lib/stockists";
 
 const allStockistPoints = stockists.map((s) => ({
@@ -40,9 +39,6 @@ export const Route = createFileRoute("/")({
   }),
   component: Home,
 });
-
-const featured = products.slice(0, 3);
-
 
 // Stockists data (real distributors) is imported from @/lib/stockists
 
@@ -200,53 +196,6 @@ function Home() {
           />
         </div>
       </section>
-
-      {/* FEATURED */}
-      <section id="collection" className="px-6 py-24 lg:px-20">
-        <div className="flex items-end justify-between">
-          <h2 className="font-display text-4xl text-cream sm:text-5xl">
-            Featured <em className="italic text-primary">fragrances</em>
-          </h2>
-          <Link
-            to="/fragrances"
-            className="label-caps hidden text-muted-foreground hover:text-primary sm:block"
-          >
-            View all eleven →
-          </Link>
-        </div>
-
-        <div className="mt-14 grid gap-8 md:grid-cols-3">
-          {featured.map((f) => (
-            <Link
-              key={f.slug}
-              to="/fragrances/$slug"
-              params={{ slug: f.slug }}
-              className="clay group p-6"
-            >
-              <div className="overflow-hidden rounded-[20px] bg-background/40">
-                <img
-                  src={f.image}
-                  alt={`${f.name} perfume bottle`}
-                  loading="lazy"
-                  width={900}
-                  height={1100}
-                  className="h-80 w-full object-cover sepia-photo transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-              <h3 className="mt-6 font-display text-2xl text-primary">
-                {f.name}
-              </h3>
-              <p className="mt-2 label-caps text-muted-foreground">
-                {f.notes.join(" · ")}
-              </p>
-              <p className="mt-6 font-display text-xl text-cream">
-                {formatAED(f.price)}
-              </p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
 
       {/* STOCKISTS */}
       <section id="stockists" className="grid gap-14 px-6 py-24 lg:grid-cols-2 lg:px-20">
