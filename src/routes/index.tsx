@@ -3,7 +3,6 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { ChevronDown, ChevronUp, MapPin } from "lucide-react";
 
 import labLogo from "@/assets/the-lab-logo.svg";
-import heroImg from "@/assets/hero-desktop.png";
 import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
 import landingBg1 from "@/assets/landing-bg-1.png";
@@ -85,49 +84,6 @@ function Home() {
       </div>
 
 
-
-      {/* HERO — glass cristal panel */}
-      <section className="relative flex min-h-screen items-center overflow-hidden pb-24 pt-28">
-        <div className="glass-surface relative w-full overflow-hidden">
-          <img
-            src={heroImg}
-            alt="The Lab Perfumes atelier"
-            width={1920}
-            height={1088}
-            className="absolute inset-0 h-full w-full object-cover sepia-photo opacity-45"
-          />
-          <div className="absolute inset-0 bg-background/40" />
-          <div className="copper-beam right-1/3 hidden lg:block" />
-
-          <div className="relative px-6 py-20 sm:px-10 lg:px-16 lg:py-24">
-            <p className="label-caps text-primary">Est. Bogotá — Dubai</p>
-            <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[0.95] text-primary sm:text-7xl lg:text-[96px]">
-              Not a niche house <em className="italic">from</em> Colombia
-            </h1>
-            <p className="mt-8 max-w-md text-sm leading-relaxed text-muted-foreground">
-              Independent perfumery. Crafted between Colombia and Dubai.
-            </p>
-
-            <a
-              href="#collection"
-              className="group mt-12 inline-flex items-center gap-4"
-            >
-              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/50 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor">
-                  <path d="M0 0l12 7-12 7z" />
-                </svg>
-              </span>
-              <span className="label-caps border-b border-primary pb-1 text-cream">
-                Discover the collection
-              </span>
-            </a>
-          </div>
-
-          <span className="absolute bottom-6 left-6 label-caps text-muted-foreground">
-            | Scroll to explore
-          </span>
-        </div>
-      </section>
 
       {/* FOUNDER */}
       <section id="founder" className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
