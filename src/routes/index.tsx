@@ -7,6 +7,13 @@ import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
 import landingBg1 from "@/assets/landing-bg-1.png";
 import { stockists } from "@/lib/stockists";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 const allStockistPoints = stockists.map((s) => ({
   center: s.coords,
@@ -53,6 +60,11 @@ function Logo() {
 
 function Home() {
   const [active, setActive] = useState(0);
+  const [showComingSoon, setShowComingSoon] = useState(false);
+
+  useEffect(() => {
+    setShowComingSoon(true);
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -68,6 +80,20 @@ function Home() {
 
   return (
     <main className="relative min-h-screen">
+      <Dialog open={showComingSoon} onOpenChange={setShowComingSoon}>
+        <DialogContent className="border-border bg-background text-center sm:text-center">
+          <DialogHeader className="items-center text-center sm:items-center sm:text-center">
+            <p className="label-caps text-primary">Coming Soon</p>
+            <DialogTitle className="mt-2 font-display text-2xl text-cream">
+              This page is under construction
+            </DialogTitle>
+            <DialogDescription className="mt-2">
+              We're crafting something special. The Lab Perfumes will be available very soon — thank you for your patience.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
       {/* FULL-PAGE BACKDROP — landing background */}
       <div
         aria-hidden="true"
