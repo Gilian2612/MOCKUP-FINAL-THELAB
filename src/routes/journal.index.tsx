@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 import g5 from "@/assets/gallery-05.png";
+import journalBg from "@/assets/journal-bg.png";
 
 const INSTAGRAM_URL = "https://www.instagram.com/thelabperfumes/";
 const INSTAGRAM_POST_URL = "https://www.instagram.com/p/Cz0G8OPuyfF/";
@@ -83,7 +84,23 @@ export const Route = createFileRoute("/journal/")({
 
 function JournalPage() {
   return (
-    <main className="flex min-h-screen flex-col bg-background px-6 pb-4 pt-16 lg:px-20">
+    <main className="relative isolate flex min-h-screen flex-col bg-background px-6 pb-4 pt-16 lg:px-20">
+      {/* FULL-PAGE BACKDROP */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      >
+        <img
+          src={journalBg}
+          alt=""
+          width={1023}
+          height={1537}
+          className="absolute inset-0 h-full w-full scale-100 object-cover object-[center_95%] blur-[3px] opacity-80"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/50" />
+        <div className="absolute inset-0 bg-background/60" />
+      </div>
+
       <p className="label-caps text-primary">Journal</p>
       <h1 className="mt-1 font-display text-2xl text-cream sm:text-4xl">
         Field <em className="italic text-primary">notes</em>

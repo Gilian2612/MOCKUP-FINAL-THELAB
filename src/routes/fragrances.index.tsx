@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { useCart } from "@/context/CartContext";
 import { products, formatAED } from "@/lib/products";
+import fragrancesBg from "@/assets/fragrances-bg.png";
 
 export const Route = createFileRoute("/fragrances/")({
   head: () => ({
@@ -27,7 +28,23 @@ function FragrancesPage() {
   const { add } = useCart();
 
   return (
-    <main className="min-h-screen bg-background px-6 pb-24 pt-40 lg:px-20">
+    <main className="relative isolate min-h-screen bg-background px-6 pb-24 pt-40 lg:px-20">
+      {/* FULL-PAGE BACKDROP */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      >
+        <img
+          src={fragrancesBg}
+          alt=""
+          width={941}
+          height={1672}
+          className="absolute inset-0 h-full w-full scale-110 object-cover object-[center_25%] blur-[3px] opacity-80"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/10 to-background/50" />
+        <div className="absolute inset-0 bg-background/60" />
+      </div>
+
       <p className="label-caps text-primary">The Collection</p>
       <h1 className="mt-6 max-w-3xl font-display text-5xl text-cream sm:text-7xl">
         Eleven <em className="italic text-primary">chapters</em> of the house
