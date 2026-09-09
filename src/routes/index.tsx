@@ -6,8 +6,14 @@ import labLogo from "@/assets/the-lab-logo.svg";
 import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
 import landingBg1 from "@/assets/landing-bg-1.png";
-import { products, formatAED } from "@/lib/products";
 import { stockists } from "@/lib/stockists";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 const allStockistPoints = stockists.map((s) => ({
   center: s.coords,
@@ -40,9 +46,6 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const featured = products.slice(0, 3);
-
-
 // Stockists data (real distributors) is imported from @/lib/stockists
 
 function Logo() {
@@ -57,6 +60,11 @@ function Logo() {
 
 function Home() {
   const [active, setActive] = useState(0);
+  const [showComingSoon, setShowComingSoon] = useState(false);
+
+  useEffect(() => {
+    setShowComingSoon(true);
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -72,6 +80,20 @@ function Home() {
 
   return (
     <main className="relative min-h-screen">
+      <Dialog open={showComingSoon} onOpenChange={setShowComingSoon}>
+        <DialogContent className="border-border bg-background text-center sm:text-center">
+          <DialogHeader className="items-center text-center sm:items-center sm:text-center">
+            <p className="label-caps text-primary">Coming Soon</p>
+            <DialogTitle className="mt-2 font-display text-2xl text-cream">
+              This page is under construction
+            </DialogTitle>
+            <DialogDescription className="mt-2">
+              We're crafting something special. The Lab Perfumes will be available very soon — thank you for your patience.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
       {/* FULL-PAGE BACKDROP — landing background */}
       <div
         aria-hidden="true"
@@ -156,53 +178,6 @@ function Home() {
           />
         </div>
       </section>
-
-      {/* FEATURED */}
-      <section id="collection" className="px-6 py-24 lg:px-20">
-        <div className="flex items-end justify-between">
-          <h2 className="font-display text-4xl text-cream sm:text-5xl">
-            Featured <em className="italic text-primary">fragrances</em>
-          </h2>
-          <Link
-            to="/fragrances"
-            className="label-caps hidden text-muted-foreground hover:text-primary sm:block"
-          >
-            View all eleven →
-          </Link>
-        </div>
-
-        <div className="mt-14 grid gap-8 md:grid-cols-3">
-          {featured.map((f) => (
-            <Link
-              key={f.slug}
-              to="/fragrances/$slug"
-              params={{ slug: f.slug }}
-              className="clay group p-6"
-            >
-              <div className="overflow-hidden rounded-[20px] bg-background/40">
-                <img
-                  src={f.image}
-                  alt={`${f.name} perfume bottle`}
-                  loading="lazy"
-                  width={900}
-                  height={1100}
-                  className="h-80 w-full object-cover sepia-photo transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-              <h3 className="mt-6 font-display text-2xl text-primary">
-                {f.name}
-              </h3>
-              <p className="mt-2 label-caps text-muted-foreground">
-                {f.notes.join(" · ")}
-              </p>
-              <p className="mt-6 font-display text-xl text-cream">
-                {formatAED(f.price)}
-              </p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
 
       {/* STOCKISTS */}
       <section id="stockists" className="grid gap-14 px-6 py-24 lg:grid-cols-2 lg:px-20">
