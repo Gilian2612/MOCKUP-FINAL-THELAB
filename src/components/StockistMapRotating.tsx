@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import * as maplibregl from "maplibre-gl";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { createPerfumeMarkerElement } from "./perfumeMarker";
-import labLogo from "@/assets/the-lab-logo.svg";
 
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
@@ -15,16 +14,6 @@ type Props = {
   zoom?: number;
   className?: string;
 };
-
-// Cap/tapa dorada — tapa de perfume real que cubre TODO el cuello (X 318-820).
-// Sigue el contorno del cuello de la botella: la parte superior es una cúpula
-// (los hombros del cuello suben desde X 318 y X 820 hasta la parte plana central
-// en Y ~0.5), y los laterales bajan rectos por X 318 / X 820 hasta Y 440.
-// Se dibuja DESPUÉS del contorno de la botella para cubrirlo, de modo que el
-// contorno del cuello no se vea a través de la tapa. El contorno del cuerpo
-// (más abajo) sigue viéndose.
-const CAP_PATH =
-  "M318,440 L318,400 L318,350 L318,300 L318,250 L318,200 L318,150 L318,100 L318.1,58.3 C318.1,56.1 318.0,48.0 318.2,44.9 C318.4,41.8 318.7,41.3 319.1,39.6 C319.6,37.9 320.1,36.2 320.9,34.6 C321.6,33.0 322.6,31.4 323.6,29.9 C324.6,28.4 325.8,27.1 327.1,25.8 C328.4,24.6 329.4,23.6 331.2,22.4 C333.0,21.2 335.3,19.6 338.2,18.4 C341.1,17.2 344.5,16.0 348.4,15.0 C352.3,14.0 356.8,13.3 361.6,12.5 C366.5,11.7 371.8,10.8 377.5,10.0 C383.3,9.2 389.4,8.3 396.1,7.5 C402.8,6.7 409.9,5.9 417.5,5.2 C425.1,4.5 433.1,3.8 441.6,3.3 C450.1,2.8 459.1,2.3 468.5,1.9 C477.9,1.5 493.1,1.1 498.0,0.9 L570.6,0.8 C575.5,0.9 589.4,1.1 600.1,1.4 C610.8,1.7 623.2,2.1 635.0,2.4 C646.8,2.7 658.5,3.0 671.0,3.4 C683.5,3.8 697.0,4.1 710.2,4.8 C723.4,5.5 737.5,6.3 750.4,7.7 C763.3,9.1 778.5,11.2 787.6,13.3 C796.7,15.4 800.2,17.2 805.0,20.2 C809.8,23.2 813.8,27.4 816.4,31.4 C819.0,35.4 819.7,42.0 820.4,44.1 L820.4,100 L820.4,150 L820.4,200 L820.4,250 L820.4,300 L820.4,350 L820.4,400 L820.4,440 Z";
 
 // Contorno de botella del SVG adjunto (para renderizado en viewBox="0 0 1145.4 1791.79")
 const BOTTLE_PATH =
@@ -267,13 +256,6 @@ export default function StockistMapRotating({
             <stop offset="0.55" stopColor="#B8A76A" stopOpacity="0.04" />
             <stop offset="1" stopColor="#000000" stopOpacity="0.20" />
           </linearGradient>
-          <linearGradient id="capMetal" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#8C7A3F" />
-            <stop offset="0.25" stopColor="#F3E4B0" />
-            <stop offset="0.5" stopColor="#B8A76A" />
-            <stop offset="0.75" stopColor="#F3E4B0" />
-            <stop offset="1" stopColor="#7a6836" />
-          </linearGradient>
           <linearGradient
             id="bottleSheen"
             x1="0"
@@ -299,15 +281,6 @@ export default function StockistMapRotating({
             <stop offset="0.62" stopColor="#000000" stopOpacity="0" />
             <stop offset="1" stopColor="#000000" stopOpacity="0.62" />
           </radialGradient>
-          <filter id="bottleGlow" x="-25%" y="-25%" width="150%" height="150%">
-            <feDropShadow
-              dx="0"
-              dy="0"
-              stdDeviation="4"
-              floodColor="#B8A76A"
-              floodOpacity="0.6"
-            />
-          </filter>
           <clipPath
             id="bottleClip"
             clipPathUnits="userSpaceOnUse"
@@ -328,49 +301,6 @@ export default function StockistMapRotating({
           className="h-full w-full overflow-hidden"
         />
       </div>
-
-      <svg
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        viewBox="0 0 1145.4 1791.79"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        {/* Contorno dorado de la botella (from contorno.svg) — dibujado PRIMERO,
-            debajo de la tapa, para que la tapa cubra el contorno del cuello */}
-        <path
-          d={BOTTLE_PATH}
-          fill="none"
-          stroke="#B8A76A"
-          strokeWidth="2"
-          strokeLinejoin="round"
-          vectorEffect="non-scaling-stroke"
-          filter="url(#bottleGlow)"
-        />
-        {/* Opaque cap — cubre el cuello y el contorno del cuello (dibujado encima) */}
-        <path
-          d={CAP_PATH}
-          fill="url(#capMetal)"
-          stroke="none"
-        />
-      </svg>
-
-      {/* Engraved logo on the cap */}
-      <img
-        src={labLogo}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute"
-        style={{
-          top: "9%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "28%",
-          height: "auto",
-          mixBlendMode: "multiply",
-          filter: "brightness(0.4)",
-          opacity: 0.95,
-        }}
-      />
 
       {/* Grounding shadow */}
       <div

@@ -96,12 +96,6 @@ function ProductPage() {
     <main className="min-h-screen bg-background pt-28">
       <div className="grid lg:grid-cols-2">
         <div className="relative isolate min-h-[520px] overflow-hidden lg:min-h-[calc(100vh-7rem)]">
-          <svg className="absolute h-0 w-0" aria-hidden="true">
-            <filter id="wear" x="-20%" y="-20%" width="140%" height="140%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n" />
-              <feDisplacementMap in="SourceGraphic" in2="n" scale="3.5" xChannelSelector="R" yChannelSelector="G" />
-            </filter>
-          </svg>
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 z-20 opacity-[0.05] mix-blend-overlay"
@@ -125,12 +119,6 @@ function ProductPage() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="absolute inset-0"
           >
-            <p
-              aria-hidden="true"
-              className="plate-ghost absolute inset-0 flex select-none items-center justify-center px-6 text-center text-[clamp(3.25rem,11vw,8.5rem)] uppercase"
-            >
-              {product.family}
-            </p>
             <img
               src={product.image}
               alt={`${product.name} perfume bottle`}
@@ -152,14 +140,6 @@ function ProductPage() {
                 </div>
               </div>
           </motion.div>
-
-          <span
-            aria-hidden="true"
-            style={{ textShadow: "0 0 28px rgba(184,167,106,0.45)", filter: "url(#wear)" }}
-            className="pointer-events-none absolute right-4 top-1 select-none font-display text-[clamp(4rem,13vw,9rem)] leading-none text-primary/70 sm:right-8 sm:top-3"
-          >
-            {product.chapter.replace("Chapter ", "")}
-          </span>
         </div>
 
         <div className="relative flex flex-col justify-center px-6 py-16 lg:px-20">
