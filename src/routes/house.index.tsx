@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import marioHero from "@/assets/mario-hero.jpg";
 import marioStrips from "@/assets/mario-strips.jpg";
 import marioSmelling from "@/assets/mario-smelling.jpg";
 import brandBases from "@/assets/brand-bases.jpg";
@@ -11,6 +10,7 @@ import g3 from "@/assets/gallery-03.png";
 import g4 from "@/assets/gallery-04.png";
 import g5 from "@/assets/gallery-05.png";
 import g6 from "@/assets/gallery-06.png";
+import houseBg from "@/assets/house-bg.png";
 
 const gallery = [
   { src: g1, alt: "Perfumer's glassware in the atelier" },
@@ -43,16 +43,24 @@ export const Route = createFileRoute("/house/")({
 
 function HousePage() {
   return (
-    <main className="min-h-screen bg-background">
-      <section className="relative flex min-h-[80vh] items-end overflow-hidden">
+    <main className="relative isolate min-h-screen bg-background">
+      {/* FULL-PAGE BACKDROP */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      >
         <img
-          src={marioHero}
-          alt="Mario Galindo in the atelier"
-          width={1200}
-          height={1400}
-          className="absolute inset-0 h-full w-full object-cover sepia-photo"
+          src={houseBg}
+          alt=""
+          width={941}
+          height={1672}
+          className="absolute inset-0 h-full w-full scale-110 object-cover object-top blur-[3px] opacity-80"
         />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/50" />
         <div className="absolute inset-0 bg-background/60" />
+      </div>
+
+      <section className="relative flex min-h-[80vh] items-end overflow-hidden">
         <div className="copper-beam left-1/4" />
         <div className="relative w-full px-6 pb-20 lg:px-20">
           <p className="label-caps text-primary">The House</p>
