@@ -125,6 +125,13 @@
     font-family: var(--font-display);
     font-weight: 300;
   }
+
+  /* Instagram's blockquote/iframe renders with a white background before
+     embed.js finishes resizing it, showing as a stray white sliver at the
+     top of its container. Hide it until Instagram marks it as rendered. */
+  .instagram-media:not(.instagram-media-rendered) {
+    visibility: hidden !important;
+  }
 }
 
 @utility clay {

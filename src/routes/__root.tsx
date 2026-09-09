@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "@/context/CartContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import SiteNav from "@/components/SiteNav";
+import SiteFooter from "@/components/SiteFooter";
 import CartDrawer from "@/components/CartDrawer";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -137,6 +138,7 @@ function RootComponent() {
           <SiteNav />
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
+          <SiteFooter />
           <CartDrawer />
           <Toaster
             position="bottom-right"

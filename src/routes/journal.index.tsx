@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import g5 from "@/assets/gallery-05.png";
 
 const INSTAGRAM_URL = "https://www.instagram.com/thelabperfumes/";
-const INSTAGRAM_POST_URL = "https://www.instagram.com/p/Db1w1l4NSRF/";
+const INSTAGRAM_POST_URL = "https://www.instagram.com/p/Cz0G8OPuyfF/";
 const INSTAGRAM_POST_URL_2 = "https://www.instagram.com/p/DadjIU0IuI2/";
 
 declare global {
@@ -83,58 +83,66 @@ export const Route = createFileRoute("/journal/")({
 
 function JournalPage() {
   return (
-    <main className="min-h-screen bg-background px-6 pb-28 pt-40 lg:px-20">
+    <main className="flex min-h-screen flex-col bg-background px-6 pb-4 pt-16 lg:px-20">
       <p className="label-caps text-primary">Journal</p>
-      <h1 className="mt-6 font-display text-5xl text-cream sm:text-7xl">
+      <h1 className="mt-1 font-display text-2xl text-cream sm:text-4xl">
         Field <em className="italic text-primary">notes</em>
       </h1>
 
-      <div className="mt-16 grid gap-8 md:grid-cols-3">
-        <article className="clay flex flex-col p-6">
-          <div className="overflow-hidden rounded-[20px]">
+      <section className="mt-4 flex flex-col items-center gap-0.5 text-center">
+        <p className="label-caps text-muted-foreground">Follow along</p>
+        <a
+          href={INSTAGRAM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 font-display text-base text-primary transition-colors hover:text-cream"
+        >
+          <InstagramIcon className="h-4 w-4" />
+          @thelabperfumes
+        </a>
+        <p className="max-w-md text-xs leading-relaxed text-muted-foreground">
+          Behind-the-scenes from the atelier, sourcing trips and new releases — on Instagram.
+        </p>
+      </section>
+
+      <div className="mx-auto mt-4 grid w-full max-w-3xl gap-4 sm:grid-cols-2">
+        <article className="clay p-3">
+          <div className="min-h-[320px] overflow-hidden rounded-[16px] bg-background/40">
             <InstagramEmbed url={INSTAGRAM_POST_URL} />
           </div>
-          <p className="mt-6 label-caps text-muted-foreground">Follow along</p>
-          <a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-2 font-display text-2xl text-primary transition-colors hover:text-cream"
-          >
-            <InstagramIcon className="h-5 w-5" />
-            @thelabperfumes
-          </a>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Behind-the-scenes from the atelier, sourcing trips and new releases — on Instagram.
-          </p>
         </article>
 
-        <article className="clay p-6">
-          <div className="overflow-hidden rounded-[20px]">
+        <article className="clay p-3">
+          <div className="min-h-[320px] overflow-hidden rounded-[16px] bg-background/40">
             <InstagramEmbed url={INSTAGRAM_POST_URL_2} />
           </div>
         </article>
+      </div>
 
-        {entries.map((e) => (
-          <article key={e.title} className="clay group p-6">
-            <div className="overflow-hidden rounded-[20px]">
-              <img
-                src={e.image}
-                alt={e.alt}
-                loading="lazy"
-                width={1000}
-                height={1000}
-                className="h-64 w-full object-cover sepia-photo transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
-            <p className="mt-6 label-caps text-muted-foreground">{e.date}</p>
-            <h2 className="mt-3 font-display text-2xl text-primary">{e.title}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+      {entries.map((e) => (
+        <article
+          key={e.title}
+          className="clay group mx-auto mt-3 flex w-full max-w-3xl flex-col items-center gap-4 p-3 sm:flex-row"
+        >
+          <div className="w-full shrink-0 overflow-hidden rounded-[16px] sm:w-36">
+            <img
+              src={e.image}
+              alt={e.alt}
+              loading="lazy"
+              width={1000}
+              height={1000}
+              className="h-20 w-full object-cover sepia-photo transition-transform duration-700 group-hover:scale-105 sm:h-full"
+            />
+          </div>
+          <div>
+            <p className="label-caps text-muted-foreground">{e.date}</p>
+            <h2 className="mt-1 font-display text-lg text-primary">{e.title}</h2>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
               {e.text}
             </p>
-          </article>
-        ))}
-      </div>
+          </div>
+        </article>
+      ))}
     </main>
   );
 }

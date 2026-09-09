@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { ChevronDown, ChevronUp, MapPin } from "lucide-react";
 
-import labLogo from "@/assets/the-lab-logo.svg";
 import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
 import landingBg1 from "@/assets/landing-bg-1.png";
@@ -47,16 +46,6 @@ export const Route = createFileRoute("/")({
 });
 
 // Stockists data (real distributors) is imported from @/lib/stockists
-
-function Logo() {
-  return (
-    <img
-      src={labLogo}
-      alt="The Lab Perfumes"
-      className="h-10 w-auto object-contain"
-    />
-  );
-}
 
 function Home() {
   const [active, setActive] = useState(0);
@@ -249,14 +238,6 @@ function Home() {
         </Suspense>
       </section>
 
-      <footer className="border-t border-border bg-background px-6 py-12 lg:px-20">
-        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-          <Logo />
-          <p className="label-caps text-muted-foreground">
-            Bogotá · Dubai — MMXXVI
-          </p>
-        </div>
-      </footer>
     </main>
   );
 }
