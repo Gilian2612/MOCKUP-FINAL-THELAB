@@ -47,7 +47,7 @@ function FragrancesPage() {
 
       <p className="label-caps text-primary">The Collection</p>
       <h1 className="mt-6 max-w-3xl font-display text-5xl text-cream sm:text-7xl">
-        Eleven <em className="italic text-primary">chapters</em> of the house
+        Eleven <span className="not-italic text-primary">chapters</span> of the house
       </h1>
       <p className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground">
         Every composition is bottled in small batches between Bogotá and Dubai.

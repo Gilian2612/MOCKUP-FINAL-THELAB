@@ -103,7 +103,7 @@ function JournalPage() {
 
       <p className="label-caps text-primary">Journal</p>
       <h1 className="mt-1 font-display text-2xl text-cream sm:text-4xl">
-        Field <em className="italic text-primary">notes</em>
+        Field <span className="not-italic text-primary">notes</span>
       </h1>
 
       <section className="mt-4 flex flex-col items-center gap-0.5 text-center">

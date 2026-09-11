@@ -65,7 +65,7 @@ function HousePage() {
         <div className="relative w-full px-6 pb-20 lg:px-20">
           <p className="label-caps text-primary">The House</p>
           <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[0.95] text-cream sm:text-7xl">
-            A house built <em className="italic text-primary">between</em> two
+            A house built <span className="not-italic text-primary">between</span> two
             deserts and a mountain range
           </h1>
         </div>
