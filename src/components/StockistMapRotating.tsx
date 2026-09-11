@@ -302,6 +302,21 @@ export default function StockistMapRotating({
         />
       </div>
 
+      {/* Thin gold outline over the bottle silhouette, same color as the logo */}
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        aria-hidden="true"
+      >
+        <path
+          d={BOTTLE_PATH}
+          transform={`scale(${430 / 1145.4} ${720 / 1791.79})`}
+          fill="none"
+          stroke="#ab843d"
+          strokeWidth={2.5}
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg>
+
       {/* Grounding shadow */}
       <div
         aria-hidden="true"
