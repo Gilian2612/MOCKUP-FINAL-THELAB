@@ -41,7 +41,9 @@ export default function SiteNav() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "border-b border-border/60 bg-neutral-900/80 backdrop-blur-xl"
+          ? theme === "day"
+            ? "border-b border-border/60 bg-white/80 backdrop-blur-xl"
+            : "border-b border-border/60 bg-neutral-900/80 backdrop-blur-xl"
           : "border-b border-transparent bg-transparent"
       }`}
     >
@@ -55,8 +57,12 @@ export default function SiteNav() {
             <Link
               key={l.to}
               to={l.to}
-              className="label-caps text-muted-foreground transition-colors hover:text-primary"
-              activeProps={{ className: "label-caps text-primary" }}
+              className={
+                theme === "day"
+                  ? "label-caps text-neutral-700/80 transition-colors hover:text-primary"
+                  : "label-caps text-white/75 transition-colors hover:text-primary"
+              }
+              activeProps={{ className: "label-caps text-primary!" }}
             >
               {l.label}
             </Link>
@@ -80,7 +86,11 @@ export default function SiteNav() {
           </button>
           <button
             type="button"
-            className="label-caps hidden text-muted-foreground transition-colors hover:text-primary sm:block"
+            className={
+              theme === "day"
+                ? "label-caps hidden text-neutral-700/80 transition-colors hover:text-primary sm:block"
+                : "label-caps hidden text-white/75 transition-colors hover:text-primary sm:block"
+            }
           >
             Search
           </button>

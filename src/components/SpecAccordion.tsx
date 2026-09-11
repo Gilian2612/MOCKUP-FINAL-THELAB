@@ -31,7 +31,10 @@ export function SpecAccordion({ items }: { items: SpecAccordionItem[] }) {
               type="button"
               onClick={() => setOpenId(isOpen ? null : item.id)}
               aria-expanded={isOpen}
-              className="label-caps flex w-full items-center justify-between px-6 py-4 text-left tracking-widest text-cream text-[0.9375rem]!"
+              className={cn(
+                "label-caps flex w-full items-center justify-between px-6 py-4 text-left tracking-widest text-[0.9375rem]!",
+                isOpen ? "text-[#D9BE8B]" : "text-cream",
+              )}
             >
               <span>{item.label}</span>
               <motion.span
@@ -54,7 +57,7 @@ export function SpecAccordion({ items }: { items: SpecAccordionItem[] }) {
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   className="overflow-hidden"
                 >
-                  <div className="px-6 pb-6 font-display text-base italic leading-relaxed text-muted-foreground">
+                  <div className="px-6 pb-6 font-display text-base italic leading-relaxed text-[#D9BE8B]">
                     {item.content}
                   </div>
                 </motion.div>

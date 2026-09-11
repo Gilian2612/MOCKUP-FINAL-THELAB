@@ -84,7 +84,7 @@ export const Route = createFileRoute("/journal/")({
 
 function JournalPage() {
   return (
-    <main className="relative isolate flex min-h-screen flex-col bg-background px-6 pb-4 pt-16 lg:px-20">
+    <main className="relative isolate flex min-h-screen flex-col bg-background px-6 pb-4 pt-[114px] lg:px-20">
       {/* FULL-PAGE BACKDROP */}
       <div
         aria-hidden="true"

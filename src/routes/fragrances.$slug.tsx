@@ -56,7 +56,7 @@ function ProductPage() {
           {product.notes.map((n) => (
             <span
               key={n}
-              className="rounded-full border border-primary/40 px-4 py-2 label-caps text-primary"
+              className="rounded-full border border-[#D9BE8B]/40 px-4 py-2 label-caps text-[#D9BE8B]"
             >
               {n}
             </span>
