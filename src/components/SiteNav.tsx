@@ -61,7 +61,7 @@ export default function SiteNav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 -translate-x-5">
           <button
             type="button"
             onClick={toggleTheme}
