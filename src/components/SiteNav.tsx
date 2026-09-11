@@ -37,6 +37,7 @@ export default function SiteNav() {
   }, []);
 
   return (
+    <>
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
@@ -102,42 +103,43 @@ export default function SiteNav() {
           </button>
         </div>
       </div>
-
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[70] flex flex-col bg-background lg:hidden">
-          <div className="flex items-center justify-between px-6 py-4">
-            <Link
-              to="/"
-              aria-label="The Lab Perfumes — home"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <Logo />
-            </Link>
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(false)}
-              aria-label="Close menu"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-
-          <nav className="flex flex-1 flex-col items-center justify-center gap-10">
-            {links.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                onClick={() => setMobileMenuOpen(false)}
-                className="font-display text-4xl text-cream transition-colors hover:text-primary"
-                activeProps={{ className: "font-display text-4xl text-primary" }}
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
     </header>
+
+    {mobileMenuOpen && (
+      <div className="fixed inset-0 z-[70] flex flex-col bg-background lg:hidden">
+        <div className="flex items-center justify-between px-6 py-4">
+          <Link
+            to="/"
+            aria-label="The Lab Perfumes — home"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <Logo />
+          </Link>
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close menu"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        <nav className="flex flex-1 flex-col items-center justify-center gap-10">
+          {links.map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              onClick={() => setMobileMenuOpen(false)}
+              className="font-display text-4xl text-cream transition-colors hover:text-primary"
+              activeProps={{ className: "font-display text-4xl text-primary" }}
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+      </div>
+    )}
+    </>
   );
 }
