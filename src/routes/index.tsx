@@ -184,24 +184,26 @@ function Home() {
                 <div key={s.distributor} className="clay flex gap-4 p-6">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between">
-                      <p className="label-caps text-primary/80">{s.flag} {s.country}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="label-caps text-primary/80">{s.flag} {s.country}</p>
+                        <a
+                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                            `${s.distributor}, ${s.address}`,
+                          )}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Open ${s.distributor} in Google Maps`}
+                          className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+                        >
+                          <MapPin className="h-3 w-3" />
+                        </a>
+                      </div>
                       <p className="label-caps text-muted-foreground">{n} / {total}</p>
                     </div>
                     <p className="mt-5 font-display text-3xl text-cream">{s.distributor}</p>
                     <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
                       {s.address}
                     </p>
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                        `${s.distributor}, ${s.address}`,
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Open ${s.distributor} in Google Maps`}
-                      className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
-                    >
-                      <MapPin className="h-4 w-4" />
-                    </a>
                   </div>
 
                   <div className="flex flex-col items-center justify-center gap-2 border-l border-border pl-4">
