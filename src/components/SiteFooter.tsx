@@ -10,7 +10,7 @@ export default function SiteFooter() {
           className="h-10 w-auto object-contain"
         />
         <p className="label-caps text-muted-foreground">
-          Bogotá · Dubai — MMXXVI
+          Colombia - UAE — MMXXVI
         </p>
       </div>
     </footer>
