@@ -69,27 +69,6 @@ function ProductPage() {
       label: "Story",
       content: product.story,
     },
-    {
-      id: "ingredients",
-      label: "Ingredients",
-      content: product.ingredients,
-    },
-    {
-      id: "concentration",
-      label: "Concentration",
-      content: (
-        <p>
-          {product.concentration}
-          <br />
-          {product.size} bottle
-        </p>
-      ),
-    },
-    {
-      id: "origin",
-      label: "Origin",
-      content: product.origin,
-    },
   ];
 
   return (

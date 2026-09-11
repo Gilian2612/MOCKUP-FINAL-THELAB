@@ -31,7 +31,7 @@ export function SpecAccordion({ items }: { items: SpecAccordionItem[] }) {
               type="button"
               onClick={() => setOpenId(isOpen ? null : item.id)}
               aria-expanded={isOpen}
-              className="label-caps flex w-full items-center justify-between px-6 py-4 text-left tracking-widest text-cream"
+              className="label-caps flex w-full items-center justify-between px-6 py-4 text-left tracking-widest text-cream text-[0.9375rem]!"
             >
               <span>{item.label}</span>
               <motion.span
