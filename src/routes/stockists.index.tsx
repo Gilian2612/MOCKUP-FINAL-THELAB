@@ -48,7 +48,7 @@ function StockistsPage() {
 
       <p className="label-caps text-primary">Retail</p>
       <h1 className="mt-6 font-display text-5xl text-cream sm:text-7xl">
-        International <em className="italic text-primary">stockists</em>
+        International <span className="not-italic text-primary">stockists</span>
       </h1>
 
       <div className="mt-16 grid gap-16 lg:grid-cols-2">
