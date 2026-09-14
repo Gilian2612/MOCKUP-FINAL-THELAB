@@ -10,6 +10,30 @@ import karmaScotch from "@/assets/shop-karma-scotch.png";
 import corintoKush from "@/assets/shop-corinto-kush.png";
 import loto from "@/assets/shop-loto.png";
 
+import neroliNegroStoryDark from "@/assets/story/dark/neroli-negro.svg";
+import tobaccoBlancoStoryDark from "@/assets/story/dark/tobacco-blanco.svg";
+import freshVetiverStoryDark from "@/assets/story/dark/fresh-vetiver.svg";
+import koshuStoryDark from "@/assets/story/dark/koshu.svg";
+import mangOudStoryDark from "@/assets/story/dark/mang-oud.svg";
+import omgStoryDark from "@/assets/story/dark/omg.svg";
+import amberChocolatStoryDark from "@/assets/story/dark/amber-chocolat.svg";
+import cestLaVieStoryDark from "@/assets/story/dark/cest-la-vie.svg";
+import karmaScotchStoryDark from "@/assets/story/dark/karma-scotch.svg";
+import corintoKushStoryDark from "@/assets/story/dark/corinto-kush.svg";
+import lotoStoryDark from "@/assets/story/dark/loto.svg";
+
+import neroliNegroStoryLight from "@/assets/story/light/neroli-negro.svg";
+import tobaccoBlancoStoryLight from "@/assets/story/light/tobacco-blanco.svg";
+import freshVetiverStoryLight from "@/assets/story/light/fresh-vetiver.svg";
+import koshuStoryLight from "@/assets/story/light/koshu.svg";
+import mangOudStoryLight from "@/assets/story/light/mang-oud.svg";
+import omgStoryLight from "@/assets/story/light/omg.svg";
+import amberChocolatStoryLight from "@/assets/story/light/amber-chocolat.svg";
+import cestLaVieStoryLight from "@/assets/story/light/cest-la-vie.svg";
+import karmaScotchStoryLight from "@/assets/story/light/karma-scotch.svg";
+import corintoKushStoryLight from "@/assets/story/light/corinto-kush.svg";
+import lotoStoryLight from "@/assets/story/light/loto.svg";
+
 export type Product = {
   slug: string;
   name: string;
@@ -23,6 +47,8 @@ export type Product = {
   concentration: string;
   size: string;
   image: string;
+  storyImageDark: string;
+  storyImageLight: string;
 };
 
 export const products: Product[] = [
@@ -42,6 +68,8 @@ export const products: Product[] = [
     concentration: "Extrait de Parfum · 22%",
     size: "50 ml",
     image: neroliNegro,
+  storyImageDark: neroliNegroStoryDark,
+    storyImageLight: neroliNegroStoryLight,
   },
   {
     slug: "tobacco-blanco",
@@ -59,6 +87,8 @@ export const products: Product[] = [
     concentration: "Eau de Parfum · 20%",
     size: "50 ml",
     image: tobaccoBlanco,
+  storyImageDark: tobaccoBlancoStoryDark,
+    storyImageLight: tobaccoBlancoStoryLight,
   },
   {
     slug: "fresh-vetiver",
@@ -76,6 +106,8 @@ export const products: Product[] = [
     concentration: "Eau de Parfum · 18%",
     size: "50 ml",
     image: freshVetiver,
+    storyImageDark: freshVetiverStoryDark,
+    storyImageLight: freshVetiverStoryLight,
   },
   {
     slug: "koshu",
@@ -93,6 +125,8 @@ export const products: Product[] = [
     concentration: "Eau de Parfum · 18%",
     size: "50 ml",
     image: koshu,
+    storyImageDark: koshuStoryDark,
+    storyImageLight: koshuStoryLight,
   },
   {
     slug: "mang-oud",
@@ -110,6 +144,8 @@ export const products: Product[] = [
     concentration: "Extrait de Parfum · 24%",
     size: "50 ml",
     image: mangOud,
+    storyImageDark: mangOudStoryDark,
+    storyImageLight: mangOudStoryLight,
   },
   {
     slug: "omg",
@@ -127,6 +163,8 @@ export const products: Product[] = [
     concentration: "Extrait de Parfum · 22%",
     size: "50 ml",
     image: omg,
+    storyImageDark: omgStoryDark,
+    storyImageLight: omgStoryLight,
   },
   {
     slug: "amber-chocolat",
@@ -144,6 +182,8 @@ export const products: Product[] = [
     concentration: "Extrait de Parfum · 22%",
     size: "50 ml",
     image: amberChocolat,
+    storyImageDark: amberChocolatStoryDark,
+    storyImageLight: amberChocolatStoryLight,
   },
   {
     slug: "cest-la-vie",
@@ -161,6 +201,8 @@ export const products: Product[] = [
     concentration: "Eau de Parfum · 20%",
     size: "50 ml",
     image: cestLaVie,
+    storyImageDark: cestLaVieStoryDark,
+    storyImageLight: cestLaVieStoryLight,
   },
   {
     slug: "karma-scotch",
@@ -178,6 +220,8 @@ export const products: Product[] = [
     concentration: "Extrait de Parfum · 22%",
     size: "50 ml",
     image: karmaScotch,
+    storyImageDark: karmaScotchStoryDark,
+    storyImageLight: karmaScotchStoryLight,
   },
   {
     slug: "corinto-kush",
@@ -195,6 +239,8 @@ export const products: Product[] = [
     concentration: "Extrait de Parfum · 22%",
     size: "50 ml",
     image: corintoKush,
+    storyImageDark: corintoKushStoryDark,
+    storyImageLight: corintoKushStoryLight,
   },
   {
     slug: "loto",
@@ -212,6 +258,8 @@ export const products: Product[] = [
     concentration: "Eau de Parfum · 18%",
     size: "50 ml",
     image: loto,
+    storyImageDark: lotoStoryDark,
+    storyImageLight: lotoStoryLight,
   },
 ];
 
