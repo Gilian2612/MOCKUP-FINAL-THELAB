@@ -95,7 +95,7 @@ function JournalPage() {
           alt=""
           width={1023}
           height={1537}
-          className="absolute inset-0 h-full w-full scale-100 object-cover object-[center_95%] blur-[3px] opacity-80"
+          className="absolute inset-0 h-full w-full scale-100 object-cover object-[center_95%] blur-[8px] opacity-80 translate-x-[8px] translate-y-[8px]"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/50" />
         <div className="absolute inset-0 bg-background/60" />
@@ -105,6 +105,7 @@ function JournalPage() {
       <h1 className="mt-1 font-display text-2xl text-cream sm:text-4xl">
         Field <span className="not-italic text-primary">notes</span>
       </h1>
+      <div className="mt-2 h-px w-16 bg-primary/40" />
 
       <section className="mt-4 flex flex-col items-center gap-0.5 text-center">
         <p className="label-caps text-muted-foreground">Follow along</p>
