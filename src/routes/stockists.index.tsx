@@ -40,11 +40,13 @@ function StockistsPage() {
           alt=""
           width={941}
           height={1672}
-          className="absolute inset-0 h-full w-full scale-110 object-cover blur-[3px] opacity-80"
+          className="absolute inset-0 h-full w-full scale-110 object-cover blur-[8px] opacity-80"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/10 to-background/50" />
         <div className="absolute inset-0 bg-background/60" />
       </div>
+
+      <div className="mb-4 h-3 w-3 border-l border-t border-primary/40" />
 
       <p className="label-caps text-primary">Retail</p>
       <h1 className="mt-6 font-display text-5xl text-cream sm:text-7xl">

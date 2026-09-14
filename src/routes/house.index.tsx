@@ -54,7 +54,7 @@ function HousePage() {
           alt=""
           width={941}
           height={1672}
-          className="absolute inset-0 h-full w-full scale-110 object-cover object-top blur-[3px] opacity-80"
+          className="absolute inset-0 h-full w-full scale-110 object-cover object-top blur-[8px] opacity-80 -translate-y-[180px]"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/50" />
         <div className="absolute inset-0 bg-background/60" />
