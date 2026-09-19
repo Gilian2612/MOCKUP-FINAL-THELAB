@@ -50,7 +50,8 @@ function ProductPage() {
 
   const isDark = theme === "night";
   const storyImage = isDark ? product.storyImageDark : product.storyImageLight;
-  const activeImage = accordionOpenId === "story" ? storyImage : product.image;
+  const isNotes = accordionOpenId === "notes";
+  const activeImage = accordionOpenId === "story" ? storyImage : isNotes ? product.notesImage : product.image;
 
   const adj = getAdjacent(product.slug, lang);
   const prev = adj?.prev ?? product;
@@ -109,7 +110,7 @@ function ProductPage() {
             initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="absolute inset-0"
+            className="absolute inset-0 overflow-hidden"
           >
             <AnimatePresence initial={false}>
               <motion.img
@@ -126,7 +127,7 @@ function ProductPage() {
                   reduceMotion ? { opacity: 0 } : { opacity: 0, filter: "blur(16px)", scale: 1.06 }
                 }
                 transition={{ duration: reduceMotion ? 0.3 : 0.9, ease: "easeInOut" }}
-                className="absolute inset-0 h-full w-full object-contain"
+                className={`absolute inset-0 h-full w-full ${isNotes ? "object-cover" : "object-contain"}`}
               />
             </AnimatePresence>
             <div

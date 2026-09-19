@@ -144,17 +144,6 @@ export default function SiteNav() {
             </button>
             <button
               type="button"
-              className={
-                theme === "day"
-                  ? "label-caps hidden text-neutral-700/80 transition-colors hover:text-primary sm:block"
-                  : "label-caps hidden text-white/75 transition-colors hover:text-primary sm:block"
-              }
-            >
-              {t.nav.search}
-            </button>
-            <span className="hidden text-border sm:block">|</span>
-            <button
-              type="button"
               onClick={() => setDrawerOpen(true)}
               className="label-caps text-primary"
             >

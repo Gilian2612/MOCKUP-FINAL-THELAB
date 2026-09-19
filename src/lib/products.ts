@@ -22,6 +22,18 @@ import karmaScotchStoryDark from "@/assets/story/dark/karma-scotch.svg";
 import corintoKushStoryDark from "@/assets/story/dark/corinto-kush.svg";
 import lotoStoryDark from "@/assets/story/dark/loto.svg";
 
+import neroliNegroNotes from "@/assets/notes/neroli-negro.svg";
+import tobaccoBlancoNotes from "@/assets/notes/tobacco-blanco.svg";
+import freshVetiverNotes from "@/assets/notes/fresh-vetiver.svg";
+import koshuNotes from "@/assets/notes/koshu.svg";
+import mangOudNotes from "@/assets/notes/mang-oud.svg";
+import omgNotes from "@/assets/notes/omg.svg";
+import amberChocolatNotes from "@/assets/notes/amber-chocolat.svg";
+import cestLaVieNotes from "@/assets/notes/cest-la-vie.svg";
+import karmaScotchNotes from "@/assets/notes/karma-scotch.svg";
+import corintoKushNotes from "@/assets/notes/corinto-kush.svg";
+import lotoNotes from "@/assets/notes/loto.svg";
+
 import neroliNegroStoryLight from "@/assets/story/light/neroli-negro.svg";
 import tobaccoBlancoStoryLight from "@/assets/story/light/tobacco-blanco.svg";
 import freshVetiverStoryLight from "@/assets/story/light/fresh-vetiver.svg";
@@ -52,6 +64,7 @@ export type Product = {
   concentration: string;
   size: string;
   image: string;
+  notesImage: string;
   storyImageDark: string;
   storyImageLight: string;
 };
@@ -96,6 +109,7 @@ const productSources: ProductSource[] = [
     concentration: { es: "Extrait de Parfum · 22%", en: "Extrait de Parfum · 22%" },
     size: "50 ml",
     image: neroliNegro,
+    notesImage: neroliNegroNotes,
     storyImageDark: neroliNegroStoryDark,
     storyImageLight: neroliNegroStoryLight,
   },
@@ -125,6 +139,7 @@ const productSources: ProductSource[] = [
     concentration: { es: "Eau de Parfum · 20%", en: "Eau de Parfum · 20%" },
     size: "50 ml",
     image: tobaccoBlanco,
+    notesImage: tobaccoBlancoNotes,
     storyImageDark: tobaccoBlancoStoryDark,
     storyImageLight: tobaccoBlancoStoryLight,
   },
@@ -154,6 +169,7 @@ const productSources: ProductSource[] = [
     concentration: { es: "Eau de Parfum · 18%", en: "Eau de Parfum · 18%" },
     size: "50 ml",
     image: freshVetiver,
+    notesImage: freshVetiverNotes,
     storyImageDark: freshVetiverStoryDark,
     storyImageLight: freshVetiverStoryLight,
   },
@@ -183,6 +199,7 @@ const productSources: ProductSource[] = [
     concentration: { es: "Eau de Parfum · 18%", en: "Eau de Parfum · 18%" },
     size: "50 ml",
     image: koshu,
+    notesImage: koshuNotes,
     storyImageDark: koshuStoryDark,
     storyImageLight: koshuStoryLight,
   },
@@ -212,6 +229,7 @@ const productSources: ProductSource[] = [
     concentration: { es: "Extrait de Parfum · 24%", en: "Extrait de Parfum · 24%" },
     size: "50 ml",
     image: mangOud,
+    notesImage: mangOudNotes,
     storyImageDark: mangOudStoryDark,
     storyImageLight: mangOudStoryLight,
   },
@@ -241,6 +259,7 @@ const productSources: ProductSource[] = [
     concentration: { es: "Extrait de Parfum · 22%", en: "Extrait de Parfum · 22%" },
     size: "50 ml",
     image: omg,
+    notesImage: omgNotes,
     storyImageDark: omgStoryDark,
     storyImageLight: omgStoryLight,
   },
@@ -270,6 +289,7 @@ const productSources: ProductSource[] = [
     concentration: { es: "Extrait de Parfum · 22%", en: "Extrait de Parfum · 22%" },
     size: "50 ml",
     image: amberChocolat,
+    notesImage: amberChocolatNotes,
     storyImageDark: amberChocolatStoryDark,
     storyImageLight: amberChocolatStoryLight,
   },
@@ -299,6 +319,7 @@ const productSources: ProductSource[] = [
     concentration: { es: "Eau de Parfum · 20%", en: "Eau de Parfum · 20%" },
     size: "50 ml",
     image: cestLaVie,
+    notesImage: cestLaVieNotes,
     storyImageDark: cestLaVieStoryDark,
     storyImageLight: cestLaVieStoryLight,
   },
@@ -328,6 +349,7 @@ const productSources: ProductSource[] = [
     concentration: { es: "Extrait de Parfum · 22%", en: "Extrait de Parfum · 22%" },
     size: "50 ml",
     image: karmaScotch,
+    notesImage: karmaScotchNotes,
     storyImageDark: karmaScotchStoryDark,
     storyImageLight: karmaScotchStoryLight,
   },
@@ -357,6 +379,7 @@ const productSources: ProductSource[] = [
     concentration: { es: "Extrait de Parfum · 22%", en: "Extrait de Parfum · 22%" },
     size: "50 ml",
     image: corintoKush,
+    notesImage: corintoKushNotes,
     storyImageDark: corintoKushStoryDark,
     storyImageLight: corintoKushStoryLight,
   },
@@ -386,6 +409,7 @@ const productSources: ProductSource[] = [
     concentration: { es: "Eau de Parfum · 18%", en: "Eau de Parfum · 18%" },
     size: "50 ml",
     image: loto,
+    notesImage: lotoNotes,
     storyImageDark: lotoStoryDark,
     storyImageLight: lotoStoryLight,
   },
@@ -404,6 +428,7 @@ const localize = (p: ProductSource, lang: Lang): Product => ({
   concentration: p.concentration[lang],
   size: p.size,
   image: p.image,
+  notesImage: p.notesImage,
   storyImageDark: p.storyImageDark,
   storyImageLight: p.storyImageLight,
 });
