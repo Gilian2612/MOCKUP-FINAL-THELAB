@@ -9,8 +9,20 @@ export type SpecAccordionItem = {
   content: ReactNode;
 };
 
-export function SpecAccordion({ items }: { items: SpecAccordionItem[] }) {
+export function SpecAccordion({
+  items,
+  onChange,
+}: {
+  items: SpecAccordionItem[];
+  onChange?: (openId: string | null) => void;
+}) {
   const [openId, setOpenId] = useState<string | null>(null);
+
+  const handleToggle = (id: string) => {
+    const next = openId === id ? null : id;
+    setOpenId(next);
+    onChange?.(next);
+  };
 
   return (
     <div className="mt-8 flex flex-col gap-3">
@@ -29,7 +41,7 @@ export function SpecAccordion({ items }: { items: SpecAccordionItem[] }) {
           >
             <button
               type="button"
-              onClick={() => setOpenId(isOpen ? null : item.id)}
+              onClick={() => handleToggle(item.id)}
               aria-expanded={isOpen}
               className={cn(
                 "label-caps flex w-full items-center justify-between px-6 py-4 text-left tracking-widest text-[0.9375rem]!",

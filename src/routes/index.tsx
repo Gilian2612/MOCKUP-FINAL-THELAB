@@ -4,7 +4,7 @@ import { ChevronDown, ChevronUp, MapPin } from "lucide-react";
 
 import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
-import landingBg1 from "@/assets/landing-bg-1.png";
+import mario1 from "@/assets/mario1.svg";
 import { getStockists } from "@/lib/stockists";
 import { useLanguage } from "@/context/LanguageContext";
 import {
@@ -88,18 +88,18 @@ function Home() {
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
       >
         <img
-          src={landingBg1}
+          src={mario1}
           alt=""
-          width={939}
-          height={1668}
-          className="absolute inset-0 h-full w-full scale-110 object-cover blur-[3px] opacity-80"
+          className="absolute inset-0 h-full w-full scale-100 object-cover object-[center_15%] blur-[8px] grayscale opacity-80"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/50" />
+        <div className="absolute inset-0 bg-background/60" />
       </div>
 
       {/* FOUNDER */}
       <section id="founder" className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
         <div className="flex flex-col justify-center">
+          <div className="mb-4 h-2 w-2 rotate-45 bg-primary/60" />
           <p className="label-caps text-primary">{t.home.founderLabel}</p>
           <h2 className="mt-6 font-display text-4xl text-cream sm:text-6xl">
             {t.home.founderName}

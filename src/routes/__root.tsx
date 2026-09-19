@@ -124,6 +124,22 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function GoldenSmoke() {
+  return (
+    <div
+      aria-hidden="true"
+      className="smoke-layer pointer-events-none fixed inset-0 z-0 overflow-hidden"
+    >
+      <div className="smoke-wisp smoke-wisp-1" />
+      <div className="smoke-wisp smoke-wisp-2" />
+      <div className="smoke-wisp smoke-wisp-3" />
+      <div className="smoke-wisp smoke-wisp-4" />
+      <div className="smoke-wisp smoke-wisp-5" />
+      <div className="smoke-wisp smoke-wisp-6" />
+    </div>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
@@ -133,6 +149,7 @@ function RootComponent() {
         <ThemeProvider>
           <CartProvider>
             <SiteNav />
+            <GoldenSmoke />
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
             <Outlet />
             <SiteFooter />

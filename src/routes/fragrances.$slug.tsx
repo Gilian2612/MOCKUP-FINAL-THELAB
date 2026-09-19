@@ -1,8 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { useCart } from "@/context/CartContext";
+import { useTheme } from "@/context/ThemeContext";
 import { getProduct, getAdjacent, formatAED } from "@/lib/products";
 import { useLanguage } from "@/context/LanguageContext";
 import { SpecAccordion, type SpecAccordionItem } from "@/components/SpecAccordion";
@@ -42,8 +43,14 @@ function ProductPage() {
   const { lang, t } = useLanguage();
   const product = getProduct(loaded.slug, lang) ?? loaded;
   const { add } = useCart();
+  const { theme } = useTheme();
   const [qty, setQty] = useState(1);
+  const [accordionOpenId, setAccordionOpenId] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
+
+  const isDark = theme === "night";
+  const storyImage = isDark ? product.storyImageDark : product.storyImageLight;
+  const activeImage = accordionOpenId === "story" ? storyImage : product.image;
 
   const adj = getAdjacent(product.slug, lang);
   const prev = adj?.prev ?? product;
@@ -92,23 +99,36 @@ function ProductPage() {
             aria-hidden="true"
             className="plate-frame pointer-events-none absolute inset-3 sm:inset-5"
           />
-          <div
-            aria-hidden="true"
-            className="plate-floor absolute bottom-[12%] left-1/2 h-[5%] w-[44%] -translate-x-1/2 rounded-full"
-          />
+          {accordionOpenId === null && (
+            <div
+              aria-hidden="true"
+              className="plate-floor absolute bottom-[12%] left-1/2 h-[5%] w-[44%] -translate-x-1/2 rounded-full"
+            />
+          )}
           <motion.div
             initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="absolute inset-0"
           >
-            <img
-              src={product.image}
-              alt={t.product.bottleAlt(product.name)}
-              width={1080}
-              height={1920}
-              className="absolute inset-0 h-full w-full object-contain"
-            />
+            <AnimatePresence initial={false}>
+              <motion.img
+                key={activeImage}
+                src={activeImage}
+                alt={t.product.bottleAlt(product.name)}
+                width={1080}
+                height={1350}
+                initial={
+                  reduceMotion ? { opacity: 0 } : { opacity: 0, filter: "blur(16px)", scale: 1.06 }
+                }
+                animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+                exit={
+                  reduceMotion ? { opacity: 0 } : { opacity: 0, filter: "blur(16px)", scale: 1.06 }
+                }
+                transition={{ duration: reduceMotion ? 0.3 : 0.9, ease: "easeInOut" }}
+                className="absolute inset-0 h-full w-full object-contain"
+              />
+            </AnimatePresence>
             <div
               aria-hidden="true"
               className="absolute inset-x-5 bottom-5 sm:inset-x-8 sm:bottom-7"
@@ -133,7 +153,7 @@ function ProductPage() {
             {product.chapter} · {product.family}
           </p>
           <h1 className="mt-4 font-display text-5xl text-cream sm:text-6xl">{product.name}</h1>
-          <SpecAccordion items={specItems} />
+          <SpecAccordion items={specItems} onChange={(id) => setAccordionOpenId(id)} />
 
           <div className="mt-10 flex flex-wrap items-center gap-6">
             <div className="inline-flex items-center gap-6 rounded-full bg-background px-5 py-3 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8),inset_0_-1px_0_rgba(182,170,132,0.16)]">
