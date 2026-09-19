@@ -12,9 +12,10 @@ type Props = {
   zoom?: number;
   label?: string;
   points?: Point[];
+  ariaLabel?: string;
 };
 
-export default function StockistMap({ center, zoom = 12, label, points }: Props) {
+export default function StockistMap({ center, zoom = 12, label, points, ariaLabel }: Props) {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -22,11 +23,7 @@ export default function StockistMap({ center, zoom = 12, label, points }: Props)
     let cancelled = false;
 
     const markers =
-      points && points.length
-        ? points
-        : center
-          ? [{ center, label: label ?? "" }]
-          : [];
+      points && points.length ? points : center ? [{ center, label: label ?? "" }] : [];
 
     (async () => {
       if (cancelled || !ref.current) return;
@@ -130,7 +127,7 @@ export default function StockistMap({ center, zoom = 12, label, points }: Props)
   return (
     <div
       ref={ref}
-      aria-label={label ?? "Stockist locations"}
+      aria-label={ariaLabel ?? label ?? "Stockist locations"}
       className="h-[260px] w-full overflow-hidden rounded-[20px] border border-border"
     />
   );

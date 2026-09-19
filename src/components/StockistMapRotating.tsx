@@ -10,6 +10,7 @@ type Point = { center: [number, number]; label: string };
 
 type Props = {
   points: Point[];
+  ariaLabel?: string;
   active?: number;
   zoom?: number;
   className?: string;
@@ -24,6 +25,7 @@ const BODY_PATH =
 
 export default function StockistMapRotating({
   points,
+  ariaLabel,
   active = 0,
   zoom = 13,
   className = "",
@@ -195,14 +197,14 @@ export default function StockistMapRotating({
           console.log("[MAP] tiles loaded");
         });
 
-      // Force re-resize after mount so the canvas repaints once laid out.
-      const forceResize = () => instance.resize();
-      requestAnimationFrame(forceResize);
+        // Force re-resize after mount so the canvas repaints once laid out.
+        const forceResize = () => instance.resize();
+        requestAnimationFrame(forceResize);
 
-      const el = createPerfumeMarkerElement();
-      markerRef.current = new maplibregl.Marker({ element: el })
-        .setLngLat(points[active]?.center ?? [0, 0])
-        .addTo(instance);
+        const el = createPerfumeMarkerElement();
+        markerRef.current = new maplibregl.Marker({ element: el })
+          .setLngLat(points[active]?.center ?? [0, 0])
+          .addTo(instance);
       } catch (err: any) {
         console.error("[MAP] create", err);
       }
@@ -291,22 +293,16 @@ export default function StockistMapRotating({
         </defs>
       </svg>
 
-      <div
-        className="absolute inset-0"
-        style={{ clipPath: "url(#bottleClip)" }}
-      >
+      <div className="absolute inset-0" style={{ clipPath: "url(#bottleClip)" }}>
         <div
           ref={ref}
-          aria-label="Rotating stockist locations"
+          aria-label={ariaLabel ?? "Rotating stockist locations"}
           className="h-full w-full overflow-hidden"
         />
       </div>
 
       {/* Thin gold outline over the bottle silhouette, same color as the logo */}
-      <svg
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        aria-hidden="true"
-      >
+      <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
         <path
           d={BOTTLE_PATH}
           transform={`scale(${430 / 1145.4} ${720 / 1791.79})`}
@@ -327,8 +323,7 @@ export default function StockistMapRotating({
           width: "56%",
           height: "5%",
           transform: "translateX(-50%)",
-          background:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0.55), rgba(0,0,0,0) 72%)",
+          background: "radial-gradient(ellipse at center, rgba(0,0,0,0.55), rgba(0,0,0,0) 72%)",
           filter: "blur(6px)",
         }}
       />

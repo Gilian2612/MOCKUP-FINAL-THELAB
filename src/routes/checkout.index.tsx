@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 import { useCart } from "@/context/CartContext";
 import { formatAED } from "@/lib/products";
+import { useLanguage } from "@/context/LanguageContext";
 
 export const Route = createFileRoute("/checkout/")({
   head: () => ({
@@ -31,29 +32,30 @@ const field =
 function CheckoutPage() {
   const { lines, setQty, subtotal, shipping, tax, total, clear } = useCart();
   const [payment, setPayment] = useState<"card" | "tabby">("card");
+  const { t } = useLanguage();
+  const c = t.checkout;
 
   return (
     <main className="min-h-screen bg-background px-6 pb-28 pt-40 lg:px-20">
-      <p className="label-caps text-primary">Checkout</p>
+      <p className="label-caps text-primary">{c.label}</p>
       <h1 className="mt-6 font-display text-5xl text-cream sm:text-6xl">
-        Complete your <em className="italic text-primary">order</em>
+        {c.titleStart}
+        <em className="italic text-primary">{c.titleEm}</em>
       </h1>
 
       <div className="mt-14 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         {/* ORDER SUMMARY */}
         <section className="clay h-fit p-7">
-          <h2 className="label-caps text-primary">Order summary</h2>
+          <h2 className="label-caps text-primary">{c.summary}</h2>
 
           {lines.length === 0 ? (
             <div className="mt-8">
-              <p className="font-display text-2xl text-muted-foreground">
-                Your bag is empty.
-              </p>
+              <p className="font-display text-2xl text-muted-foreground">{c.empty}</p>
               <Link
                 to="/fragrances"
                 className="mt-6 inline-block rounded-full border border-primary/60 px-8 py-3 label-caps text-primary"
               >
-                Browse fragrances
+                {c.browse}
               </Link>
             </div>
           ) : (
@@ -70,13 +72,11 @@ function CheckoutPage() {
                   />
                   <div className="flex-1">
                     <p className="font-display text-xl text-primary">{l.name}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      {formatAED(l.price)}
-                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">{formatAED(l.price)}</p>
                     <div className="mt-3 inline-flex items-center gap-5 rounded-full bg-background px-4 py-1.5 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)]">
                       <button
                         type="button"
-                        aria-label={`Decrease ${l.name}`}
+                        aria-label={c.decrease(l.name)}
                         onClick={() => setQty(l.slug, l.qty - 1)}
                         className="text-primary"
                       >
@@ -85,7 +85,7 @@ function CheckoutPage() {
                       <span className="text-sm text-cream">{l.qty}</span>
                       <button
                         type="button"
-                        aria-label={`Increase ${l.name}`}
+                        aria-label={c.increase(l.name)}
                         onClick={() => setQty(l.slug, l.qty + 1)}
                         className="text-primary"
                       >
@@ -93,9 +93,7 @@ function CheckoutPage() {
                       </button>
                     </div>
                   </div>
-                  <p className="font-display text-lg text-cream">
-                    {formatAED(l.price * l.qty)}
-                  </p>
+                  <p className="font-display text-lg text-cream">{formatAED(l.price * l.qty)}</p>
                 </li>
               ))}
             </ul>
@@ -103,19 +101,19 @@ function CheckoutPage() {
 
           <dl className="mt-8 space-y-3 border-t border-border pt-6 text-sm">
             <div className="flex justify-between text-muted-foreground">
-              <dt>Subtotal</dt>
+              <dt>{c.subtotal}</dt>
               <dd>{formatAED(subtotal)}</dd>
             </div>
             <div className="flex justify-between text-muted-foreground">
-              <dt>Shipping</dt>
+              <dt>{c.shipping}</dt>
               <dd>{shipping ? formatAED(shipping) : "—"}</dd>
             </div>
             <div className="flex justify-between text-muted-foreground">
-              <dt>VAT (5%)</dt>
+              <dt>{c.vat}</dt>
               <dd>{formatAED(tax)}</dd>
             </div>
             <div className="flex justify-between border-t border-border pt-4 font-display text-2xl text-cream">
-              <dt>Total</dt>
+              <dt>{c.total}</dt>
               <dd>{formatAED(total)}</dd>
             </div>
           </dl>
@@ -127,57 +125,50 @@ function CheckoutPage() {
             onSubmit={(e) => {
               e.preventDefault();
               if (lines.length === 0) {
-                toast.error("Your bag is empty");
+                toast.error(c.emptyError);
                 return;
               }
-              toast.success("ORDER PLACED", {
-                description: `Thank you — confirmation on its way.`,
-              });
+              toast.success(c.placedTitle, { description: c.placedText });
               clear();
             }}
           >
-            <h2 className="label-caps text-primary">Contact</h2>
+            <h2 className="label-caps text-primary">{c.contact}</h2>
             <div className="mt-5 grid gap-5 sm:grid-cols-2">
               <label className="block text-xs text-muted-foreground">
-                Full name
-                <input required className={field} placeholder="Mario Galindo" />
+                {c.fullName}
+                <input required className={field} placeholder={c.fullNamePlaceholder} />
               </label>
               <label className="block text-xs text-muted-foreground">
-                Email
-                <input
-                  required
-                  type="email"
-                  className={field}
-                  placeholder="you@example.com"
-                />
+                {c.email}
+                <input required type="email" className={field} placeholder={c.emailPlaceholder} />
               </label>
             </div>
 
-            <h2 className="mt-10 label-caps text-primary">Shipping</h2>
+            <h2 className="mt-10 label-caps text-primary">{c.shippingSection}</h2>
             <div className="mt-5 grid gap-5 sm:grid-cols-2">
               <label className="block text-xs text-muted-foreground sm:col-span-2">
-                Address
-                <input required className={field} placeholder="Street address" />
+                {c.address}
+                <input required className={field} placeholder={c.addressPlaceholder} />
               </label>
               <label className="block text-xs text-muted-foreground">
-                City
-                <input required className={field} placeholder="Dubai" />
+                {c.city}
+                <input required className={field} placeholder={c.cityPlaceholder} />
               </label>
               <label className="block text-xs text-muted-foreground">
-                Region / Emirate
-                <input required className={field} placeholder="Dubai" />
+                {c.region}
+                <input required className={field} placeholder={c.regionPlaceholder} />
               </label>
               <label className="block text-xs text-muted-foreground">
-                Postal code
-                <input className={field} placeholder="00000" />
+                {c.postalCode}
+                <input className={field} placeholder={c.postalPlaceholder} />
               </label>
               <label className="block text-xs text-muted-foreground">
-                Country
-                <input required className={field} placeholder="United Arab Emirates" />
+                {c.country}
+                <input required className={field} placeholder={c.countryPlaceholder} />
               </label>
             </div>
 
-            <h2 className="mt-10 label-caps text-primary">Payment</h2>
+            <h2 className="mt-10 label-caps text-primary">{c.payment}</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {(["card", "tabby"] as const).map((m) => (
                 <button
@@ -190,7 +181,7 @@ function CheckoutPage() {
                       : "border-border text-muted-foreground"
                   }`}
                 >
-                  {m === "card" ? "Card" : "Tabby — 4 payments"}
+                  {m === "card" ? c.card : c.tabby}
                 </button>
               ))}
             </div>
@@ -198,23 +189,23 @@ function CheckoutPage() {
             {payment === "card" ? (
               <div className="mt-5 grid gap-5 sm:grid-cols-2">
                 <label className="block text-xs text-muted-foreground sm:col-span-2">
-                  Card number
+                  {c.cardNumber}
                   <input required className={field} placeholder="4242 4242 4242 4242" />
                 </label>
                 <label className="block text-xs text-muted-foreground">
-                  Expiry
-                  <input required className={field} placeholder="MM / YY" />
+                  {c.expiry}
+                  <input required className={field} placeholder={c.expiryPlaceholder} />
                 </label>
                 <label className="block text-xs text-muted-foreground">
-                  CVC
+                  {c.cvc}
                   <input required className={field} placeholder="123" />
                 </label>
               </div>
             ) : (
               <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
-                Split into 4 interest-free payments of{" "}
-                <span className="text-cream">{formatAED(Math.round(total / 4))}</span>.
-                You will be redirected to Tabby to confirm.
+                {c.tabbyTextStart}
+                <span className="text-cream">{formatAED(Math.round(total / 4))}</span>
+                {c.tabbyTextEnd}
               </p>
             )}
 
@@ -222,7 +213,7 @@ function CheckoutPage() {
               type="submit"
               className="mt-10 w-full rounded-full bg-primary py-4 label-caps text-primary-foreground"
             >
-              Pay AED {total.toLocaleString("en-US")} →
+              {c.pay(total.toLocaleString("en-US"))}
             </button>
           </form>
         </section>

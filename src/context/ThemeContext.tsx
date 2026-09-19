@@ -35,10 +35,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     setTheme((t) => (t === "night" ? "day" : "night"));
   }, []);
 
-  const value = useMemo<ThemeValue>(
-    () => ({ theme, toggleTheme }),
-    [theme, toggleTheme],
-  );
+  const value = useMemo<ThemeValue>(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }

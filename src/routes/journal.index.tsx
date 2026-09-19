@@ -3,6 +3,7 @@ import { useEffect } from "react";
 
 import g5 from "@/assets/gallery-05.png";
 import journalBg from "@/assets/journal-bg.png";
+import { useLanguage } from "@/context/LanguageContext";
 
 const INSTAGRAM_URL = "https://www.instagram.com/thelabperfumes/";
 const INSTAGRAM_POST_URL = "https://www.instagram.com/p/Cz0G8OPuyfF/";
@@ -43,15 +44,7 @@ function InstagramEmbed({ url }: { url: string }) {
   );
 }
 
-const entries = [
-  {
-    date: "November 2025",
-    title: "The flagship, Dubai Mall",
-    image: g5,
-    alt: "The Lab boutique interior",
-    text: "Building a room dark enough to smell in — light, material and the architecture of attention.",
-  },
-];
+const entryImages = [g5];
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -83,6 +76,11 @@ export const Route = createFileRoute("/journal/")({
 });
 
 function JournalPage() {
+  const { t } = useLanguage();
+  const entries = t.journal.entries.map((e, i) => ({
+    ...e,
+    image: entryImages[i] ?? g5,
+  }));
   return (
     <main className="relative isolate flex min-h-screen flex-col bg-background px-6 pb-4 pt-[114px] lg:px-20">
       {/* FULL-PAGE BACKDROP */}
@@ -101,13 +99,14 @@ function JournalPage() {
         <div className="absolute inset-0 bg-background/60" />
       </div>
 
-      <p className="label-caps text-primary">Journal</p>
+      <p className="label-caps text-primary">{t.journal.label}</p>
       <h1 className="mt-1 font-display text-2xl text-cream sm:text-4xl">
-        Field <span className="not-italic text-primary">notes</span>
+        {t.journal.titleStart}
+        <span className="not-italic text-primary">{t.journal.titleEm}</span>
       </h1>
 
       <section className="mt-4 flex flex-col items-center gap-0.5 text-center">
-        <p className="label-caps text-muted-foreground">Follow along</p>
+        <p className="label-caps text-muted-foreground">{t.journal.follow}</p>
         <a
           href={INSTAGRAM_URL}
           target="_blank"
@@ -118,7 +117,7 @@ function JournalPage() {
           @thelabperfumes
         </a>
         <p className="max-w-md text-xs leading-relaxed text-muted-foreground">
-          Behind-the-scenes from the atelier, sourcing trips and new releases — on Instagram.
+          {t.journal.followText}
         </p>
       </section>
 
@@ -154,9 +153,7 @@ function JournalPage() {
           <div>
             <p className="label-caps text-muted-foreground">{e.date}</p>
             <h2 className="mt-1 font-display text-lg text-primary">{e.title}</h2>
-            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-              {e.text}
-            </p>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{e.text}</p>
           </div>
         </article>
       ))}

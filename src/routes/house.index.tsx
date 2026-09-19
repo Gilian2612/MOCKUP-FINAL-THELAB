@@ -11,15 +11,9 @@ import g4 from "@/assets/gallery-04.png";
 import g5 from "@/assets/gallery-05.png";
 import g6 from "@/assets/gallery-06.png";
 import houseBg from "@/assets/house-bg.png";
+import { useLanguage } from "@/context/LanguageContext";
 
-const gallery = [
-  { src: g1, alt: "Perfumer's glassware in the atelier" },
-  { src: g2, alt: "Pouring perfume oil into a flask" },
-  { src: g3, alt: "Desert dunes outside Dubai at dusk" },
-  { src: g4, alt: "Colombian coffee and tropical botanicals" },
-  { src: g5, alt: "The Lab boutique interior" },
-  { src: g6, alt: "Perfume mist caught in a light beam" },
-];
+const galleryImages = [g1, g2, g3, g4, g5, g6];
 
 export const Route = createFileRoute("/house/")({
   head: () => ({
@@ -33,8 +27,7 @@ export const Route = createFileRoute("/house/")({
       { property: "og:title", content: "The House — The Lab Perfumes" },
       {
         property: "og:description",
-        content:
-          "Founder Mario Galindo, the atelier method, and the materials behind the house.",
+        content: "Founder Mario Galindo, the atelier method, and the materials behind the house.",
       },
     ],
   }),
@@ -42,6 +35,11 @@ export const Route = createFileRoute("/house/")({
 });
 
 function HousePage() {
+  const { t } = useLanguage();
+  const gallery = galleryImages.map((src, i) => ({
+    src,
+    alt: t.house.galleryAlts[i] ?? "",
+  }));
   return (
     <main className="relative isolate min-h-screen bg-background">
       {/* FULL-PAGE BACKDROP */}
@@ -63,36 +61,28 @@ function HousePage() {
       <section className="relative flex min-h-[80vh] items-end overflow-hidden">
         <div className="copper-beam left-1/4" />
         <div className="relative w-full px-6 pb-20 lg:px-20">
-          <p className="label-caps text-primary">The House</p>
+          <p className="label-caps text-primary">{t.house.label}</p>
           <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[0.95] text-cream sm:text-7xl">
-            A house built <span className="not-italic text-primary">between</span> two
-            deserts and a mountain range
+            {t.house.heroStart}
+            <span className="not-italic text-primary">{t.house.heroEm}</span>
+            {t.house.heroEnd}
           </h1>
         </div>
       </section>
 
       <section className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
         <div>
-          <p className="label-caps text-primary">The Founder</p>
+          <p className="label-caps text-primary">{t.house.founderLabel}</p>
           <h2 className="mt-6 font-display text-4xl text-cream sm:text-5xl">
-            Mario Galindo
+            {t.house.founderName}
           </h2>
-          <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-            Mario began blending in a Bogotá apartment with a hotplate, a scale
-            and forty raw materials. Ten years later the same obsession runs a
-            house that ships from Dubai to Tokyo — still small batch, still
-            signed by hand.
-          </p>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-            His rule has not changed: no brief, no focus group, no compromise on
-            the material. If a note is expensive, it stays. If a composition is
-            polite, it is thrown out.
-          </p>
+          <p className="mt-6 text-sm leading-relaxed text-muted-foreground">{t.house.founderP1}</p>
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{t.house.founderP2}</p>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <img
             src={marioStrips}
-            alt="Mario Galindo holding blotter strips"
+            alt={t.house.marioStripsAlt}
             loading="lazy"
             width={1000}
             height={1000}
@@ -100,7 +90,7 @@ function HousePage() {
           />
           <img
             src={marioSmelling}
-            alt="Mario Galindo evaluating a blotter"
+            alt={t.house.marioSmellingAlt}
             loading="lazy"
             width={1000}
             height={1000}
@@ -113,7 +103,7 @@ function HousePage() {
         <div className="order-2 grid grid-cols-2 gap-4 lg:order-1">
           <img
             src={brandBases}
-            alt="Shelf of perfume bases in amber bottles"
+            alt={t.house.basesAlt}
             loading="lazy"
             width={1000}
             height={1000}
@@ -121,7 +111,7 @@ function HousePage() {
           />
           <img
             src={brandTag}
-            alt="Gold-foiled hang tag on a perfume bottle"
+            alt={t.house.tagAlt}
             loading="lazy"
             width={1000}
             height={1000}
@@ -129,19 +119,16 @@ function HousePage() {
           />
         </div>
         <div className="order-1 lg:order-2">
-          <p className="label-caps text-primary">The Method</p>
+          <p className="label-caps text-primary">{t.house.methodLabel}</p>
           <h2 className="mt-6 font-display text-4xl text-cream sm:text-5xl">
-            Bases before <em className="italic">bottles</em>
+            {t.house.methodTitleStart}
+            <em className="italic">{t.house.methodTitleEm}</em>
           </h2>
           <ol className="mt-10 divide-y divide-border border-y border-border">
-            {[
-              "Materials sourced direct — Cambodian oud, Colombian cacao",
-              "Bases macerated a minimum of eight weeks",
-              "Every flacon numbered, tagged and signed",
-            ].map((t, i) => (
-              <li key={t} className="flex items-baseline gap-6 py-6">
+            {t.house.methodPoints.map((point, i) => (
+              <li key={point} className="flex items-baseline gap-6 py-6">
                 <span className="label-caps text-primary">0{i + 1} —</span>
-                <span className="font-display text-2xl text-cream">{t}</span>
+                <span className="font-display text-2xl text-cream">{point}</span>
               </li>
             ))}
           </ol>
@@ -149,9 +136,10 @@ function HousePage() {
       </section>
 
       <section className="px-6 pb-28 lg:px-20">
-        <p className="label-caps text-primary">Gallery</p>
+        <p className="label-caps text-primary">{t.house.galleryLabel}</p>
         <h2 className="mt-6 font-display text-4xl text-cream sm:text-5xl">
-          From the <em className="italic">atelier</em>
+          {t.house.galleryTitleStart}
+          <em className="italic">{t.house.galleryTitleEm}</em>
         </h2>
         <div className="mt-12 columns-1 gap-6 sm:columns-2 lg:columns-3 [&>*]:mb-6">
           {gallery.map((g, i) => (

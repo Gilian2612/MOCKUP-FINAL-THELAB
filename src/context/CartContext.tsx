@@ -1,14 +1,8 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
 import type { Product } from "@/lib/products";
+import { useLanguage } from "@/context/LanguageContext";
 
 export type CartLine = {
   slug: string;
@@ -38,28 +32,31 @@ const CartContext = createContext<CartValue | null>(null);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { t } = useLanguage();
+  const addedToast = t.cart.addedToast;
 
-  const add = useCallback((product: Product, qty = 1) => {
-    setLines((prev) => {
-      const existing = prev.find((l) => l.slug === product.slug);
-      if (existing) {
-        return prev.map((l) =>
-          l.slug === product.slug ? { ...l, qty: l.qty + qty } : l,
-        );
-      }
-      return [
-        ...prev,
-        {
-          slug: product.slug,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          qty,
-        },
-      ];
-    });
-    toast.success("ADDED TO BAG", { description: product.name });
-  }, []);
+  const add = useCallback(
+    (product: Product, qty = 1) => {
+      setLines((prev) => {
+        const existing = prev.find((l) => l.slug === product.slug);
+        if (existing) {
+          return prev.map((l) => (l.slug === product.slug ? { ...l, qty: l.qty + qty } : l));
+        }
+        return [
+          ...prev,
+          {
+            slug: product.slug,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            qty,
+          },
+        ];
+      });
+      toast.success(addedToast, { description: product.name });
+    },
+    [addedToast],
+  );
 
   const setQty = useCallback((slug: string, qty: number) => {
     setLines((prev) =>

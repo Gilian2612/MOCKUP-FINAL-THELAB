@@ -4,11 +4,13 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { useCart } from "@/context/CartContext";
 import { getProduct, getAdjacent, formatAED } from "@/lib/products";
+import { useLanguage } from "@/context/LanguageContext";
 import { SpecAccordion, type SpecAccordionItem } from "@/components/SpecAccordion";
 
 export const Route = createFileRoute("/fragrances/$slug")({
   loader: ({ params }) => {
-    const product = getProduct(params.slug);
+    // Meta tags are rendered server-side, before the visitor's language is known.
+    const product = getProduct(params.slug, "en");
     if (!product) throw notFound();
     return { product };
   },
@@ -36,12 +38,14 @@ export const Route = createFileRoute("/fragrances/$slug")({
 });
 
 function ProductPage() {
-  const { product } = Route.useLoaderData();
+  const { product: loaded } = Route.useLoaderData();
+  const { lang, t } = useLanguage();
+  const product = getProduct(loaded.slug, lang) ?? loaded;
   const { add } = useCart();
   const [qty, setQty] = useState(1);
   const reduceMotion = useReducedMotion();
 
-  const adj = getAdjacent(product.slug);
+  const adj = getAdjacent(product.slug, lang);
   const prev = adj?.prev ?? product;
   const next = adj?.next ?? product;
   const index = adj?.index ?? 0;
@@ -50,7 +54,7 @@ function ProductPage() {
   const specItems: SpecAccordionItem[] = [
     {
       id: "notes",
-      label: "Notes",
+      label: t.product.notes,
       content: (
         <div className="flex flex-wrap gap-3 not-italic">
           {product.notes.map((n) => (
@@ -66,7 +70,7 @@ function ProductPage() {
     },
     {
       id: "story",
-      label: "Story",
+      label: t.product.story,
       content: product.story,
     },
   ];
@@ -100,47 +104,42 @@ function ProductPage() {
           >
             <img
               src={product.image}
-              alt={`${product.name} perfume bottle`}
+              alt={t.product.bottleAlt(product.name)}
               width={1080}
               height={1920}
               className="absolute inset-0 h-full w-full object-contain"
             />
-              <div
-                aria-hidden="true"
-                className="absolute inset-x-5 bottom-5 sm:inset-x-8 sm:bottom-7"
-              >
-                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5 border-t border-gold/25 pt-3">
-                  <p className="label-caps text-gold/90">
-                    {product.chapter} · {product.family}
-                  </p>
-                  <p className="text-[0.6875rem] tracking-[0.22em] text-muted-foreground/90">
-                    {product.name}
-                  </p>
-                </div>
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-5 bottom-5 sm:inset-x-8 sm:bottom-7"
+            >
+              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5 border-t border-gold/25 pt-3">
+                <p className="label-caps text-gold/90">
+                  {product.chapter} · {product.family}
+                </p>
+                <p className="text-[0.6875rem] tracking-[0.22em] text-muted-foreground/90">
+                  {product.name}
+                </p>
               </div>
+            </div>
           </motion.div>
         </div>
 
         <div className="relative flex flex-col justify-center px-6 py-16 lg:px-20">
-          <Link
-            to="/fragrances"
-            className="label-caps text-muted-foreground hover:text-primary"
-          >
-            ← All fragrances
+          <Link to="/fragrances" className="label-caps text-muted-foreground hover:text-primary">
+            {t.product.allFragrances}
           </Link>
           <p className="mt-8 label-caps text-primary">
             {product.chapter} · {product.family}
           </p>
-          <h1 className="mt-4 font-display text-5xl text-cream sm:text-6xl">
-            {product.name}
-          </h1>
+          <h1 className="mt-4 font-display text-5xl text-cream sm:text-6xl">{product.name}</h1>
           <SpecAccordion items={specItems} />
 
           <div className="mt-10 flex flex-wrap items-center gap-6">
             <div className="inline-flex items-center gap-6 rounded-full bg-background px-5 py-3 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8),inset_0_-1px_0_rgba(182,170,132,0.16)]">
               <button
                 type="button"
-                aria-label="Decrease quantity"
+                aria-label={t.product.decreaseQty}
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
                 className="text-lg text-primary"
               >
@@ -149,16 +148,14 @@ function ProductPage() {
               <span className="text-cream">{qty}</span>
               <button
                 type="button"
-                aria-label="Increase quantity"
+                aria-label={t.product.increaseQty}
                 onClick={() => setQty((q) => q + 1)}
                 className="text-lg text-primary"
               >
                 +
               </button>
             </div>
-            <p className="font-display text-3xl text-cream">
-              {formatAED(product.price)}
-            </p>
+            <p className="font-display text-3xl text-cream">{formatAED(product.price)}</p>
           </div>
 
           <button
@@ -166,7 +163,7 @@ function ProductPage() {
             onClick={() => add(product, qty)}
             className="mt-8 w-full rounded-full bg-primary py-4 label-caps text-primary-foreground sm:w-auto sm:px-16"
           >
-            Add to bag
+            {t.product.addToBag}
           </button>
 
           <div className="relative mt-12 flex items-center justify-between gap-4 border-t border-primary/20 pt-6 lg:absolute lg:inset-x-20 lg:bottom-4 lg:mt-0">
@@ -182,7 +179,7 @@ function ProductPage() {
                 ←
               </span>
               <span className="flex flex-col">
-                <span className="label-caps text-muted-foreground">Previous</span>
+                <span className="label-caps text-muted-foreground">{t.product.previous}</span>
                 <span className="text-cream transition-colors group-hover:text-primary">
                   {prev.name}
                 </span>
@@ -190,8 +187,7 @@ function ProductPage() {
             </Link>
 
             <span className="label-caps text-muted-foreground/70">
-              {String(index + 1).padStart(2, "0")} /{" "}
-              {String(total).padStart(2, "0")}
+              {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
             </span>
 
             <Link
@@ -200,7 +196,7 @@ function ProductPage() {
               className="group flex items-center gap-3 text-right"
             >
               <span className="flex flex-col">
-                <span className="label-caps text-muted-foreground">Next</span>
+                <span className="label-caps text-muted-foreground">{t.product.next}</span>
                 <span className="text-cream transition-colors group-hover:text-primary">
                   {next.name}
                 </span>

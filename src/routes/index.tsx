@@ -5,7 +5,8 @@ import { ChevronDown, ChevronUp, MapPin } from "lucide-react";
 import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
 import landingBg1 from "@/assets/landing-bg-1.png";
-import { stockists } from "@/lib/stockists";
+import { getStockists } from "@/lib/stockists";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   Dialog,
   DialogContent,
@@ -14,11 +15,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 
-const allStockistPoints = stockists.map((s) => ({
-  center: s.coords,
-  label: `${s.distributor} — ${s.city}`,
-}));
-
+const STOCKIST_COUNT = getStockists("es").length;
 
 const StockistMapRotating = lazy(() => import("@/components/StockistMapRotating"));
 
@@ -48,6 +45,12 @@ export const Route = createFileRoute("/")({
 // Stockists data (real distributors) is imported from @/lib/stockists
 
 function Home() {
+  const { lang, t } = useLanguage();
+  const stockists = getStockists(lang);
+  const allStockistPoints = stockists.map((s) => ({
+    center: s.coords,
+    label: `${s.distributor} — ${s.city}`,
+  }));
   const [active, setActive] = useState(0);
   const [showComingSoon, setShowComingSoon] = useState(false);
 
@@ -57,28 +60,24 @@ function Home() {
 
   useEffect(() => {
     const t = setTimeout(() => {
-      setActive((prev) => (prev + 1) % allStockistPoints.length);
+      setActive((prev) => (prev + 1) % STOCKIST_COUNT);
     }, 8000);
     return () => clearTimeout(t);
   }, [active]);
 
-  const goToPrevStockist = () =>
-    setActive((prev) => (prev - 1 + allStockistPoints.length) % allStockistPoints.length);
-  const goToNextStockist = () =>
-    setActive((prev) => (prev + 1) % allStockistPoints.length);
+  const goToPrevStockist = () => setActive((prev) => (prev - 1 + STOCKIST_COUNT) % STOCKIST_COUNT);
+  const goToNextStockist = () => setActive((prev) => (prev + 1) % STOCKIST_COUNT);
 
   return (
     <main className="relative min-h-screen">
       <Dialog open={showComingSoon} onOpenChange={setShowComingSoon}>
         <DialogContent className="border-border bg-background text-center sm:text-center">
           <DialogHeader className="items-center text-center sm:items-center sm:text-center">
-            <p className="label-caps text-primary">Coming Soon</p>
+            <p className="label-caps text-primary">{t.home.comingSoon}</p>
             <DialogTitle className="mt-2 font-display text-2xl text-cream">
-              This page is under construction
+              {t.home.underConstruction}
             </DialogTitle>
-            <DialogDescription className="mt-2">
-              We're crafting something special. The Lab Perfumes will be available very soon — thank you for your patience.
-            </DialogDescription>
+            <DialogDescription className="mt-2">{t.home.underConstructionText}</DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>
@@ -98,29 +97,22 @@ function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/50" />
       </div>
 
-
-
       {/* FOUNDER */}
       <section id="founder" className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
         <div className="flex flex-col justify-center">
-          <p className="label-caps text-primary">The Founder</p>
+          <p className="label-caps text-primary">{t.home.founderLabel}</p>
           <h2 className="mt-6 font-display text-4xl text-cream sm:text-6xl">
-            Mario Galindo
+            {t.home.founderName}
           </h2>
           <p className="mt-3 font-display text-2xl italic text-muted-foreground">
-            Visionary Perfumer and Entrepreneur
+            {t.home.founderTitle}
           </p>
           <ol className="mt-12 space-y-8 border-t border-border pt-10">
-            {[
-              "Crafting distinctive scents that defy tradition",
-              "Leading The Lab Perfumes to global prestige",
-            ].map((t, i) => (
-              <li key={t} className="flex gap-6">
-                <span className="label-caps pt-1 text-primary">
-                  0{i + 1} —
-                </span>
+            {t.home.founderPoints.map((point, i) => (
+              <li key={point} className="flex gap-6">
+                <span className="label-caps pt-1 text-primary">0{i + 1} —</span>
                 <span className="max-w-sm font-display text-2xl leading-snug text-cream">
-                  {t}
+                  {point}
                 </span>
               </li>
             ))}
@@ -129,7 +121,7 @@ function Home() {
         <div className="clay overflow-hidden p-2">
           <img
             src={marioImg}
-            alt="Mario Galindo, founder of The Lab Perfumes"
+            alt={t.home.founderAlt}
             loading="lazy"
             width={912}
             height={1200}
@@ -141,17 +133,12 @@ function Home() {
       {/* BRAND SYSTEM */}
       <section id="house" className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
         <div>
-          <p className="label-caps text-primary">The House System</p>
+          <p className="label-caps text-primary">{t.home.houseLabel}</p>
           <ol className="mt-10 divide-y divide-border border-y border-border">
-            {[
-              "Luxury in every detail",
-              "Noir cinematic aesthetic",
-              "Elegant dark mode interface",
-              "Premium sensory experience",
-            ].map((t, i) => (
-              <li key={t} className="flex items-baseline gap-6 py-7">
+            {t.home.housePoints.map((point, i) => (
+              <li key={point} className="flex items-baseline gap-6 py-7">
                 <span className="label-caps text-primary">0{i + 1} —</span>
-                <span className="font-display text-3xl text-cream">{t}</span>
+                <span className="font-display text-3xl text-cream">{point}</span>
               </li>
             ))}
           </ol>
@@ -159,7 +146,7 @@ function Home() {
         <div className="clay overflow-hidden p-2">
           <img
             src={brandImg}
-            alt="Detail of an amber perfume flacon and brass cap"
+            alt={t.home.brandAlt}
             loading="lazy"
             width={912}
             height={1200}
@@ -171,13 +158,14 @@ function Home() {
       {/* STOCKISTS */}
       <section id="stockists" className="grid gap-14 px-6 py-24 lg:grid-cols-2 lg:px-20">
         <div>
-          <p className="label-caps text-primary">Stockists</p>
+          <p className="label-caps text-primary">{t.home.stockistsLabel}</p>
           <h2 className="mt-6 font-display text-4xl text-cream sm:text-5xl">
-            Where to <em className="italic">find us</em>
+            {t.home.stockistsTitleStart}
+            <em className="italic">{t.home.stockistsTitleEm}</em>
           </h2>
           <div className="mt-12">
             {(() => {
-              const s = stockists[active];
+              const s = stockists[active]!;
               const n = String(active + 1).padStart(2, "0");
               const total = String(stockists.length).padStart(2, "0");
               return (
@@ -185,20 +173,24 @@ function Home() {
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <p className="label-caps text-primary/80">{s.flag} {s.country}</p>
+                        <p className="label-caps text-primary/80">
+                          {s.flag} {s.country}
+                        </p>
                         <a
                           href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                             `${s.distributor}, ${s.address}`,
                           )}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Open ${s.distributor} in Google Maps`}
+                          aria-label={t.home.openInMaps(s.distributor)}
                           className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
                         >
                           <MapPin className="h-3 w-3" />
                         </a>
                       </div>
-                      <p className="label-caps text-muted-foreground">{n} / {total}</p>
+                      <p className="label-caps text-muted-foreground">
+                        {n} / {total}
+                      </p>
                     </div>
                     <p className="mt-5 font-display text-3xl text-cream">{s.distributor}</p>
                     <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
@@ -210,7 +202,7 @@ function Home() {
                     <button
                       type="button"
                       onClick={goToPrevStockist}
-                      aria-label="Previous stockist"
+                      aria-label={t.home.prevStockist}
                       className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
                     >
                       <ChevronUp className="h-4 w-4" />
@@ -218,7 +210,7 @@ function Home() {
                     <button
                       type="button"
                       onClick={goToNextStockist}
-                      aria-label="Next stockist"
+                      aria-label={t.home.nextStockist}
                       className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
                     >
                       <ChevronDown className="h-4 w-4" />
@@ -230,16 +222,14 @@ function Home() {
           </div>
         </div>
 
-        <Suspense
-          fallback={<div className="h-[440px] w-full rounded-[20px] bg-muted" />}
-        >
+        <Suspense fallback={<div className="h-[440px] w-full rounded-[20px] bg-muted" />}>
           <StockistMapRotating
             points={allStockistPoints}
             active={active}
+            ariaLabel={t.stockists.rotatingMapAria}
           />
         </Suspense>
       </section>
-
     </main>
   );
 }
