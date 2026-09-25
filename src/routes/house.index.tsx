@@ -4,16 +4,9 @@ import marioStrips from "@/assets/mario-strips.jpg";
 import marioSmelling from "@/assets/mario-smelling.jpg";
 import brandBases from "@/assets/brand-bases.jpg";
 import brandTag from "@/assets/brand-tag.jpg";
-import g1 from "@/assets/gallery-01.png";
-import g2 from "@/assets/gallery-02.png";
-import g3 from "@/assets/gallery-03.png";
-import g4 from "@/assets/gallery-04.png";
-import g5 from "@/assets/gallery-05.png";
-import g6 from "@/assets/gallery-06.png";
 import houseBg from "@/assets/house-bg.png";
 import { useLanguage } from "@/context/LanguageContext";
-
-const galleryImages = [g1, g2, g3, g4, g5, g6];
+import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 export const Route = createFileRoute("/house/")({
   head: () => ({
@@ -36,27 +29,17 @@ export const Route = createFileRoute("/house/")({
 
 function HousePage() {
   const { t } = useLanguage();
-  const gallery = galleryImages.map((src, i) => ({
-    src,
-    alt: t.house.galleryAlts[i] ?? "",
-  }));
   return (
     <main className="relative isolate min-h-screen bg-background">
       {/* FULL-PAGE BACKDROP */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
-        <img
-          src={houseBg}
-          alt=""
-          width={941}
-          height={1672}
-          className="absolute inset-0 h-full w-full scale-110 object-cover object-top blur-[8px] opacity-80 -translate-y-[180px]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/50" />
-        <div className="absolute inset-0 bg-background/60" />
-      </div>
+      <FilmBackdrop
+        src={houseBg}
+        width={941}
+        height={1672}
+        position="object-top"
+        scale="scale-110"
+        translate="-translate-y-[180px]"
+      />
 
       <section className="relative flex min-h-[80vh] items-end overflow-hidden">
         <div className="copper-beam left-1/4" />
@@ -132,30 +115,6 @@ function HousePage() {
               </li>
             ))}
           </ol>
-        </div>
-      </section>
-
-      <section className="px-6 pb-28 lg:px-20">
-        <p className="label-caps text-primary">{t.house.galleryLabel}</p>
-        <h2 className="mt-6 font-display text-4xl text-cream sm:text-5xl">
-          {t.house.galleryTitleStart}
-          <em className="italic">{t.house.galleryTitleEm}</em>
-        </h2>
-        <div className="mt-12 columns-1 gap-6 sm:columns-2 lg:columns-3 [&>*]:mb-6">
-          {gallery.map((g, i) => (
-            <figure key={g.src} className="clay break-inside-avoid overflow-hidden p-2">
-              <img
-                src={g.src}
-                alt={g.alt}
-                loading="lazy"
-                width={1000}
-                height={1000}
-                className={`w-full rounded-[20px] object-cover grayscale transition-all duration-700 hover:grayscale-0 ${
-                  i % 3 === 1 ? "h-[420px]" : "h-[300px]"
-                }`}
-              />
-            </figure>
-          ))}
         </div>
       </section>
     </main>

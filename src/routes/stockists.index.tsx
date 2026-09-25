@@ -5,6 +5,7 @@ import { MapPin } from "lucide-react";
 import { getStockistsByCountry, getStockistsByRegion } from "@/lib/stockists";
 import { useLanguage } from "@/context/LanguageContext";
 import stockistsBg from "@/assets/stockists-bg.png";
+import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 const StockistMap = lazy(() => import("@/components/StockistMap"));
 
@@ -33,20 +34,12 @@ function StockistsPage() {
   return (
     <main className="relative isolate min-h-screen bg-background px-6 pb-28 pt-40 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
-        <img
-          src={stockistsBg}
-          alt=""
-          width={941}
-          height={1672}
-          className="absolute inset-0 h-full w-full scale-110 object-cover blur-[8px] opacity-80"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/10 to-background/50" />
-        <div className="absolute inset-0 bg-background/60" />
-      </div>
+      <FilmBackdrop
+        src={stockistsBg}
+        width={941}
+        height={1672}
+        scale="scale-110"
+      />
 
       <div className="mb-4 h-3 w-3 border-l border-t border-primary/40" />
 
