@@ -7,6 +7,7 @@ import brandImg from "@/assets/brand-detail.jpg";
 import mario1 from "@/assets/mario1.svg";
 import { getStockists } from "@/lib/stockists";
 import { useLanguage } from "@/context/LanguageContext";
+import { FilmBackdrop } from "@/components/FilmBackdrop";
 import {
   Dialog,
   DialogContent,
@@ -83,18 +84,7 @@ function Home() {
       </Dialog>
 
       {/* FULL-PAGE BACKDROP — landing background */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
-        <img
-          src={mario1}
-          alt=""
-          className="absolute inset-0 h-full w-full scale-100 object-cover object-[center_15%] blur-[8px] grayscale opacity-80"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/50" />
-        <div className="absolute inset-0 bg-background/60" />
-      </div>
+      <FilmBackdrop src={mario1} position="object-[center_15%]" />
 
       {/* FOUNDER */}
       <section id="founder" className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
