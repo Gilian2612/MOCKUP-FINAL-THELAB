@@ -4,7 +4,7 @@ import { ChevronDown, ChevronUp, MapPin } from "lucide-react";
 
 import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
-import mario1 from "@/assets/mario1.svg";
+import marioFondo1 from "@/assets/mario-fondo1.svg";
 import { getStockists } from "@/lib/stockists";
 import { useLanguage } from "@/context/LanguageContext";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
@@ -84,7 +84,7 @@ function Home() {
       </Dialog>
 
       {/* FULL-PAGE BACKDROP — landing background */}
-      <FilmBackdrop src={mario1} position="object-[center_15%]" />
+      <FilmBackdrop src={marioFondo1} position="object-[center_15%]" />
 
       {/* FOUNDER */}
       <section id="founder" className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">

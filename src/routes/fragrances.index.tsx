@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCart } from "@/context/CartContext";
 import { getProducts, formatAED } from "@/lib/products";
 import { useLanguage } from "@/context/LanguageContext";
-import fragrancesBg from "@/assets/fragrances-bg.png";
+import fondoExtra from "@/assets/fondo-extra.svg";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 export const Route = createFileRoute("/fragrances/")({
@@ -35,7 +35,7 @@ function FragrancesPage() {
     <main className="relative isolate min-h-screen bg-background px-6 pb-24 pt-40 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
       <FilmBackdrop
-        src={fragrancesBg}
+        src={fondoExtra}
         width={941}
         height={1672}
         position="object-[center_25%]"

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 import g5 from "@/assets/gallery-05.png";
-import journalBg from "@/assets/journal-bg.png";
+import marioFondo3 from "@/assets/mario-fondo3.svg";
 import { useLanguage } from "@/context/LanguageContext";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
@@ -86,7 +86,7 @@ function JournalPage() {
     <main className="relative isolate flex min-h-screen flex-col bg-background px-6 pb-4 pt-[114px] lg:px-20">
       {/* FULL-PAGE BACKDROP */}
       <FilmBackdrop
-        src={journalBg}
+        src={marioFondo3}
         width={1023}
         height={1537}
         position="object-[center_95%]"

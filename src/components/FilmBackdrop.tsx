@@ -18,14 +18,14 @@ export function FilmBackdrop({
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
     >
       <img
         src={src}
         alt=""
         width={width}
         height={height}
-        className={`film-grade absolute inset-0 h-full w-full ${scale} object-cover ${position} ${translate ?? ""}`}
+        className={`film-grade absolute inset-0 h-full w-full ${scale} object-contain ${position} ${translate ?? ""}`}
       />
       <div className="film-warm absolute inset-0" />
       <div className="film-grain absolute inset-0" />

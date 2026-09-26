@@ -4,7 +4,7 @@ import { MapPin } from "lucide-react";
 
 import { getStockistsByCountry, getStockistsByRegion } from "@/lib/stockists";
 import { useLanguage } from "@/context/LanguageContext";
-import stockistsBg from "@/assets/stockists-bg.png";
+import marioFondo4 from "@/assets/mario-fondo4.svg";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 const StockistMap = lazy(() => import("@/components/StockistMap"));
@@ -35,7 +35,7 @@ function StockistsPage() {
     <main className="relative isolate min-h-screen bg-background px-6 pb-28 pt-40 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
       <FilmBackdrop
-        src={stockistsBg}
+        src={marioFondo4}
         width={941}
         height={1672}
         scale="scale-110"

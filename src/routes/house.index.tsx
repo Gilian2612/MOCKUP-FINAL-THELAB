@@ -4,7 +4,7 @@ import marioStrips from "@/assets/mario-strips.jpg";
 import marioSmelling from "@/assets/mario-smelling.jpg";
 import brandBases from "@/assets/brand-bases.jpg";
 import brandTag from "@/assets/brand-tag.jpg";
-import houseBg from "@/assets/house-bg.png";
+import marioFondo2 from "@/assets/mario-fondo2.svg";
 import { useLanguage } from "@/context/LanguageContext";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
@@ -33,7 +33,7 @@ function HousePage() {
     <main className="relative isolate min-h-screen bg-background">
       {/* FULL-PAGE BACKDROP */}
       <FilmBackdrop
-        src={houseBg}
+        src={marioFondo2}
         width={941}
         height={1672}
         position="object-top"
