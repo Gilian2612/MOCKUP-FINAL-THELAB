@@ -56,7 +56,7 @@ function FragrancesPage() {
 
       <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((p) => (
-          <article key={p.slug} className="clay group flex flex-col p-6">
+          <article key={p.slug} className="glass-surface group flex flex-col rounded-[26px] p-6">
             <Link
               to="/fragrances/$slug"
               params={{ slug: p.slug }}
