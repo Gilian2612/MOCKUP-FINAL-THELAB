@@ -147,7 +147,7 @@
 
 @utility glass-surface {
   position: relative;
-  background: color-mix(in oklab, var(--surface) 34%, transparent);
+  background: color-mix(in oklab, var(--surface) 15%, transparent);
   -webkit-backdrop-filter: blur(24px) saturate(150%);
   backdrop-filter: blur(24px) saturate(150%);
   border: 1px solid color-mix(in oklab, var(--cream) 14%, transparent);
