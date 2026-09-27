@@ -18,7 +18,7 @@ export function FilmBackdrop({
 }: FilmBackdropProps) {
   const bgStyle: React.CSSProperties = {
     backgroundImage: `url(${src})`,
-    backgroundSize: "contain",
+    backgroundSize: "100% auto",
     backgroundPosition: "center",
     backgroundAttachment: "scroll",
     backgroundRepeat: "repeat-y",
