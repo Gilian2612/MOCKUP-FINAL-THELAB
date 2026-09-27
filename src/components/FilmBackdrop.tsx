@@ -16,8 +16,9 @@ type FilmBackdropProps = {
  * section on every viewport (letterbox areas included) with the image's own
  * colors, so there are no hard edges or seams.
  *
- * Front layer: same image with `contain` — always fully visible, never
- * cropped, natural aspect ratio.
+ * Front layer: same image with `cover` — fills the whole section on every
+ * viewport; the background image is a seamless stone texture, so the cropped
+ * edges are invisible at the section boundary.
  *
  * Single instance per layer (no-repeat) => no horizontal seams or stretching
  * artifacts. Sections keep their natural height (absolute inset-0 wrapper).
@@ -31,9 +32,9 @@ export function FilmBackdrop({ src }: FilmBackdropProps) {
     filter: "blur(40px) brightness(0.75) saturate(1.1)",
     transform: "scale(1.12)", // keeps blurred edges from leaking transparency
   };
-  const containStyle: React.CSSProperties = {
+  const sharpStyle: React.CSSProperties = {
     backgroundImage: `url(${src})`,
-    backgroundSize: "contain",
+    backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   };
@@ -44,8 +45,8 @@ export function FilmBackdrop({ src }: FilmBackdropProps) {
     >
       {/* Blurred cover fill: seamless backdrop everywhere */}
       <div className="absolute inset-0" style={fillStyle} />
-      {/* Sharp complete image: always whole, never cropped */}
-      <div className="absolute inset-0" style={containStyle} />
+      {/* Sharp cover: fills the section on every viewport */}
+      <div className="absolute inset-0" style={sharpStyle} />
       <div className="film-warm absolute inset-0" />
       <div className="film-grain absolute inset-0" />
       <div className="film-vignette absolute inset-0" />
