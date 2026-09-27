@@ -26,7 +26,7 @@ export function FilmBackdrop({
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
       style={bgStyle}
     >
       <div className="film-warm absolute inset-0" />
