@@ -20,7 +20,7 @@ export function FilmBackdrop({
     backgroundImage: `url(${src})`,
     backgroundSize: "contain",
     backgroundPosition: "center",
-    backgroundAttachment: "fixed",
+    backgroundAttachment: "scroll",
     backgroundRepeat: "no-repeat",
   };
   return (
