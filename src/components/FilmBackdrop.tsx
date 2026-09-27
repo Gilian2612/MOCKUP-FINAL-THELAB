@@ -23,9 +23,7 @@ export function FilmBackdrop({
       <img
         src={src}
         alt=""
-        width={width}
-        height={height}
-        className={`film-grade absolute inset-0 h-full w-full ${scale} object-contain ${position} ${translate ?? ""}`}
+        className={`film-grade absolute inset-0 w-screen h-full ${scale} object-cover ${position} ${translate ?? ""}`}
       />
       <div className="film-warm absolute inset-0" />
       <div className="film-grain absolute inset-0" />
