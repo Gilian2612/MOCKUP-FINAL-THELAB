@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 import g5 from "@/assets/gallery-05.png";
-import marioFondo3 from "@/assets/mario-fondo3.svg";
+import marioFondo3 from "@/assets/mario-fondo3.webp";
 import { useLanguage } from "@/context/LanguageContext";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 

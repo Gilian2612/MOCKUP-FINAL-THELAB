@@ -4,7 +4,7 @@ import marioStrips from "@/assets/mario-strips.jpg";
 import marioSmelling from "@/assets/mario-smelling.jpg";
 import brandBases from "@/assets/brand-bases.jpg";
 import brandTag from "@/assets/brand-tag.jpg";
-import marioFondo2 from "@/assets/mario-fondo2.svg";
+import marioFondo2 from "@/assets/mario-fondo2.webp";
 import { useLanguage } from "@/context/LanguageContext";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 

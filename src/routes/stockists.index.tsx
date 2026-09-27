@@ -4,7 +4,7 @@ import { MapPin } from "lucide-react";
 
 import { getStockistsByCountry, getStockistsByRegion } from "@/lib/stockists";
 import { useLanguage } from "@/context/LanguageContext";
-import marioFondo4 from "@/assets/mario-fondo4.svg";
+import marioFondo4 from "@/assets/mario-fondo4.webp";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 const StockistMap = lazy(() => import("@/components/StockistMap"));

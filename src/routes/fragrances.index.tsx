@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCart } from "@/context/CartContext";
 import { getProducts, formatAED } from "@/lib/products";
 import { useLanguage } from "@/context/LanguageContext";
-import fondoExtra from "@/assets/fondo-extra.svg";
+import fondoExtra from "@/assets/fondo-extra.webp";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 export const Route = createFileRoute("/fragrances/")({

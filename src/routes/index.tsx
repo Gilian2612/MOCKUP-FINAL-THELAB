@@ -4,7 +4,7 @@ import { ChevronDown, ChevronUp, MapPin } from "lucide-react";
 
 import marioImg from "@/assets/mario-hero.jpg";
 import brandImg from "@/assets/brand-detail.jpg";
-import marioFondo1 from "@/assets/mario-fondo1.svg";
+import marioFondo1 from "@/assets/mario-fondo1.webp";
 import { getStockists } from "@/lib/stockists";
 import { useLanguage } from "@/context/LanguageContext";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
