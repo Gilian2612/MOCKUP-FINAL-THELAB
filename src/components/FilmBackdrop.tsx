@@ -1,3 +1,4 @@
+import React from "react";
 type FilmBackdropProps = {
   src: string;
   width?: number;
@@ -15,16 +16,19 @@ export function FilmBackdrop({
   scale = "scale-100",
   translate,
 }: FilmBackdropProps) {
+  const bgStyle: React.CSSProperties = {
+    backgroundImage: `url(${src})`,
+    backgroundSize: "contain",
+    backgroundPosition: "center",
+    backgroundAttachment: "fixed",
+    backgroundRepeat: "no-repeat",
+  };
   return (
     <div
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+      style={bgStyle}
     >
-      <img
-        src={src}
-        alt=""
-        className={`film-grade absolute inset-0 w-screen h-full ${scale} object-cover ${position} ${translate ?? ""}`}
-      />
       <div className="film-warm absolute inset-0" />
       <div className="film-grain absolute inset-0" />
       <div className="film-vignette absolute inset-0" />
