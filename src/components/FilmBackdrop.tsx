@@ -21,7 +21,7 @@ export function FilmBackdrop({
     backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundAttachment: "scroll",
-    backgroundRepeat: "no-repeat",
+    backgroundRepeat: "repeat-y",
   };
   return (
     <div
