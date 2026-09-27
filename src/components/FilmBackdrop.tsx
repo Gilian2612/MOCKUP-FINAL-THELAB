@@ -10,17 +10,30 @@ type FilmBackdropProps = {
 };
 
 /**
- * Full-page film backdrop.
+ * Full-page film backdrop — two-layer technique.
  *
- * `background-size: cover` scales the image to fill each section while
- * keeping its natural aspect ratio — responsive on every viewport, one
- * single instance (no repeat => no horizontal seams), sections keep their
- * natural height. Edges of the image are cropped.
+ * Back layer: same image with `cover` + heavy blur. It fills the whole
+ * section on every viewport (letterbox areas included) with the image's own
+ * colors, so there are no hard edges or seams.
+ *
+ * Front layer: same image with `contain` — always fully visible, never
+ * cropped, natural aspect ratio.
+ *
+ * Single instance per layer (no-repeat) => no horizontal seams or stretching
+ * artifacts. Sections keep their natural height (absolute inset-0 wrapper).
  */
 export function FilmBackdrop({ src }: FilmBackdropProps) {
-  const bgStyle: React.CSSProperties = {
+  const fillStyle: React.CSSProperties = {
     backgroundImage: `url(${src})`,
     backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    filter: "blur(40px) brightness(0.75) saturate(1.1)",
+    transform: "scale(1.12)", // keeps blurred edges from leaking transparency
+  };
+  const containStyle: React.CSSProperties = {
+    backgroundImage: `url(${src})`,
+    backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   };
@@ -28,8 +41,11 @@ export function FilmBackdrop({ src }: FilmBackdropProps) {
     <div
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      style={bgStyle}
     >
+      {/* Blurred cover fill: seamless backdrop everywhere */}
+      <div className="absolute inset-0" style={fillStyle} />
+      {/* Sharp complete image: always whole, never cropped */}
+      <div className="absolute inset-0" style={containStyle} />
       <div className="film-warm absolute inset-0" />
       <div className="film-grain absolute inset-0" />
       <div className="film-vignette absolute inset-0" />
