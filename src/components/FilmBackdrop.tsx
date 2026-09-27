@@ -12,15 +12,15 @@ type FilmBackdropProps = {
 /**
  * Full-page film backdrop.
  *
- * Option C: `background-size: 100% 100%` stretches the image to fill each
- * section exactly — the whole image stays visible (distorted to the section's
- * aspect ratio), there are no side gaps, and sections keep their natural
- * height instead of being forced taller by the image.
+ * `background-size: cover` scales the image to fill each section while
+ * keeping its natural aspect ratio — responsive on every viewport, one
+ * single instance (no repeat => no horizontal seams), sections keep their
+ * natural height. Edges of the image are cropped.
  */
 export function FilmBackdrop({ src }: FilmBackdropProps) {
   const bgStyle: React.CSSProperties = {
     backgroundImage: `url(${src})`,
-    backgroundSize: "100% 100%",
+    backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   };
