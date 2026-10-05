@@ -23,6 +23,16 @@ dist-ssr
 # Source material, not part of the site
 /ASSETS DE LA WEB ANTIGUA*/
 
+/# Generated backdrop experiments. src/assets/mario-fondo1.webp and
+# fondo-extra.webp are the committed plates; the -fit variants were cropped to
+# per-section boxes and the -h variants cropped to 16:9, and neither is
+# referenced any more. Regenerate rather than commit.
+src/assets/*-fit.webp
+src/assets/*-h.webp
+
+# Skill registry cache
+.atl/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
