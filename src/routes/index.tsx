@@ -84,7 +84,7 @@ function Home() {
       </Dialog>
 
       {/* FULL-PAGE BACKDROP — landing background */}
-      <FilmBackdrop src={marioFondo1} position="object-[center_15%]" />
+      <FilmBackdrop src={marioFondo1} />
 
       {/* FOUNDER */}
       <section id="founder" className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
@@ -115,7 +115,7 @@ function Home() {
             loading="lazy"
             width={912}
             height={1200}
-            className="h-[520px] w-full rounded-[22px] object-cover sepia-photo"
+            className="h-[520px] w-full rounded-[22px] object-contain"
           />
         </div>
       </section>
@@ -140,14 +140,14 @@ function Home() {
             loading="lazy"
             width={912}
             height={1200}
-            className="h-[520px] w-full rounded-[22px] object-cover sepia-photo"
+            className="h-[520px] w-full rounded-[22px] object-contain"
           />
         </div>
       </section>
 
       {/* STOCKISTS */}
       <section id="stockists" className="grid gap-14 px-6 py-24 lg:grid-cols-2 lg:px-20">
-        <div>
+        <div className="min-w-0">
           <p className="label-caps text-primary">{t.home.stockistsLabel}</p>
           <h2 className="mt-6 font-display text-4xl text-cream sm:text-5xl">
             {t.home.stockistsTitleStart}

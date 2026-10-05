@@ -34,12 +34,7 @@ function StockistsPage() {
   return (
     <main className="relative isolate min-h-screen bg-background px-6 pb-28 pt-40 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop
-        src={marioFondo4}
-        width={941}
-        height={1672}
-        scale="scale-110"
-      />
+      <FilmBackdrop src={marioFondo4} />
 
       <div className="mb-4 h-3 w-3 border-l border-t border-primary/40" />
 

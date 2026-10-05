@@ -104,9 +104,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+/* The inline theme script below mutates <html>'s class before React hydrates,
+   so the server HTML and the client tree disagree on it. That is expected,
+   not a bug: without suppressHydrationWarning the console logs a hydration
+   mismatch on every load in day mode. */
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang={DEFAULT_LANG}>
+    <html lang={DEFAULT_LANG} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

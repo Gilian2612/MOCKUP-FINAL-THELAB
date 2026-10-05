@@ -85,12 +85,7 @@ function JournalPage() {
   return (
     <main className="relative isolate flex min-h-screen flex-col bg-background px-6 pb-4 pt-[114px] lg:px-20">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop
-        src={marioFondo3}
-        width={1023}
-        height={1537}
-        position="object-[center_95%]"
-      />
+      <FilmBackdrop src={marioFondo3} />
 
       <p className="label-caps text-primary">{t.journal.label}</p>
       <h1 className="mt-1 font-display text-2xl text-cream sm:text-4xl">
@@ -134,14 +129,14 @@ function JournalPage() {
           key={e.title}
           className="clay group mx-auto mt-3 flex w-full max-w-3xl flex-col items-center gap-4 p-3 sm:flex-row"
         >
-          <div className="w-full shrink-0 overflow-hidden rounded-[16px] sm:w-36">
+          <div className="plate-media w-full shrink-0 overflow-hidden rounded-[16px] sm:w-36">
             <img
               src={e.image}
               alt={e.alt}
               loading="lazy"
               width={1000}
               height={1000}
-              className="h-20 w-full object-cover sepia-photo transition-transform duration-700 group-hover:scale-105 sm:h-full"
+              className="h-20 w-full object-contain transition-transform duration-700 group-hover:scale-105 sm:h-full"
             />
           </div>
           <div>

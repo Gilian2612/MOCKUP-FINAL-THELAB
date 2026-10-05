@@ -127,7 +127,7 @@ function ProductPage() {
                   reduceMotion ? { opacity: 0 } : { opacity: 0, filter: "blur(16px)", scale: 1.06 }
                 }
                 transition={{ duration: reduceMotion ? 0.3 : 0.9, ease: "easeInOut" }}
-                className={`absolute inset-0 h-full w-full ${isNotes ? "object-cover" : "object-contain"}`}
+                className="absolute inset-0 h-full w-full object-contain"
               />
             </AnimatePresence>
             <div

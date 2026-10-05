@@ -48,7 +48,7 @@ export default function CartDrawer() {
                     loading="lazy"
                     width={90}
                     height={110}
-                    className="h-24 w-20 rounded-[14px] object-cover sepia-photo"
+                    className="plate-media h-24 w-20 rounded-[14px] object-contain"
                   />
                   <div className="flex-1">
                     <p className="font-display text-xl text-primary">{l.name}</p>

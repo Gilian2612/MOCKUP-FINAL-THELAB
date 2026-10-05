@@ -32,14 +32,7 @@ function HousePage() {
   return (
     <main className="relative isolate min-h-screen bg-background">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop
-        src={marioFondo2}
-        width={941}
-        height={1672}
-        position="object-top"
-        scale="scale-110"
-        translate="-translate-y-[180px]"
-      />
+      <FilmBackdrop src={marioFondo2} />
 
       <section className="relative flex min-h-[80vh] items-end overflow-hidden">
         <div className="copper-beam left-1/4" />
@@ -69,7 +62,7 @@ function HousePage() {
             loading="lazy"
             width={1000}
             height={1000}
-            className="clay h-72 w-full object-cover p-1 sepia-photo"
+            className="clay h-72 w-full object-contain p-1"
           />
           <img
             src={marioSmelling}
@@ -77,7 +70,7 @@ function HousePage() {
             loading="lazy"
             width={1000}
             height={1000}
-            className="clay mt-10 h-72 w-full object-cover p-1 sepia-photo"
+            className="clay mt-10 h-72 w-full object-contain p-1"
           />
         </div>
       </section>
@@ -90,7 +83,7 @@ function HousePage() {
             loading="lazy"
             width={1000}
             height={1000}
-            className="clay h-72 w-full object-cover p-1 sepia-photo"
+            className="clay h-72 w-full object-contain p-1"
           />
           <img
             src={brandTag}
@@ -98,7 +91,7 @@ function HousePage() {
             loading="lazy"
             width={1000}
             height={1000}
-            className="clay mt-10 h-72 w-full object-cover p-1 sepia-photo"
+            className="clay mt-10 h-72 w-full object-contain p-1"
           />
         </div>
         <div className="order-1 lg:order-2">

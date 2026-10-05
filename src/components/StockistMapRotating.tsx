@@ -227,8 +227,8 @@ export default function StockistMapRotating({
 
   return (
     <div
-      className={`relative mx-auto ${className}`}
-      style={{ height: 720, width: 430, maxWidth: "100%" }}
+      className={`relative mx-auto w-full max-w-[430px] overflow-hidden ${className}`}
+      style={{ height: 720 }}
     >
       {/* Ambient glow behind the bottle */}
       <div

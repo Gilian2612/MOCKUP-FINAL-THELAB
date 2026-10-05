@@ -134,6 +134,15 @@
   .instagram-media:not(.instagram-media-rendered) {
     visibility: hidden !important;
   }
+
+  /* Instagram's embed script writes `min-width: 326px` as an inline style on
+     the iframe it injects. At a 360px viewport the column is only 312px wide,
+     so the embed pushed the page to 374px and produced a horizontal scrollbar
+     the reader could not act on. The inline style needs the override. */
+  .instagram-media {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
 }
 
 @utility clay {
@@ -156,14 +165,6 @@
     0 8px 24px -12px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 color-mix(in oklab, var(--cream) 14%, transparent),
     inset 0 0 0 1px color-mix(in oklab, var(--gold) 10%, transparent);
-}
-
-@utility sepia-photo {
-  filter: none;
-}
-
-@utility film-grade {
-  filter: sepia(0.22) saturate(1.15) contrast(1.12) brightness(0.9) blur(2px);
 }
 
 @utility film-warm {
@@ -216,8 +217,24 @@
   pointer-events: none;
 }
 
+/* The plate every cut-out photograph in this project sits on.
+
+   Measured across the assets: the 11 `shop-*.png` bottles are 19-29% opaque,
+   the 6 `gallery-*.png` 21-28%, the 10 notes images 25-40%, and
+   `shop-mang-oud.png` just 10.4%. They are cut-outs authored against black, so
+   66-81% of each canvas is transparent. Backing them with a theme token put
+   them on near-white in day mode (`--surface` is oklch 0.93), and every soft
+   reflection in the glass composited against paper and read as white dust
+   sprayed over the bottle.
+
+   The negative a cut-out was made for does not change with the theme, so this
+   plate does not either. Fixed values, not tokens. */
+@utility plate-media {
+  background: radial-gradient(ellipse 115% 88% at 50% 42%, #141414, #080808 84%);
+}
+
 @utility plate-backdrop {
-  background: radial-gradient(ellipse 115% 88% at 50% 40%, var(--surface), var(--background) 82%);
+  background: radial-gradient(ellipse 115% 88% at 50% 40%, #141414, #080808 82%);
 }
 
 @utility plate-frame {

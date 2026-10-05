@@ -34,13 +34,7 @@ function FragrancesPage() {
   return (
     <main className="relative isolate min-h-screen bg-background px-6 pb-24 pt-40 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop
-        src={fondoExtra}
-        width={941}
-        height={1672}
-        position="object-[center_25%]"
-        scale="scale-110"
-      />
+      <FilmBackdrop src={fondoExtra} />
 
       <div className="mb-4 h-px w-14 bg-primary/40" />
 
@@ -60,7 +54,7 @@ function FragrancesPage() {
             <Link
               to="/fragrances/$slug"
               params={{ slug: p.slug }}
-              className="overflow-hidden rounded-[20px] bg-background/40"
+              className="plate-media overflow-hidden rounded-[20px]"
             >
               <img
                 src={p.image}
@@ -68,7 +62,7 @@ function FragrancesPage() {
                 loading="lazy"
                 width={900}
                 height={1100}
-                className="h-80 w-full object-cover sepia-photo transition-transform duration-700 group-hover:scale-105"
+                className="h-80 w-full object-contain transition-transform duration-700 group-hover:scale-105"
               />
             </Link>
             <Link to="/fragrances/$slug" params={{ slug: p.slug }}>
