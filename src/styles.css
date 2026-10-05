@@ -219,29 +219,47 @@
 
 /* The plate every cut-out photograph in this project sits on.
 
-   Measured across the assets: the 11 `shop-*.png` bottles are 19-29% opaque,
-   the 6 `gallery-*.png` 21-28%, the 10 notes images 25-40%, and
-   `shop-mang-oud.png` just 10.4%. They are cut-outs authored against black, so
-   66-81% of each canvas is transparent. Backing them with a theme token put
-   them on near-white in day mode (`--surface` is oklch 0.93), and every soft
-   reflection in the glass composited against paper and read as white dust
-   sprayed over the bottle.
+   Measured across the assets: the 11 `shop-*.png` bottles are 19-29% opaque
+   and `shop-mang-oud.png` just 10.4%. They are cut-outs authored against
+   black, and the bottle is genuinely translucent rather than a matte
+   contaminated with black: only 12.8% of that file is fully opaque, and the
+   liquid, glass and the silver label carry real partial alpha. Composited on
+   paper the glass resolves grey and the label turns to flat silver-grey,
+   which is what read as dust. Un-premultiplying the matte changed nothing
+   measurable, and neither did any colour correction -- a see-through bottle
+   photographed on black cannot be made to look the same on white.
 
-   The negative a cut-out was made for does not change with the theme, so this
-   plate does not either. Fixed values, not tokens. */
+   So the surround stays dark in both themes and earns the dark by being built
+   as a plate rather than a fill: a full bleed with a shallow vertical
+   gradient so it is not dead flat, carried by `plate-frame`'s gold hairline
+   and the card's own radius. A hard-edged vignette was tried and rejected --
+   it reads as an obvious ellipse, which is worse than a framed rectangle. */
 @utility plate-media {
-  background: radial-gradient(ellipse 115% 88% at 50% 42%, #141414, #080808 84%);
+  background: linear-gradient(
+    180deg,
+    #1b1a18 0%,
+    #100f0e 46%,
+    #0c0b0a 78%,
+    #141312 100%
+  );
 }
 
 @utility plate-backdrop {
-  background: radial-gradient(ellipse 115% 88% at 50% 40%, #141414, #080808 82%);
+  background: linear-gradient(
+    180deg,
+    #1c1b19 0%,
+    #111010 48%,
+    #0b0b0a 80%,
+    #151413 100%
+  );
 }
 
 @utility plate-frame {
-  border: 1px solid color-mix(in oklab, var(--gold) 26%, transparent);
+  border: 1px solid color-mix(in oklab, var(--gold) 34%, transparent);
   box-shadow:
-    inset 0 0 0 1px color-mix(in oklab, var(--gold) 7%, transparent),
-    inset 0 1px 0 color-mix(in oklab, var(--cream) 6%, transparent);
+    inset 0 0 0 1px color-mix(in oklab, var(--gold) 10%, transparent),
+    inset 0 0 90px rgb(0 0 0 / 0.55),
+    inset 0 1px 0 rgb(255 255 255 / 0.08);
 }
 
 @utility plate-ghost {
