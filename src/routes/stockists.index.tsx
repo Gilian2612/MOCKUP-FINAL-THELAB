@@ -2,12 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
 import { MapPin } from "lucide-react";
 
-import { getStockistsByCountry, getStockistsByRegion } from "@/lib/stockists";
+import { getStockists, getStockistsByCountry } from "@/lib/stockists";
 import { useLanguage } from "@/context/LanguageContext";
 import marioFondo4 from "@/assets/mario-fondo4.webp";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
-const StockistMap = lazy(() => import("@/components/StockistMap"));
+const StockistMapRotating = lazy(() => import("@/components/StockistMapRotating"));
 
 export const Route = createFileRoute("/stockists/")({
   head: () => ({
@@ -30,7 +30,10 @@ export const Route = createFileRoute("/stockists/")({
 function StockistsPage() {
   const { lang, t } = useLanguage();
   const stockistsByCountry = getStockistsByCountry(lang);
-  const stockistsByRegion = getStockistsByRegion(lang);
+  const allStockistPoints = getStockists(lang).map((s) => ({
+    center: s.coords,
+    label: `${s.distributor} - ${s.city}`,
+  }));
   return (
     <main className="relative isolate min-h-screen bg-background px-6 pb-28 pt-40 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
@@ -79,21 +82,15 @@ function StockistsPage() {
           ))}
         </div>
 
-        <div className="space-y-8">
-          {stockistsByRegion.map(({ label, points }) => (
-            <div key={label} className="clay p-4">
-              <div className="mb-3 flex items-center justify-between px-1">
-                <p className="label-caps text-primary">{label}</p>
-              </div>
-              <Suspense fallback={<div className="h-[260px] rounded-[20px] bg-muted" />}>
-                <StockistMap
-                  zoom={points.length > 1 ? 9 : 13}
-                  points={points}
-                  ariaLabel={t.stockists.mapAria}
-                />
-              </Suspense>
-            </div>
-          ))}
+        {/* El mapa del frasco (antes en la landing) reemplaza los tres
+            rectangulos por region: una sola pieza, no cuatro mapas. */}
+        <div className="flex justify-center">
+          <Suspense fallback={<div className="h-[720px] w-full max-w-[430px] rounded-[20px] bg-muted" />}>
+            <StockistMapRotating
+              points={allStockistPoints}
+              ariaLabel={t.stockists.rotatingMapAria}
+            />
+          </Suspense>
         </div>
       </div>
     </main>

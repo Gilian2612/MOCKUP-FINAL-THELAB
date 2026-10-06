@@ -1,9 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp, MapPin } from "lucide-react";
 
-import marioImg from "@/assets/mario-hero.jpg";
-import brandImg from "@/assets/brand-detail.jpg";
 import marioFondo1 from "@/assets/mario-fondo1.webp";
 import { getStockists } from "@/lib/stockists";
 import { useLanguage } from "@/context/LanguageContext";
@@ -17,8 +15,6 @@ import {
 } from "@/components/ui/dialog";
 
 const STOCKIST_COUNT = getStockists("es").length;
-
-const StockistMapRotating = lazy(() => import("@/components/StockistMapRotating"));
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -48,10 +44,6 @@ export const Route = createFileRoute("/")({
 function Home() {
   const { lang, t } = useLanguage();
   const stockists = getStockists(lang);
-  const allStockistPoints = stockists.map((s) => ({
-    center: s.coords,
-    label: `${s.distributor} — ${s.city}`,
-  }));
   const [active, setActive] = useState(0);
   const [showComingSoon, setShowComingSoon] = useState(false);
 
@@ -108,19 +100,9 @@ function Home() {
             ))}
           </ol>
         </div>
-        <div className="clay overflow-hidden p-2">
-          <img
-            src={marioImg}
-            alt={t.home.founderAlt}
-            loading="lazy"
-            width={912}
-            height={1200}
-            className="h-[520px] w-full rounded-[22px] object-contain"
-          />
-        </div>
       </section>
 
-      {/* BRAND SYSTEM */}
+      {/* BRAND SYSTEM: la foto de marca se retiro; queda solo el texto. */}
       <section id="house" className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
         <div>
           <p className="label-caps text-primary">{t.home.houseLabel}</p>
@@ -132,16 +114,6 @@ function Home() {
               </li>
             ))}
           </ol>
-        </div>
-        <div className="clay overflow-hidden p-2">
-          <img
-            src={brandImg}
-            alt={t.home.brandAlt}
-            loading="lazy"
-            width={912}
-            height={1200}
-            className="h-[520px] w-full rounded-[22px] object-contain"
-          />
         </div>
       </section>
 
@@ -211,14 +183,6 @@ function Home() {
             })()}
           </div>
         </div>
-
-        <Suspense fallback={<div className="h-[440px] w-full rounded-[20px] bg-muted" />}>
-          <StockistMapRotating
-            points={allStockistPoints}
-            active={active}
-            ariaLabel={t.stockists.rotatingMapAria}
-          />
-        </Suspense>
       </section>
     </main>
   );
