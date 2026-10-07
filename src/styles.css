@@ -42,6 +42,8 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-muted-on-photo: var(--muted-on-photo);
+  --color-primary-on-photo: var(--primary-on-photo);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
@@ -73,6 +75,15 @@
   --secondary-foreground: oklch(0.89 0 0);
   --muted: oklch(0.24 0 0);
   --muted-foreground: oklch(0.62 0 0);
+  /* Secondary text that sits directly on a FilmBackdrop plate. The plate is a
+     graded photograph, so its local luminance swings with the crop; this value
+     is lifted off `--muted-foreground` to hold 4.5:1 against the brightest
+     scrimmed patch rather than only against the page background. */
+  --muted-on-photo: oklch(0.78 0 0);
+  /* Same story for the gold labels that sit on a plate. In night the accent is
+     already light enough against the scrim; in day it is a mid gold on a pale
+     scrim, which lands near 2:1, so it gets its own deeper value. */
+  --primary-on-photo: oklch(0.68 0.05 75);
   --accent: oklch(0.68 0.05 75);
   --accent-foreground: oklch(0.15 0 0);
   --destructive: oklch(0.577 0.245 27.325);
@@ -100,6 +111,8 @@
   --secondary-foreground: oklch(0.22 0 0);
   --muted: oklch(0.91 0 0);
   --muted-foreground: oklch(0.42 0 0);
+  --muted-on-photo: oklch(0.26 0 0);
+  --primary-on-photo: oklch(0.38 0.07 75);
   --accent: oklch(0.56 0.06 75);
   --accent-foreground: oklch(0.98 0 0);
   --destructive: oklch(0.58 0.13 27);
@@ -167,6 +180,19 @@
     inset 0 0 0 1px color-mix(in oklab, var(--gold) 10%, transparent);
 }
 
+/* The photographic grade every backdrop carries. One place, so all five
+   section backdrops read as the same shoot: a little sepia for the warm cast,
+   a lift in saturation, a touch of contrast, a stop of brightness, and 2px of
+   blur to take the digital edge off.
+
+   This was deleted as dead code while it had zero callers, which was correct
+   at the time. It then turned out to be the filter the live design runs on,
+   and the four `*-bg` plates that design uses had been removed in the same
+   sweep as "unused". Both are back. */
+@utility film-grade {
+  filter: sepia(0.22) saturate(1.15) contrast(1.12) brightness(0.9) blur(9px);
+}
+
 @utility film-warm {
   background: linear-gradient(
     180deg,
@@ -190,6 +216,93 @@
     transparent 55%,
     rgba(0, 0, 0, 0.55) 100%
   );
+}
+
+/* The two scrims that make the plate readable without killing it.
+
+   The plate used to be buried under a full-surface wash (`bg-background/60`)
+   plus a second flat veil, which is what turned every backdrop into a
+   near-black field with a warm smudge in it: the photograph was darkened twice
+   at full strength and the copy then sat on near-black in both themes. In day
+   mode the same numbers washed the picture out instead.
+
+   `film-scrim` is vertical and weighted where the reading actually happens --
+   the masthead and hero at the top, the closing block at the bottom -- and it
+   thins through the middle band so the photograph keeps its own tonality. It
+   is the only full-surface layer left.
+
+   `film-scrim-side` is horizontal and only exists from `lg` up, where the copy
+   runs in a column and the picture is meant to breathe on the other side of
+   the page. Below `lg` the copy is full-bleed, so a side scrim would only
+   darken the part of the plate the reader is not looking at.
+
+   Both are tinted with `--background`, so night lays ink and day lays paper and
+   the pair reads as one lens rather than two hardcoded blacks and whites. */
+@utility film-scrim {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--background) 74%, transparent) 0%,
+    color-mix(in srgb, var(--background) 64%, transparent) 10%,
+    color-mix(in srgb, var(--background) 46%, transparent) 28%,
+    color-mix(in srgb, var(--background) 38%, transparent) 52%,
+    color-mix(in srgb, var(--background) 41%, transparent) 76%,
+    color-mix(in srgb, var(--background) 54%, transparent) 100%
+  );
+}
+
+@utility film-scrim-side {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--background) 56%, transparent) 0%,
+    color-mix(in srgb, var(--background) 34%, transparent) 26%,
+    color-mix(in srgb, var(--background) 12%, transparent) 44%,
+    transparent 60%
+  );
+}
+
+/* Day mode lays paper instead of ink, so the plate needs less lift -- but the
+   vignette would then fight the light scrim and drag the page edges back down
+   to grey. It softens with the theme. */
+:root.light .film-vignette {
+  background: radial-gradient(
+    ellipse 92% 78% at 50% 45%,
+    transparent 62%,
+    rgba(0, 0, 0, 0.16) 100%
+  );
+}
+
+:root.light .film-scrim {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--background) 62%, transparent) 0%,
+    color-mix(in srgb, var(--background) 54%, transparent) 10%,
+    color-mix(in srgb, var(--background) 34%, transparent) 28%,
+    color-mix(in srgb, var(--background) 22%, transparent) 52%,
+    color-mix(in srgb, var(--background) 32%, transparent) 76%,
+    color-mix(in srgb, var(--background) 58%, transparent) 100%
+  );
+}
+
+:root.light .film-scrim-side {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--background) 52%, transparent) 0%,
+    color-mix(in srgb, var(--background) 30%, transparent) 26%,
+    color-mix(in srgb, var(--background) 8%, transparent) 44%,
+    transparent 60%
+  );
+}
+
+@media (min-width: 1024px) {
+  .film-scrim-side {
+    display: block;
+  }
+}
+
+@media (max-width: 1023.98px) {
+  .film-scrim-side {
+    display: none;
+  }
 }
 
 @utility film-leak {
@@ -260,6 +373,37 @@
     inset 0 0 0 1px color-mix(in oklab, var(--gold) 10%, transparent),
     inset 0 0 90px rgb(0 0 0 / 0.55),
     inset 0 1px 0 rgb(255 255 255 / 0.08);
+}
+
+/* The product plate is a lit vitrine. Its night gradient is baked ink, so it
+   has to be re-tinted for day: a near-black field behind a white carton reads
+   as a hole punched in the page, which is what the first light pass showed.
+   Day gets warm paper instead, and the frame loses its heavy inner vignette,
+   which would otherwise grey the whole plate out. */
+:root.light .plate-backdrop {
+  background: linear-gradient(
+    180deg,
+    oklch(0.965 0 0) 0%,
+    oklch(0.935 0 0) 48%,
+    oklch(0.9 0 0) 80%,
+    oklch(0.945 0 0) 100%
+  );
+}
+
+:root.light .plate-media {
+  background: linear-gradient(
+    180deg,
+    oklch(0.955 0 0) 0%,
+    oklch(0.925 0 0) 46%,
+    oklch(0.885 0 0) 78%,
+    oklch(0.94 0 0) 100%
+  );
+}
+
+:root.light .plate-frame {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--gold) 14%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 0.6);
 }
 
 @utility plate-ghost {

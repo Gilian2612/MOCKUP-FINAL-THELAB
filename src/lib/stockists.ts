@@ -10,7 +10,8 @@ export type Stockist = {
   city: string;
   distributor: string;
   address: string;
-  coords: [number, number];
+  /** Absent for stockists we cannot plot yet; those are skipped by the map. */
+  coords?: [number, number] | undefined;
 };
 
 type StockistSource = Omit<Stockist, "country" | "region" | "city"> & {
@@ -27,10 +28,13 @@ const CHILE: L = { es: "Chile", en: "Chile" };
 const MIDDLE_EAST: L = { es: "Medio Oriente", en: "Middle East" };
 const EUROPE: L = { es: "Europa", en: "Europe" };
 const AMERICAS: L = { es: "América", en: "Americas" };
+const ASIA_PACIFIC: L = { es: "Asia Pacífico", en: "Asia Pacific" };
 
 const DUBAI: L = { es: "Dubái", en: "Dubai" };
 const ABU_DHABI: L = { es: "Abu Dabi", en: "Abu Dhabi" };
 const DOHA: L = { es: "Doha", en: "Doha" };
+
+const SAME = (value: string): L => ({ es: value, en: value });
 
 const stockistSources: StockistSource[] = [
   {
@@ -38,8 +42,8 @@ const stockistSources: StockistSource[] = [
     country: UAE,
     region: MIDDLE_EAST,
     city: DUBAI,
-    distributor: "Jovoy Rare Perfumes",
-    address: "Al Wasl Rd, Al Bada'a, Jumeirah 1, Dubai, UAE",
+    distributor: "JOVOY RARE PERFUMES",
+    address: "Al Wasl Rd, Al Beda'a, Jumeirah 1, Dubai, UAE",
     coords: [55.263, 25.228],
   },
   {
@@ -47,53 +51,26 @@ const stockistSources: StockistSource[] = [
     country: UAE,
     region: MIDDLE_EAST,
     city: ABU_DHABI,
-    distributor: "Scent Community",
-    address: "Building 26, Saeed Bin Saif Al Falahi St, Al Nahyan / Al Mamoura, Abu Dhabi, UAE",
+    distributor: "SCENT COMMUNITY",
+    address: "Building 26, Sheesh Zabeer 1, Al Falashi St, Al Mansoura, Abu Dhabi, UAE",
     coords: [54.377, 24.452],
   },
   {
-    flag: "🇦🇪",
-    country: UAE,
-    region: MIDDLE_EAST,
-    city: DUBAI,
-    distributor: "Scent Community / LINK Concept Store",
-    address: "Wafi City, Wafi Mall, 1st Floor, Dubai, UAE",
-    coords: [55.318, 25.247],
-  },
-  {
     flag: "🇶🇦",
     country: QATAR,
     region: MIDDLE_EAST,
     city: DOHA,
-    distributor: "Jovoy Qatar",
+    distributor: "JOVOY QATAR",
     address: "Al Mana Business Centre 02, Al Amir Street, Doha, Qatar",
     coords: [51.533, 25.286],
-  },
-  {
-    flag: "🇶🇦",
-    country: QATAR,
-    region: MIDDLE_EAST,
-    city: { es: "Al Rayyan / Doha", en: "Al Rayyan / Doha" },
-    distributor: "Jovoy – Mall of Qatar",
-    address: "Mall of Qatar, Rawdat Al Jahhaniya, Al Rayyan, Qatar",
-    coords: [51.425, 25.319],
-  },
-  {
-    flag: "🇶🇦",
-    country: QATAR,
-    region: MIDDLE_EAST,
-    city: DOHA,
-    distributor: "Jovoy – Doha Festival City",
-    address: "Doha Festival City, Al Shamal Rd, Ground Floor, Doha, Qatar",
-    coords: [51.497, 25.378],
   },
   {
     flag: "🇪🇸",
     country: SPAIN,
     region: EUROPE,
     city: { es: "Vila-real", en: "Vila-real" },
-    distributor: "Ládano Perfumería",
-    address: "Carrer Colom 14, Vila-real, Castellón, Comunidad Valenciana, España",
+    distributor: "LADANO PERFUMERÍA",
+    address: "España",
     coords: [-0.102, 39.94],
   },
   {
@@ -101,9 +78,67 @@ const stockistSources: StockistSource[] = [
     country: CHILE,
     region: AMERICAS,
     city: { es: "Santiago", en: "Santiago" },
-    distributor: "Liquo SpA",
-    address: "Padre Mariano 391, Providencia, Santiago, Chile",
+    distributor: "LIQUO SPA",
+    address: "Chile",
     coords: [-70.608, -33.432],
+  },
+  /* Las siguientes siete vienen del diseño de PRESENCIA y todavía no tienen
+     coordenadas: salen en la lista, no en el mapa, hasta que se focallen. */
+  {
+    flag: "🇦🇪",
+    country: UAE,
+    region: MIDDLE_EAST,
+    city: ABU_DHABI,
+    distributor: "HOB ABU DHABI",
+    address: "Delma Mall, Main Entrance, ICAD 1, Abu Dhabi, UAE",
+  },
+  {
+    flag: "🇰🇼",
+    country: SAME("Kuwait"),
+    region: MIDDLE_EAST,
+    city: SAME("Kuwait"),
+    distributor: "IMPERIAL PERFUMES",
+    address: "Kuwait",
+  },
+  {
+    flag: "🇵🇦",
+    country: { es: "Panamá", en: "Panama" },
+    region: AMERICAS,
+    city: { es: "Panamá", en: "Panama" },
+    distributor: "FRAGANCEROS",
+    address: "Panamá",
+  },
+  {
+    flag: "🇲🇽",
+    country: SAME("Mexico"),
+    region: AMERICAS,
+    city: SAME("Mexico"),
+    distributor: "INFINITY SCENTS",
+    address: "Mexico",
+  },
+  {
+    flag: "🇺🇸",
+    country: { es: "EE. UU.", en: "USA" },
+    region: AMERICAS,
+    city: SAME("Texas"),
+    distributor: "USA – DIRECT SHIPPING",
+    address: "The LAB Perfumes",
+  },
+  {
+    flag: "🇦🇺",
+    country: SAME("Australia"),
+    region: ASIA_PACIFIC,
+    city: SAME("Australia"),
+    distributor: "FRAGARTAU",
+    address: "Australia",
+  },
+  {
+    flag: "🇮🇶",
+    country: { es: "Irak", en: "Iraq" },
+    region: ASIA_PACIFIC,
+    city: { es: "Irak", en: "Iraq" },
+    distributor: "IMAN ALATTAR FRAGRANCES",
+    address: "Iraq",
   },
 ];
 
@@ -122,13 +157,34 @@ const cache: Record<Lang, Stockist[]> = {
   en: stockistSources.map((s) => localize(s, "en")),
 };
 
-/** All stockists, in catalogue order, with labels in the given language. */
+/** Every stockist, in catalogue order, with labels in the given language. */
 export const getStockists = (lang: Lang): Stockist[] => cache[lang];
 
+/** Only the stockists we can place on the bottle map. */
+export type PlottedStockist = Stockist & { coords: [number, number] };
+
+export const getPlottedStockists = (lang: Lang): PlottedStockist[] =>
+  cache[lang].filter((s): s is PlottedStockist => s.coords !== undefined);
+
 const toPoint = (s: Stockist) => ({
-  center: s.coords,
+  center: s.coords!,
   label: `${s.distributor} — ${s.city}`,
 });
+
+/**
+ * A Google Maps link for any stockist, not only the plotted ones.
+ *
+ * With coordinates it is an exact pin. Without them it falls back to a text
+ * search built from the distributor name, the street address and the city, so
+ * every row can hand the reader off to Maps instead of only the five that
+ * happen to be geocoded.
+ */
+export const getMapsUrl = (s: Stockist): string => {
+  const query = s.coords
+    ? `${s.coords[1]},${s.coords[0]}`
+    : [s.distributor, s.address, s.city].filter(Boolean).join(", ");
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+};
 
 export const getStockistsByCountry = (lang: Lang) => {
   const groups = cache[lang].reduce<Record<string, Stockist[]>>((acc, s) => {
@@ -150,7 +206,7 @@ export const getStockistsByRegion = (lang: Lang) => {
   }, {});
   return Object.entries(groups).map(([region, items]) => ({
     region,
-    label: `🌍 ${region}`,
+    label: region,
     items,
     points: items.map(toPoint),
   }));

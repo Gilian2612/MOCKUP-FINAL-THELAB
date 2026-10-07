@@ -81,7 +81,7 @@ export default function StockistMapRotating({
                 type: "fill",
                 source: "carto",
                 "source-layer": "water",
-                paint: { "fill-color": "#11151f" },
+                paint: { "fill-color": "#171310" },
               },
               {
                 id: "roads-minor",
@@ -101,7 +101,7 @@ export default function StockistMapRotating({
                 "source-layer": "transportation",
                 filter: ["==", ["get", "class"], "motorway"],
                 paint: {
-                  "line-color": "#3c4657",
+                  "line-color": "#4a3f33",
                   "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.8, 14, 2.4],
                 },
               },

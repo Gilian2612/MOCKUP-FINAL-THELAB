@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 import g5 from "@/assets/gallery-05.png";
-import marioFondo3 from "@/assets/mario-fondo3.webp";
+import marioFondo3 from "@/assets/journal-bg.webp";
 import { useLanguage } from "@/context/LanguageContext";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
@@ -85,27 +85,27 @@ function JournalPage() {
   return (
     <main className="relative isolate flex min-h-screen flex-col bg-background px-6 pb-4 pt-[114px] lg:px-20">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop src={marioFondo3} />
+      <FilmBackdrop src={marioFondo3} position="center 95%" />
 
-      <p className="label-caps text-primary">{t.journal.label}</p>
+      <p className="label-caps text-primary-on-photo">{t.journal.label}</p>
       <h1 className="mt-1 font-display text-2xl text-cream sm:text-4xl">
         {t.journal.titleStart}
-        <span className="not-italic text-primary">{t.journal.titleEm}</span>
+        <span className="not-italic text-primary-on-photo">{t.journal.titleEm}</span>
       </h1>
       <div className="mt-2 h-px w-16 bg-primary/40" />
 
       <section className="mt-4 flex flex-col items-center gap-0.5 text-center">
-        <p className="label-caps text-muted-foreground">{t.journal.follow}</p>
+        <p className="label-caps text-muted-on-photo">{t.journal.follow}</p>
         <a
           href={INSTAGRAM_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 font-display text-base text-primary transition-colors hover:text-cream"
+          className="inline-flex items-center gap-2 font-display text-base text-primary-on-photo transition-colors hover:text-cream"
         >
           <InstagramIcon className="h-4 w-4" />
           @thelabperfumes
         </a>
-        <p className="max-w-md text-xs leading-relaxed text-muted-foreground">
+        <p className="max-w-md text-xs leading-relaxed text-muted-on-photo">
           {t.journal.followText}
         </p>
       </section>

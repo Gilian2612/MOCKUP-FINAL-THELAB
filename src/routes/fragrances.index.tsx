@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCart } from "@/context/CartContext";
 import { getProducts, formatAED } from "@/lib/products";
 import { useLanguage } from "@/context/LanguageContext";
-import fondoExtra from "@/assets/fondo-extra.webp";
+import fondoExtra from "@/assets/fragrances-bg.webp";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 export const Route = createFileRoute("/fragrances/")({
@@ -26,6 +26,11 @@ export const Route = createFileRoute("/fragrances/")({
   component: FragrancesPage,
 });
 
+/** The thin gold rule the design sets between the collection's title block. */
+function Rule() {
+  return <div aria-hidden="true" className="my-6 h-px w-14 bg-primary/70" />;
+}
+
 function FragrancesPage() {
   const { add } = useCart();
   const { lang, t } = useLanguage();
@@ -34,19 +39,38 @@ function FragrancesPage() {
   return (
     <main className="relative isolate min-h-screen bg-background px-6 pb-24 pt-40 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop src={fondoExtra} />
+      <FilmBackdrop src={fondoExtra} position="center 25%" scale={1.1} />
 
       <div className="mb-4 h-px w-14 bg-primary/40" />
 
-      <p className="label-caps text-primary">{t.fragrances.label}</p>
+      <p className="label-caps text-primary-on-photo">{t.fragrances.label}</p>
       <h1 className="mt-6 max-w-3xl font-display text-5xl text-cream sm:text-7xl">
         {t.fragrances.titleStart}
-        <span className="not-italic text-primary">{t.fragrances.titleEm}</span>
+        <span className="not-italic text-primary-on-photo">{t.fragrances.titleEm}</span>
         {t.fragrances.titleEnd}
       </h1>
-      <p className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground">
-        {t.fragrances.intro}
+
+      <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-baseline sm:gap-8">
+        <p className="label-caps text-muted-on-photo">{t.fragrances.sideLabel}</p>
+        <p aria-hidden="true" className="label-caps hidden text-primary/60 sm:block">
+          /
+        </p>
+        <p className="label-caps text-muted-on-photo">{t.fragrances.meta}</p>
+      </div>
+      <Rule />
+
+      <p className="font-display text-2xl leading-snug text-cream sm:text-3xl">
+        {t.fragrances.pullQuote}
       </p>
+      <Rule />
+
+      <div className="max-w-2xl space-y-5">
+        {t.fragrances.body.map((paragraph) => (
+          <p key={paragraph} className="text-sm leading-relaxed text-muted-on-photo">
+            {paragraph}
+          </p>
+        ))}
+      </div>
 
       <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((p) => (

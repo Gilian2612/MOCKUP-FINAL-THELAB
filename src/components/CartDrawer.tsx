@@ -29,7 +29,7 @@ export default function CartDrawer() {
           <button
             type="button"
             onClick={() => setDrawerOpen(false)}
-            className="label-caps text-muted-foreground hover:text-primary"
+            className="label-caps -my-2.5 py-2.5 text-muted-foreground hover:text-primary"
           >
             {t.cart.close}
           </button>

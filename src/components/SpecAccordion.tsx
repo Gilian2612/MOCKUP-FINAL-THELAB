@@ -35,7 +35,7 @@ export function SpecAccordion({
             className={cn(
               "overflow-hidden rounded-3xl border-l-[3px] border-y border-r transition-colors duration-300",
               isOpen
-                ? "border-y-transparent border-r-transparent border-l-[#B8935A] bg-[#1A1614]"
+                ? "border-y-transparent border-r-transparent border-l-primary bg-primary/10"
                 : "border-y-border border-r-border border-l-border bg-transparent",
             )}
           >
@@ -45,7 +45,7 @@ export function SpecAccordion({
               aria-expanded={isOpen}
               className={cn(
                 "label-caps flex w-full items-center justify-between px-6 py-4 text-left tracking-widest text-[0.9375rem]!",
-                isOpen ? "text-[#D9BE8B]" : "text-cream",
+                isOpen ? "text-primary" : "text-cream",
               )}
             >
               <span>{item.label}</span>
@@ -69,7 +69,7 @@ export function SpecAccordion({
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   className="overflow-hidden"
                 >
-                  <div className="px-6 pb-6 font-display text-base italic leading-relaxed text-[#D9BE8B]">
+                  <div className="px-6 pb-6 font-display text-base italic leading-relaxed text-primary">
                     {item.content}
                   </div>
                 </motion.div>

@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
 import { MapPin } from "lucide-react";
 
-import { getStockists, getStockistsByCountry } from "@/lib/stockists";
+import { getStockistsByRegion, getPlottedStockists, getMapsUrl } from "@/lib/stockists";
 import { useLanguage } from "@/context/LanguageContext";
-import marioFondo4 from "@/assets/mario-fondo4.webp";
+import marioFondo4 from "@/assets/stockists-bg.webp";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 const StockistMapRotating = lazy(() => import("@/components/StockistMapRotating"));
@@ -29,31 +29,31 @@ export const Route = createFileRoute("/stockists/")({
 
 function StockistsPage() {
   const { lang, t } = useLanguage();
-  const stockistsByCountry = getStockistsByCountry(lang);
-  const allStockistPoints = getStockists(lang).map((s) => ({
+  const stockistsByRegion = getStockistsByRegion(lang);
+  const allStockistPoints = getPlottedStockists(lang).map((s) => ({
     center: s.coords,
     label: `${s.distributor} - ${s.city}`,
   }));
   return (
     <main className="relative isolate min-h-screen bg-background px-6 pb-28 pt-40 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop src={marioFondo4} />
+      <FilmBackdrop src={marioFondo4} position="center" scale={1.1} />
 
       <div className="mb-4 h-3 w-3 border-l border-t border-primary/40" />
 
-      <p className="label-caps text-primary">{t.stockists.label}</p>
+      <p className="label-caps text-primary-on-photo">{t.stockists.label}</p>
       <h1 className="mt-6 font-display text-5xl text-cream sm:text-7xl">
         {t.stockists.titleStart}
-        <span className="not-italic text-primary">{t.stockists.titleEm}</span>
+        <span className="not-italic text-primary-on-photo">{t.stockists.titleEm}</span>
+        {t.stockists.titleEnd}
       </h1>
+      <p className="label-caps mt-6 text-muted-on-photo">{t.stockists.sub}</p>
 
       <div className="mt-16 grid gap-16 lg:grid-cols-2">
         <div className="space-y-10">
-          {stockistsByCountry.map(({ country, flag, items }) => (
-            <div key={country}>
-              <p className="label-caps text-primary/80">
-                {flag} {country}
-              </p>
+          {stockistsByRegion.map(({ label, items }) => (
+            <div key={label}>
+              <p className="label-caps text-primary-on-photo">{label}</p>
               <ul className="mt-4 divide-y divide-border border-y border-border">
                 {items.map((s) => (
                   <li
@@ -62,18 +62,18 @@ function StockistsPage() {
                   >
                     <div>
                       <p className="font-display text-2xl text-cream">{s.distributor}</p>
-                      <p className="mt-1 max-w-sm text-xs leading-relaxed text-muted-foreground">
+                      <p className="mt-1 max-w-sm text-xs leading-relaxed text-muted-on-photo">
                         {s.address}
                       </p>
                     </div>
                     <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${s.coords[1]},${s.coords[0]}`}
+                      href={getMapsUrl(s)}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={t.stockists.openInMaps(s.distributor)}
-                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-primary/40 text-primary-on-photo transition-colors hover:border-primary hover:bg-primary/10"
                     >
-                      <MapPin className="h-3.5 w-3.5" />
+                      <MapPin className="h-4 w-4" />
                     </a>
                   </li>
                 ))}
@@ -93,6 +93,11 @@ function StockistsPage() {
           </Suspense>
         </div>
       </div>
+
+      <footer className="mt-28 flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <p className="label-caps text-cream/80">{t.stockists.origin}</p>
+        <p className="label-caps text-primary-on-photo">{t.stockists.numeral}</p>
+      </footer>
     </main>
   );
 }

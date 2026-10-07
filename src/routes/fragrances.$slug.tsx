@@ -83,6 +83,60 @@ function ProductPage() {
     },
   ];
 
+  /** Previous / next perfume. Rendered twice: above the copy on phones, at the
+      foot of the column from `lg` up. Touch targets keep a 44px hit area via
+      padding so the tappable box clears WCAG 2.5.8 without growing the type. */
+  function PrevNext() {
+    return (
+      <nav
+        aria-label={t.product.allFragrances}
+        className="mt-8 flex items-center justify-between gap-3 border-y border-primary/20 py-4 lg:absolute lg:inset-x-20 lg:bottom-4 lg:mt-0 lg:border-y-0 lg:border-t"
+      >
+        <Link
+          to="/fragrances/$slug"
+          params={{ slug: prev.slug }}
+          className="group -my-2 flex min-h-11 items-center gap-3 py-2 text-left"
+        >
+          <span
+            aria-hidden="true"
+            className="text-xl text-primary transition-transform group-hover:-translate-x-1"
+          >
+            ←
+          </span>
+          <span className="flex flex-col">
+            <span className="label-caps text-muted-foreground">{t.product.previous}</span>
+            <span className="text-cream transition-colors group-hover:text-primary">
+              {prev.name}
+            </span>
+          </span>
+        </Link>
+
+        <span className="label-caps shrink-0 text-muted-foreground/70">
+          {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+        </span>
+
+        <Link
+          to="/fragrances/$slug"
+          params={{ slug: next.slug }}
+          className="group -my-2 flex min-h-11 items-center gap-3 py-2 text-right"
+        >
+          <span className="flex flex-col">
+            <span className="label-caps text-muted-foreground">{t.product.next}</span>
+            <span className="text-cream transition-colors group-hover:text-primary">
+              {next.name}
+            </span>
+          </span>
+          <span
+            aria-hidden="true"
+            className="text-xl text-primary transition-transform group-hover:translate-x-1"
+          >
+            →
+          </span>
+        </Link>
+      </nav>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-background pt-28">
       <div className="grid lg:grid-cols-2">
@@ -150,6 +204,15 @@ function ProductPage() {
           <Link to="/fragrances" className="label-caps text-muted-foreground hover:text-primary">
             {t.product.allFragrances}
           </Link>
+
+          {/* On a phone the plate fills the first screen and the copy sits under
+              it, so a prev/next parked at the foot of the column meant scrolling
+              past the whole product to change perfume. It renders here instead:
+              one tap below the chapter line, before the accordion and the price. */}
+          <div className="lg:hidden">
+            <PrevNext />
+          </div>
+
           <p className="mt-8 label-caps text-primary">
             {product.chapter} · {product.family}
           </p>
@@ -187,48 +250,8 @@ function ProductPage() {
             {t.product.addToBag}
           </button>
 
-          <div className="relative mt-12 flex items-center justify-between gap-4 border-t border-primary/20 pt-6 lg:absolute lg:inset-x-20 lg:bottom-4 lg:mt-0">
-            <Link
-              to="/fragrances/$slug"
-              params={{ slug: prev.slug }}
-              className="group flex items-center gap-3 text-left"
-            >
-              <span
-                aria-hidden="true"
-                className="text-xl text-primary transition-transform group-hover:-translate-x-1"
-              >
-                ←
-              </span>
-              <span className="flex flex-col">
-                <span className="label-caps text-muted-foreground">{t.product.previous}</span>
-                <span className="text-cream transition-colors group-hover:text-primary">
-                  {prev.name}
-                </span>
-              </span>
-            </Link>
-
-            <span className="label-caps text-muted-foreground/70">
-              {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-            </span>
-
-            <Link
-              to="/fragrances/$slug"
-              params={{ slug: next.slug }}
-              className="group flex items-center gap-3 text-right"
-            >
-              <span className="flex flex-col">
-                <span className="label-caps text-muted-foreground">{t.product.next}</span>
-                <span className="text-cream transition-colors group-hover:text-primary">
-                  {next.name}
-                </span>
-              </span>
-              <span
-                aria-hidden="true"
-                className="text-xl text-primary transition-transform group-hover:translate-x-1"
-              >
-                →
-              </span>
-            </Link>
+          <div className="hidden lg:block">
+            <PrevNext />
           </div>
         </div>
       </div>

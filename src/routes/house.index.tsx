@@ -1,10 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import marioStrips from "@/assets/mario-strips.jpg";
-import marioSmelling from "@/assets/mario-smelling.jpg";
-import brandBases from "@/assets/brand-bases.jpg";
-import brandTag from "@/assets/brand-tag.jpg";
-import marioFondo2 from "@/assets/mario-fondo2.webp";
+import houseBg from "@/assets/house-bg.webp";
 import { useLanguage } from "@/context/LanguageContext";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
@@ -32,82 +28,75 @@ function HousePage() {
   return (
     <main className="relative isolate min-h-screen bg-background">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop src={marioFondo2} />
+      <FilmBackdrop src={houseBg} position="top" scale={1.1} translateY={-180} />
 
       <section className="relative flex min-h-[80vh] items-end overflow-hidden">
         <div className="copper-beam left-1/4" />
         <div className="relative w-full px-6 pb-20 lg:px-20">
-          <p className="label-caps text-primary">{t.house.label}</p>
+          <p className="label-caps text-primary-on-photo">{t.house.label}</p>
           <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[0.95] text-cream sm:text-7xl">
             {t.house.heroStart}
-            <span className="not-italic text-primary">{t.house.heroEm}</span>
+            <span className="not-italic text-primary-on-photo">{t.house.heroEm}</span>
             {t.house.heroEnd}
           </h1>
-        </div>
-      </section>
-
-      <section className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
-        <div>
-          <p className="label-caps text-primary">{t.house.founderLabel}</p>
-          <h2 className="mt-6 font-display text-4xl text-cream sm:text-5xl">
-            {t.house.founderName}
-          </h2>
-          <p className="mt-6 text-sm leading-relaxed text-muted-foreground">{t.house.founderP1}</p>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{t.house.founderP2}</p>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <img
-            src={marioStrips}
-            alt={t.house.marioStripsAlt}
-            loading="lazy"
-            width={1000}
-            height={1000}
-            className="clay h-72 w-full object-contain p-1"
-          />
-          <img
-            src={marioSmelling}
-            alt={t.house.marioSmellingAlt}
-            loading="lazy"
-            width={1000}
-            height={1000}
-            className="clay mt-10 h-72 w-full object-contain p-1"
-          />
-        </div>
-      </section>
-
-      <section className="grid items-center gap-12 px-6 py-24 lg:grid-cols-2 lg:px-20">
-        <div className="order-2 grid grid-cols-2 gap-4 lg:order-1">
-          <img
-            src={brandBases}
-            alt={t.house.basesAlt}
-            loading="lazy"
-            width={1000}
-            height={1000}
-            className="clay h-72 w-full object-contain p-1"
-          />
-          <img
-            src={brandTag}
-            alt={t.house.tagAlt}
-            loading="lazy"
-            width={1000}
-            height={1000}
-            className="clay mt-10 h-72 w-full object-contain p-1"
-          />
-        </div>
-        <div className="order-1 lg:order-2">
-          <p className="label-caps text-primary">{t.house.methodLabel}</p>
-          <h2 className="mt-6 font-display text-4xl text-cream sm:text-5xl">
-            {t.house.methodTitleStart}
-            <em className="italic">{t.house.methodTitleEm}</em>
-          </h2>
-          <ol className="mt-10 divide-y divide-border border-y border-border">
-            {t.house.methodPoints.map((point, i) => (
-              <li key={point} className="flex items-baseline gap-6 py-6">
-                <span className="label-caps text-primary">0{i + 1} —</span>
-                <span className="font-display text-2xl text-cream">{point}</span>
-              </li>
+          <p className="label-caps mt-6 text-muted-on-photo">
+            {t.house.heroSub.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
             ))}
-          </ol>
+          </p>
+        </div>
+      </section>
+
+      <section className="relative px-6 py-24 lg:px-20">
+        {/* Reading surface. The page runs on one photograph for its whole
+            length, and the copy sits low where that plate is darkest. In day
+            mode the `-on-photo` tokens assume a light surface, so without this
+            local veil the gold labels fall onto Mario's face and disappear.
+            It is a veil, not a card: no border, no radius, no shadow. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-[1]"
+          style={{
+            background:
+              "linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--background) 72%, transparent) 20%, color-mix(in srgb, var(--background) 88%, transparent) 52%, var(--background) 100%)",
+          }}
+        />
+        <p className="max-w-3xl font-display text-xl leading-relaxed text-cream/90 md:text-2xl">
+          {t.house.lead}
+        </p>
+
+        {/* NUESTRA FILOSOFIA | NUESTROS PRINCIPIOS
+            The two text columns stand side by side the way the design sets them,
+            split by a single hairline. No plates, no cards: the atelier
+            photograph behind is the only image this section needs. */}
+        <div className="mt-20 grid gap-14 lg:grid-cols-2 lg:gap-0">
+          <div className="lg:flex lg:flex-col lg:pr-14">
+            <p className="label-caps text-primary-on-photo">{t.house.philosophyLabel}</p>
+            <div className="mt-8 flex-1 space-y-6 max-w-xl">
+              {t.house.philosophy.map((paragraph) => (
+                <p key={paragraph} className="text-sm leading-relaxed text-muted-on-photo">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t border-border pt-14 lg:border-l lg:border-t-0 lg:pl-14 lg:pt-0">
+            <p className="label-caps text-primary-on-photo">{t.house.principlesLabel}</p>
+            <ol className="mt-8 divide-y divide-border border-y border-border">
+              {t.house.principles.map((principle, i) => (
+                <li key={principle.title} className="py-6">
+                  <p className="label-caps text-primary-on-photo">0{i + 1} —</p>
+                  <p className="mt-3 font-display text-2xl text-cream">{principle.title}</p>
+                  <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-on-photo">
+                    {principle.text}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </section>
     </main>

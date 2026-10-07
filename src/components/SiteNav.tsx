@@ -45,7 +45,7 @@ export function LanguageToggle({ size = "sm" }: { size?: "sm" | "lg" }) {
               type="button"
               onClick={() => setLang(o.code)}
               aria-pressed={lang === o.code}
-              className={`label-caps transition-colors ${
+              className={`label-caps inline-flex items-center py-1 transition-colors ${
                 lang === o.code ? "text-primary" : inactive
               }`}
             >
@@ -71,7 +71,7 @@ export function LanguageToggle({ size = "sm" }: { size?: "sm" | "lg" }) {
             onClick={() => setLang(o.code)}
             aria-pressed={lang === o.code}
             title={o.long}
-            className={`label-caps text-[10px] leading-none transition-colors ${
+            className={`label-caps inline-flex h-7 items-center px-1 text-[10px] leading-none transition-colors ${
               lang === o.code ? "text-primary" : inactive
             }`}
           >
@@ -111,9 +111,13 @@ export default function SiteNav() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
-          <Link to="/" aria-label={t.nav.home}>
-            <Logo />
-          </Link>
+          <Link
+          to="/"
+          aria-label={t.nav.home}
+          className="inline-flex shrink-0 items-center px-1 py-1.5"
+        >
+          <Logo />
+        </Link>
 
           <nav className="hidden items-center gap-9 lg:flex">
             {links.map((l) => (
@@ -122,8 +126,8 @@ export default function SiteNav() {
                 to={l.to}
                 className={
                   theme === "day"
-                    ? "label-caps text-neutral-700/80 transition-colors hover:text-primary"
-                    : "label-caps text-white/75 transition-colors hover:text-primary"
+                    ? "label-caps inline-block py-2.5 text-neutral-700/80 transition-colors hover:text-primary"
+                    : "label-caps inline-block py-2.5 text-white/75 transition-colors hover:text-primary"
                 }
                 activeProps={{ className: "label-caps text-primary!" }}
               >
@@ -138,14 +142,14 @@ export default function SiteNav() {
               type="button"
               onClick={toggleTheme}
               aria-label={theme === "day" ? t.nav.switchToNight : t.nav.switchToDay}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
             >
-              {theme === "day" ? <Moon className="h-3.5 w-3.5" /> : <Sun className="h-3.5 w-3.5" />}
+              {theme === "day" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
             </button>
             <button
               type="button"
               onClick={() => setDrawerOpen(true)}
-              className="label-caps text-primary"
+              className="label-caps py-2 text-primary"
             >
               {t.nav.bag} ({count})
             </button>
@@ -154,9 +158,9 @@ export default function SiteNav() {
               onClick={() => setMobileMenuOpen(true)}
               aria-label={t.nav.openMenu}
               aria-expanded={mobileMenuOpen}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10 lg:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10 lg:hidden"
             >
-              <Menu className="h-3.5 w-3.5" />
+              <Menu className="h-4 w-4" />
             </button>
           </div>
         </div>
