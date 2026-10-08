@@ -85,7 +85,7 @@ function StockistsPage() {
         {/* El mapa del frasco (antes en la landing) reemplaza los tres
             rectangulos por region: una sola pieza, no cuatro mapas. */}
         <div className="flex justify-center">
-          <Suspense fallback={<div className="h-[720px] w-full max-w-[430px] rounded-[20px] bg-muted" />}>
+            <Suspense fallback={<div className="aspect-[1145.4/1791.79] w-full max-w-[430px] rounded-[20px] bg-muted lg:aspect-auto lg:h-[720px]" />}>
             <StockistMapRotating
               points={allStockistPoints}
               ariaLabel={t.stockists.rotatingMapAria}
