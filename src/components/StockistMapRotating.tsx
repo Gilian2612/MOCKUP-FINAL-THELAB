@@ -260,7 +260,7 @@ export default function StockistMapRotating({
   return (
     <div
       ref={boxRef}
-      className={`relative mx-auto aspect-[1145.4/1791.79] w-full max-w-[430px] overflow-hidden ${className}`}
+      className={`relative mx-auto aspect-[1145.4/1791.79] w-full max-w-[430px] overflow-hidden lg:aspect-auto lg:h-[720px] ${className}`}
     >
       {/* Ambient glow behind the bottle */}
       <div
