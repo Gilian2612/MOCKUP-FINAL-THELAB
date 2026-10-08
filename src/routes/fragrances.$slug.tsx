@@ -90,7 +90,7 @@ function ProductPage() {
     return (
       <nav
         aria-label={t.product.allFragrances}
-        className="mt-8 flex items-center justify-between gap-3 border-y border-primary/20 py-4 lg:absolute lg:inset-x-20 lg:bottom-4 lg:mt-0 lg:border-y-0 lg:border-t"
+        className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-3 border-t border-primary/25 bg-background/92 px-5 py-3 backdrop-blur-lg lg:absolute lg:inset-x-20 lg:bottom-4 lg:z-auto lg:mt-0 lg:border-y-0 lg:border-t lg:bg-transparent lg:px-0 lg:backdrop-blur-none"
       >
         <Link
           to="/fragrances/$slug"
@@ -138,7 +138,7 @@ function ProductPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background pt-28">
+    <main className="min-h-screen bg-background pb-24 pt-28 lg:pb-0">
       <div className="grid lg:grid-cols-2">
         <div className="relative isolate min-h-[520px] overflow-hidden lg:min-h-[calc(100vh-7rem)]">
           <div
@@ -207,8 +207,10 @@ function ProductPage() {
 
           {/* On a phone the plate fills the first screen and the copy sits under
               it, so a prev/next parked at the foot of the column meant scrolling
-              past the whole product to change perfume. It renders here instead:
-              one tap below the chapter line, before the accordion and the price. */}
+              past the whole product to change perfume. This instance stays
+              `fixed` to the bottom edge on phones (see PrevNext), always
+              reachable; the wrapper only scopes it below `lg` and takes no
+              flow space. */}
           <div className="lg:hidden">
             <PrevNext />
           </div>

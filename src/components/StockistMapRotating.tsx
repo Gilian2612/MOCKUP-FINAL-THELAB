@@ -1,5 +1,5 @@
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as maplibregl from "maplibre-gl";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { createPerfumeMarkerElement } from "./perfumeMarker";
@@ -35,6 +35,33 @@ export default function StockistMapRotating({
   const mapRef = useRef<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const markerRef = useRef<any>(null);
+
+  // The bottle artwork is authored in a 1145.4 x 1791.79 space. The box is
+  // fluid (aspect-ratio + max-w), so the clip and the gold outline must scale
+  // with the real rendered size — a fixed 430x720 scale crops the bottle on
+  // phones. Initial value matches desktop so first paint doesn't flash.
+  const boxRef = useRef<HTMLDivElement | null>(null);
+  const [box, setBox] = useState({ w: 430, h: 720 });
+
+  useEffect(() => {
+    const node = boxRef.current;
+    if (!node) return;
+    const ro = new ResizeObserver((entries) => {
+      const r = entries[0]?.contentRect;
+      if (r && r.width > 0 && r.height > 0) {
+        setBox((prev) =>
+          Math.abs(prev.w - r.width) < 0.5 && Math.abs(prev.h - r.height) < 0.5
+            ? prev
+            : { w: r.width, h: r.height },
+        );
+      }
+    });
+    ro.observe(node);
+    return () => ro.disconnect();
+  }, []);
+
+  const sx = box.w / 1145.4;
+  const sy = box.h / 1791.79;
 
   useEffect(() => {
     let cancelled = false;
@@ -225,10 +252,15 @@ export default function StockistMapRotating({
     markerRef.current?.setLngLat(c);
   }, [active, zoom, points]);
 
+  // Keep the WebGL canvas in sync when the box resizes (phone rotation).
+  useEffect(() => {
+    mapRef.current?.resize();
+  }, [box]);
+
   return (
     <div
-      className={`relative mx-auto w-full max-w-[430px] overflow-hidden ${className}`}
-      style={{ height: 720 }}
+      ref={boxRef}
+      className={`relative mx-auto aspect-[1145.4/1791.79] w-full max-w-[430px] overflow-hidden ${className}`}
     >
       {/* Ambient glow behind the bottle */}
       <div
@@ -286,7 +318,7 @@ export default function StockistMapRotating({
           <clipPath
             id="bottleClip"
             clipPathUnits="userSpaceOnUse"
-            transform={`scale(${430 / 1145.4} ${720 / 1791.79})`}
+            transform={`scale(${sx} ${sy})`}
           >
             <path d={BOTTLE_PATH} />
           </clipPath>
@@ -305,7 +337,7 @@ export default function StockistMapRotating({
       <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
         <path
           d={BOTTLE_PATH}
-          transform={`scale(${430 / 1145.4} ${720 / 1791.79})`}
+          transform={`scale(${sx} ${sy})`}
           fill="none"
           stroke="#ab843d"
           strokeWidth={2.5}

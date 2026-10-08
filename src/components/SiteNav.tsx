@@ -137,7 +137,11 @@ export default function SiteNav() {
           </nav>
 
           <div className="flex items-center gap-4 -translate-x-5">
-            <LanguageToggle />
+            {/* The ES/EN switch is only in the hamburger menu below `lg`; showing
+                both at once crowded the bar on a phone. */}
+            <div className="hidden lg:block">
+              <LanguageToggle />
+            </div>
             <button
               type="button"
               onClick={toggleTheme}
