@@ -1,27 +1,30 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 
-import fondoLanding from "@/assets/landing-bg.webp";
+import fondoLanding from "@/assets/landing-bottle.webp";
+import labLogo from "@/assets/the-lab-logo.svg";
+import labLogoHorizontal from "@/assets/the-lab-logo-horizontal.svg";
 import { useLanguage } from "@/context/LanguageContext";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
+
+const INSTAGRAM_URL = "https://www.instagram.com/thelabperfumes/";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Lab Perfumes — Not a Niche House from Colombia" },
+      { title: "The Lab Perfumes — Perfumes de autor hechos en Colombia" },
       {
         name: "description",
         content:
-          "Independent perfumery crafted between Colombia and Dubai. Discover the collection, the founder Mario Galindo, and our stockists.",
+          "Una casa de perfumería de autor desde 2011. Representar a Colombia ante el mundo.",
       },
       {
         property: "og:title",
-        content: "The Lab Perfumes — Not a Niche House from Colombia",
+        content: "The Lab Perfumes — Perfumes de autor hechos en Colombia",
       },
       {
         property: "og:description",
         content:
-          "Independent perfumery crafted between Colombia and Dubai. Discover the collection.",
+          "Una casa de perfumería de autor desde 2011. Descubrí la colección.",
       },
     ],
   }),
@@ -37,118 +40,86 @@ function Home() {
   const { t } = useLanguage();
 
   return (
-    <main className="relative min-h-screen">
-      {/* La foto del founder es el fondo de toda la landing, tal cual el diseno. */}
-      <FilmBackdrop src={fondoLanding} position="center 15%" />
+    <main className="relative flex min-h-screen flex-col">
+      {/* Boticario ámbar: encuadre sobre la botella (derecha) para que mande ella. */}
+      <FilmBackdrop src={fondoLanding} position="75% center" sharp />
 
-      <div className="grid gap-16 px-6 pb-32 pt-28 md:grid-cols-2 md:gap-10 md:px-10 md:pt-32 lg:gap-20 lg:px-20">
-        {/* ---------------- COLUMNA IZQUIERDA ---------------- */}
-        <div className="min-w-0">
-          {/* HERO */}
-          <section aria-labelledby="hero-title">
-            <p className="label-caps text-primary-on-photo">
-              {t.home.heroEyebrow.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </p>
-            <Rule />
-            <h1
-              id="hero-title"
-              className="font-display text-5xl leading-[0.9] text-cream md:text-6xl xl:text-8xl"
-            >
-              {t.home.heroTitle}
+      <div className="flex flex-1 flex-col px-6 pb-10 pt-28 md:px-10 md:pt-32 lg:px-20">
+        {/* ---------------- HERO ---------------- */}
+        <section aria-labelledby="hero-title">
+          <p className="label-caps text-primary-on-photo">
+            {t.home.heroEyebrow.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
+          </p>
+          <Rule />
+            <h1 id="hero-title">
+              <img
+                src={labLogoHorizontal}
+                alt="The Lab Perfumes"
+                className="h-10 w-auto object-contain brightness-0 invert md:h-12"
+              />
             </h1>
-            <p className="label-caps mt-5 text-muted-on-photo">{t.home.heroFounded}</p>
-            <Rule />
-            <p className="font-display text-xl leading-snug text-cream md:text-2xl xl:text-3xl">
-              {t.home.heroTagline.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </p>
-          </section>
+          <p className="label-caps mt-5 text-muted-on-photo">{t.home.heroFounded}</p>
+        </section>
 
-          {/* THE FOUNDER */}
-          <section id="founder" aria-labelledby="founder-heading" className="mt-28 lg:mt-44">
-            <h2
-              id="founder-heading"
-              className="label-caps text-primary-on-photo"
-            >
-              {t.home.founderSection}
-            </h2>
-            <p className="mt-5 font-display text-4xl leading-none text-cream md:text-5xl xl:text-6xl">
-              {t.home.founderName}
-            </p>
-            <p className="label-caps mt-4 text-muted-on-photo">
-              {t.home.founderRole.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </p>
-            <Rule />
-            <p className="max-w-xl font-display text-base leading-relaxed text-cream/90 md:text-lg">
-              {t.home.founderBio}
-            </p>
-            <Rule />
-            <Link
-              to="/house"
-              className="group inline-flex items-center gap-4 label-caps text-cream transition-colors hover:text-primary"
-            >
-              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/50 transition-colors group-hover:border-primary group-hover:bg-primary/10">
-                <ArrowRight className="h-4 w-4" />
+        {/* ---------------- NUESTRO PROPÓSITO ---------------- */}
+        <section aria-labelledby="purpose-title" className="mt-24 md:mt-[16vh]">
+          <p className="label-caps text-primary-on-photo">{t.home.purposeEyebrow}</p>
+          <h2
+            id="purpose-title"
+            className="mt-5 font-display text-4xl font-semibold leading-[0.95] text-cream md:text-5xl xl:text-6xl"
+          >
+            {t.home.purposeTitle.map((line) => (
+              <span key={line} className="block">
+                {line}
               </span>
-              {t.home.founderCta}
-            </Link>
-          </section>
-        </div>
+            ))}
+          </h2>
+          <Rule />
+          <p className="max-w-xl text-base leading-relaxed text-cream/90">
+            {t.home.purposeBody}
+          </p>
+        </section>
 
-        {/* ---------------- COLUMNA DERECHA ---------------- */}
-        <div className="mt-28 min-w-0 md:mt-0">
-          {/* WHERE WE ARE */}
-          <section id="where" aria-labelledby="where-heading">
-            <h2 id="where-heading" className="label-caps text-primary-on-photo">
-              {t.home.whereSection}
-            </h2>
-            <p className="label-caps mt-3 text-muted-on-photo">{t.home.whereSub}</p>
-            <Rule />
-            <p className="font-display text-xl leading-snug text-cream md:text-2xl xl:text-3xl">
-              {t.home.wherePull}
-            </p>
-            <Rule />
-
-            <h3 className="label-caps text-primary-on-photo">{t.home.retailersLabel}</h3>
-            <ul className="mt-4 divide-y divide-border border-y border-border">
-              {t.home.retailers.map((place) => (
-                <li key={place} className="py-2.5 text-sm leading-relaxed text-cream">
-                  {place}
-                </li>
+        {/* ---------------- CIERRE ---------------- */}
+        <footer className="mt-24 border-t border-cream/25 pt-6 md:mt-auto">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              {t.home.footerOrigin.map((line) => (
+                <p key={line} className="label-caps text-muted-on-photo">
+                  {line}
+                </p>
               ))}
-            </ul>
-
-            <h3 className="label-caps mt-8 text-primary-on-photo">{t.home.distributorsLabel}</h3>
-            <ul className="mt-4 divide-y divide-border border-y border-border">
-              {t.home.distributors.map((place) => (
-                <li key={place} className="py-2.5 text-sm leading-relaxed text-cream">
-                  {place}
-                </li>
-              ))}
-            </ul>
-
-            <Link
-              to="/stockists"
-              className="group mt-8 inline-flex items-center gap-4 label-caps text-cream transition-colors hover:text-primary"
-            >
-              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/50 transition-colors group-hover:border-primary group-hover:bg-primary/10">
-                <ArrowRight className="h-4 w-4" />
-              </span>
-              {t.home.distributorsCta}
-            </Link>
-          </section>
-        </div>
+            </div>
+            <img
+              src={labLogo}
+              alt="The Lab Perfumes"
+              className="h-8 w-auto object-contain"
+            />
+            <div className="flex items-center gap-6">
+              {t.home.footerLinks.map((link) =>
+                link === "INSTAGRAM" ? (
+                  <a
+                    key={link}
+                    href={INSTAGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="label-caps text-cream transition-colors hover:text-primary"
+                  >
+                    {link}
+                  </a>
+                ) : (
+                  <span key={link} className="label-caps text-cream">
+                    {link}
+                  </span>
+                ),
+              )}
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
   );

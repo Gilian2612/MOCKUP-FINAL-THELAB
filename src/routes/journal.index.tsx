@@ -85,7 +85,7 @@ function JournalPage() {
   return (
     <main className="relative isolate flex min-h-screen flex-col bg-background px-6 pb-4 pt-[114px] lg:px-20">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop src={marioFondo3} position="center 95%" />
+      <FilmBackdrop src={marioFondo3} position="center 55%" />
 
       <p className="label-caps text-primary-on-photo">{t.journal.label}</p>
       <h1 className="mt-1 font-display text-2xl text-cream sm:text-4xl">

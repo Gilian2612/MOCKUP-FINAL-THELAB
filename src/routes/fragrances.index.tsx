@@ -39,7 +39,7 @@ function FragrancesPage() {
   return (
     <main className="relative isolate min-h-screen bg-background px-6 pb-24 pt-40 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop src={fondoExtra} position="center 25%" scale={1.1} />
+      <FilmBackdrop src={fondoExtra} position="70% 40%" />
 
       <div className="mb-4 h-px w-14 bg-primary/40" />
 

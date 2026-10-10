@@ -19,6 +19,54 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Cabrito Didone";
+  src: url("./fonts/CabritoDidone-NorReg.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./fonts/Poppins-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./fonts/Poppins-Italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./fonts/Poppins-Medium.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./fonts/Poppins-SemiBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./fonts/Poppins-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -28,8 +76,8 @@
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-clay: 26px;
-  --font-display: "La Presse", Georgia, serif;
-  --font-sans: "Special Elite", ui-monospace, "Courier New", monospace;
+  --font-display: "Poppins", "Cabrito Didone", "La Presse", Georgia, serif;
+  --font-sans: "Poppins", "Cabrito Didone", "Special Elite", Georgia, serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -191,6 +239,11 @@
    sweep as "unused". Both are back. */
 @utility film-grade {
   filter: sepia(0.22) saturate(1.15) contrast(1.12) brightness(0.9) blur(9px);
+}
+
+/* Same grade without the blur, for plates that must read sharp. */
+@utility film-grade-sharp {
+  filter: sepia(0.22) saturate(1.15) contrast(1.12) brightness(0.9);
 }
 
 @utility film-warm {

@@ -4,7 +4,7 @@ import { MapPin } from "lucide-react";
 
 import { getStockistsByRegion, getPlottedStockists, getMapsUrl } from "@/lib/stockists";
 import { useLanguage } from "@/context/LanguageContext";
-import marioFondo4 from "@/assets/stockists-bg.webp";
+import fondoStockists from "@/assets/landing-bg.webp";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 const StockistMapRotating = lazy(() => import("@/components/StockistMapRotating"));
@@ -37,7 +37,7 @@ function StockistsPage() {
   return (
     <main className="relative isolate min-h-screen bg-background px-6 pb-28 pt-40 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop src={marioFondo4} position="center" scale={1.1} />
+      <FilmBackdrop src={fondoStockists} position="center 20%" />
 
       <div className="mb-4 h-3 w-3 border-l border-t border-primary/40" />
 

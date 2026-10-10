@@ -110,7 +110,7 @@ export default function SiteNav() {
             : "border-b border-transparent bg-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
+        <div className="flex w-full items-center justify-between gap-6 px-6 py-4 md:px-10 lg:px-20">
           <Link
           to="/"
           aria-label={t.nav.home}
@@ -119,7 +119,7 @@ export default function SiteNav() {
           <Logo />
         </Link>
 
-          <nav className="hidden items-center gap-9 lg:flex">
+          <nav className="hidden items-center gap-12 lg:flex">
             {links.map((l) => (
               <Link
                 key={l.to}
