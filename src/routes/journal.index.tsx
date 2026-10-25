@@ -1,14 +1,25 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-import g5 from "@/assets/gallery-05.png";
-import marioFondo3 from "@/assets/journal-bg.webp";
+import collage from "@/assets/journal-collage.jpg";
+import dubai from "@/assets/journal-dubai.jpg";
+import etapaDigital from "@/assets/journal-etapa-digital.jpg";
+import granada from "@/assets/journal-granada.jpg";
+import penon from "@/assets/journal-penon.jpg";
+import spiwak from "@/assets/journal-spiwak.png";
 import { useLanguage } from "@/context/LanguageContext";
-import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 const INSTAGRAM_URL = "https://www.instagram.com/thelabperfumes/";
-const INSTAGRAM_POST_URL = "https://www.instagram.com/p/Cz0G8OPuyfF/";
-const INSTAGRAM_POST_URL_2 = "https://www.instagram.com/p/DadjIU0IuI2/";
+const INSTAGRAM_POST_URL = "https://www.instagram.com/p/DadjIU0IuI2/";
+
+/** Plate per stage, in the order the timeline is authored (see `journal.timeline`). */
+const timelineMedia = [
+  { src: granada, position: "center 50%" },
+  { src: penon, position: "center 50%" },
+  { src: spiwak, position: "center 45%" },
+  { src: etapaDigital, position: "center 50%" },
+  { src: dubai, position: "center 60%" },
+];
 
 declare global {
   interface Window {
@@ -45,8 +56,6 @@ function InstagramEmbed({ url }: { url: string }) {
   );
 }
 
-const entryImages = [g5];
-
 function InstagramIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className}>
@@ -60,16 +69,16 @@ function InstagramIcon({ className }: { className?: string }) {
 export const Route = createFileRoute("/journal/")({
   head: () => ({
     meta: [
-      { title: "Journal — The Lab Perfumes" },
+      { title: "Pasado y Presente — The Lab Perfumes" },
       {
         name: "description",
         content:
-          "Field notes from The Lab Perfumes: sourcing trips, maceration, and building the Dubai flagship.",
+          "The history of The Lab Perfumes: from Granada and El Peñón in Cali to Hotel Spiwak, the digital era and Dubai.",
       },
-      { property: "og:title", content: "Journal — The Lab Perfumes" },
+      { property: "og:title", content: "Pasado y Presente — The Lab Perfumes" },
       {
         property: "og:description",
-        content: "Field notes from an independent Colombian-Emirati perfume house.",
+        content: "The timeline of an independent Colombian-Emirati perfume house.",
       },
     ],
   }),
@@ -78,74 +87,144 @@ export const Route = createFileRoute("/journal/")({
 
 function JournalPage() {
   const { t } = useLanguage();
-  const entries = t.journal.entries.map((e, i) => ({
-    ...e,
-    image: entryImages[i] ?? g5,
-  }));
+  const journal = t.journal;
+
   return (
-    <main className="relative isolate flex min-h-screen flex-col bg-background px-6 pb-4 pt-[114px] lg:px-20">
-      {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop src={marioFondo3} position="center 55%" />
-
-      <p className="label-caps text-primary-on-photo">{t.journal.label}</p>
-      <h1 className="mt-1 font-display text-2xl text-cream sm:text-4xl">
-        {t.journal.titleStart}
-        <span className="not-italic text-primary-on-photo">{t.journal.titleEm}</span>
-      </h1>
-      <div className="mt-2 h-px w-16 bg-primary/40" />
-
-      <section className="mt-4 flex flex-col items-center gap-0.5 text-center">
-        <p className="label-caps text-muted-on-photo">{t.journal.follow}</p>
-        <a
-          href={INSTAGRAM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 font-display text-base text-primary-on-photo transition-colors hover:text-cream"
-        >
-          <InstagramIcon className="h-4 w-4" />
-          @thelabperfumes
-        </a>
-        <p className="max-w-md text-xs leading-relaxed text-muted-on-photo">
-          {t.journal.followText}
-        </p>
-      </section>
-
-      <div className="mx-auto mt-4 grid w-full max-w-3xl gap-4 sm:grid-cols-2">
-        <article className="clay p-3">
-          <div className="min-h-[320px] overflow-hidden rounded-[16px] bg-background/40">
-            <InstagramEmbed url={INSTAGRAM_POST_URL} />
-          </div>
-        </article>
-
-        <article className="clay p-3">
-          <div className="min-h-[320px] overflow-hidden rounded-[16px] bg-background/40">
-            <InstagramEmbed url={INSTAGRAM_POST_URL_2} />
-          </div>
-        </article>
+    <main className="relative isolate min-h-screen overflow-x-hidden bg-background pb-24 pt-[104px] lg:pt-[120px]">
+      {/* The product collage is the plate; the scrim keeps the copy readable. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <img
+          src={collage}
+          alt=""
+          className="h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-background/78" />
+        <div className="film-vignette absolute inset-0 opacity-80" />
+        <div
+          className="absolute inset-x-0 top-0 h-48"
+          style={{
+            background:
+              "linear-gradient(to bottom, color-mix(in srgb, var(--background) 88%, transparent), transparent)",
+          }}
+        />
       </div>
 
-      {entries.map((e) => (
-        <article
-          key={e.title}
-          className="clay group mx-auto mt-3 flex w-full max-w-3xl flex-col items-center gap-4 p-3 sm:flex-row"
-        >
-          <div className="plate-media w-full shrink-0 overflow-hidden rounded-[16px] sm:w-36">
-            <img
-              src={e.image}
-              alt={e.alt}
-              loading="lazy"
-              width={1000}
-              height={1000}
-              className="h-20 w-full object-contain transition-transform duration-700 group-hover:scale-105 sm:h-full"
-            />
+      <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-14">
+        <div className="grid gap-14 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16">
+          {/* Masthead + story */}
+          <section>
+            <h1 className="font-display text-[clamp(2.6rem,5.4vw,5.4rem)] font-bold uppercase leading-[0.86] tracking-[-0.015em] text-cream">
+              <span className="block">{journal.titleTop}</span>
+              <span className="mt-1 block text-gold-bright">{journal.titleBottom}</span>
+            </h1>
+            <div aria-hidden="true" className="mt-6 h-[3px] w-28 bg-gold-bright" />
+
+            <div className="mt-8 max-w-[60ch] space-y-5">
+              {journal.story.map((paragraph, i) => (
+                <p
+                  key={i}
+                  className="founder-serif text-[1rem] leading-[1.65] text-cream/90 sm:text-[1.06rem]"
+                >
+                  {paragraph.map((segment, j) =>
+                    segment.bold ? (
+                      <strong key={j} className="font-bold text-cream">
+                        {segment.text}
+                      </strong>
+                    ) : (
+                      <span key={j}>{segment.text}</span>
+                    ),
+                  )}
+                </p>
+              ))}
+            </div>
+          </section>
+
+          {/* Instagram */}
+          <section className="lg:pt-4">
+            <h2 className="font-display text-[clamp(1.85rem,3.3vw,3.1rem)] font-bold uppercase leading-[0.95] tracking-[-0.01em] text-cream">
+              {journal.instagramTitle.before}
+              <span className="text-gold-bright">{journal.instagramTitle.accent}</span>
+              {journal.instagramTitle.after}
+            </h2>
+            <div aria-hidden="true" className="mt-4 h-[2px] w-full bg-gold-bright/70" />
+            <p className="mt-5 max-w-[52ch] founder-serif text-[1rem] leading-[1.6] text-cream/85">
+              {journal.instagramText}
+            </p>
+
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 text-[0.8rem] uppercase tracking-[0.22em] text-gold-bright transition-colors hover:text-cream"
+            >
+              <InstagramIcon className="h-4 w-4" />
+              @thelabperfumes
+            </a>
+
+            <div className="mx-auto mt-6 w-full max-w-[460px] rounded-[16px] bg-white p-2 shadow-[0_30px_60px_-25px_rgba(0,0,0,0.9)]">
+              <div className="overflow-hidden rounded-[10px]">
+                <InstagramEmbed url={INSTAGRAM_POST_URL} />
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* Timeline */}
+        <section className="mt-20 lg:mt-24">
+          <div className="flex items-center gap-5 sm:gap-8">
+            <span aria-hidden="true" className="hidden h-px flex-1 bg-gold-bright/40 sm:block" />
+            <h2 className="mx-auto text-center font-display text-[clamp(1.4rem,2.5vw,2.3rem)] font-bold uppercase tracking-[0.08em] text-cream">
+              {journal.timelineTitle}
+            </h2>
+            <span aria-hidden="true" className="hidden h-px flex-1 bg-gold-bright/40 sm:block" />
           </div>
-          <div>
-            <p className="label-caps text-muted-foreground">{e.date}</p>
-            <h2 className="mt-1 font-display text-lg text-primary">{e.title}</h2>
-            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{e.text}</p>
+
+          <div className="mt-12 grid gap-x-7 gap-y-14 sm:grid-cols-2 lg:mt-14 lg:grid-cols-5">
+            {journal.timeline.map((stage, i) => {
+              const media = timelineMedia[i] ?? { src: granada, position: "center 50%" };
+              return (
+                <article key={stage.title} className="flex flex-col items-center text-center">
+                  <p className="font-display text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-cream/90">
+                    {stage.year}
+                  </p>
+
+                  <div aria-hidden="true" className="my-4 flex w-full items-center gap-2">
+                    <span className="h-px flex-1 bg-gold-bright/35" />
+                    <span className="h-1 w-1 rounded-full bg-gold-bright/60" />
+                    <span className="h-px flex-1 bg-gold-bright/35" />
+                  </div>
+
+                  <div className="w-full overflow-hidden border border-gold-bright/70">
+                    <img
+                      src={media.src}
+                      alt={stage.alt}
+                      loading="lazy"
+                      className="aspect-[16/9] w-full object-cover"
+                      style={{ objectPosition: media.position }}
+                    />
+                  </div>
+
+                  <h3 className="mt-4 founder-serif text-[1.35rem] uppercase leading-tight tracking-[0.05em] text-cream">
+                    {stage.title}
+                  </h3>
+                  <p className="founder-serif text-[0.98rem] text-cream/80">{stage.place}</p>
+
+                  <div className="mt-3 space-y-2.5">
+                    {stage.text.map((paragraph, j) => (
+                      <p
+                        key={j}
+                        className="founder-serif text-[0.8rem] leading-[1.55] text-cream/75"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </article>
+              );
+            })}
           </div>
-        </article>
-      ))}
+        </section>
+      </div>
     </main>
   );
 }

@@ -4,6 +4,12 @@ type FilmBackdropProps = {
   position?: string;
   /** Grade without blur, for plates that must read sharp. */
   sharp?: boolean;
+  /**
+   * Pin the plate to the viewport instead of stretching it over the whole
+   * page. Keeps the photograph at its native scale (no over-zoom, no soft
+   * blow-up) and keeps the sharp subject behind the content.
+   */
+  fixed?: boolean;
 };
 
 /**
@@ -29,12 +35,13 @@ export function FilmBackdrop({
   src,
   position = "center 15%",
   sharp = false,
+  fixed = false,
 }: FilmBackdropProps) {
   const grade = sharp ? "film-grade-sharp" : "film-grade";
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      className={`pointer-events-none ${fixed ? "absolute lg:fixed" : "absolute"} inset-0 -z-10 overflow-hidden`}
     >
       {/* Single sharp plate, edge to edge, focal point per route. */}
       <img

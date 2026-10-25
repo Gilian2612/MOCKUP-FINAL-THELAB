@@ -176,7 +176,11 @@ function ProductPage() {
                 initial={
                   reduceMotion ? { opacity: 0 } : { opacity: 0, filter: "blur(16px)", scale: 1.06 }
                 }
-                animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+                animate={{
+                  opacity: 1,
+                  filter: isDark ? "blur(0px)" : "blur(0px)",
+                  scale: 1
+                }}
                 exit={
                   reduceMotion ? { opacity: 0 } : { opacity: 0, filter: "blur(16px)", scale: 1.06 }
                 }

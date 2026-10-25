@@ -9,9 +9,9 @@ export const es = {
   code: "es" as Lang,
   nav: {
     fragrances: "Colección",
-    house: "The Founder",
+    house: "El Fundador",
     stockists: "Presencia",
-    journal: "Diario",
+    journal: "Pasado y Presente",
     bag: "Bolsa",
     home: "The Lab Perfumes — inicio",
     openMenu: "Abrir menú",
@@ -25,6 +25,8 @@ export const es = {
   footer: {
     location: "Colombia · EAU",
     instagram: "The Lab Perfumes en Instagram",
+    contact: "Contacto",
+    newsletter: "Newsletter",
   },
   cart: {
     aria: "Bolsa de compras",
@@ -53,14 +55,14 @@ export const es = {
   home: {
     founderName: "Mario Galindo",
     founderAlt: "Mario Galindo, fundador de The Lab Perfumes",
-    heroEyebrow: ["PERFUMES", "DE AUTOR", "HECHOS EN", "COLOMBIA"],
+    heroEyebrow: ["BIENVENIDOS A LA ORIGINAL CASA DE PERFUMERÍA DE AUTOR."],
     heroTitle: "THE LAB PERFUMES",
-    heroFounded: "UNA CASA DE PERFUMERÍA DE AUTOR. DESDE 2011.",
-    purposeEyebrow: "NUESTRO PROPÓSITO",
-    purposeTitle: ["REPRESENTAR", "A COLOMBIA", "ANTE EL MUNDO"],
+    heroFounded: "ESTABLECIDA EN 2011 CALI, COLOMBIA POR MARIO GALINDO",
+    purposeEyebrow: "UNA MARCA ORGULLOSAMENTE COLOMBIANA",
+    purposeTitle: ["EL PERFUME ES UNA FORMA DE EXPRESAR", "IDENTIDAD, MEMORIA Y ORIGEN."],
     purposeBody:
-      "Las fragancias conectan a las personas, sus historias y sus culturas, llevando la perfumería de autor colombiana a una audiencia global.",
-    footerOrigin: ["CALI, COLOMBIA", "MMXI"],
+      "CREAMOS FRAGANCIAS ÚNICAS QUE TRANSFORMAN NUESTRA VISIÓN DEL MUNDO EN EXPERIENCIAS OLFATIVAS, LLEVANDO EL CARÁCTER DE NUESTRA PERFUMERÍA A NUEVOS TERRITORIOS.",
+    footerOrigin: ["COLOMBIA-UAE"],
     footerBrand: "THE LAB™",
     footerLinks: ["INSTAGRAM", "CONTACTO", "NEWSLETTER"],
     heroTagline: ["NOT A NICHE HOUSE FROM COLOMBIA."],
@@ -154,7 +156,9 @@ export const es = {
       },
     ],
     founderProfile: {
-      title: ["THE", "FOUNDER"],
+      title: ["EL", "FUNDADOR"],
+      quote:
+        "¿Nunca te ha pasado que sientes como si hubieras nacido para hacer eso a lo que te dedicas?",
       body: [
         "Mario Galindo aprendió el arte de la perfumería en Estados Unidos, guiado por un mentor que le enseñó la disciplina, la sensibilidad y los fundamentos técnicos detrás de la creación de fragancias.",
         "Desde ese momento, se dedicó a construir un proyecto colombiano de perfumería con un propósito claro: representar a su país ante el mundo a través de la originalidad, la calidad y la autoría.",
@@ -168,18 +172,122 @@ export const es = {
     },
   },
   journal: {
-    label: "Diario",
-    titleStart: "Notas de ",
-    titleEm: "campo",
-    follow: "Síguenos",
-    followText:
-      "Detrás de cámaras desde el atelier, viajes de abastecimiento y nuevos lanzamientos — en Instagram.",
-    entries: [
+    label: "Pasado y Presente",
+    titleTop: "PASADO Y",
+    titleBottom: "PRESENTE",
+    story: [
+      [
+        {
+          text: "Desde muy joven, el mundo de las fragancias ya era parte de su vida. En 2011, en el barrio ",
+          bold: false,
+        },
+        { text: "Granada de Cali", bold: true },
+        {
+          text: ", nació The LAB, una casa de perfumería de autor que empezaba a tomar forma.",
+          bold: false,
+        },
+      ],
+      [
+        { text: "Su segunda sede estuvo en el barrio ", bold: false },
+        { text: "El Peñón", bold: true },
+        {
+          text: ", donde operó durante tres años, antes de trasladarse al ",
+          bold: false,
+        },
+        { text: "Hotel Spiwak", bold: true },
+        { text: ".", bold: false },
+      ],
+      [
+        {
+          text: "Esos primeros años no estuvieron exentos de diversos problemas que, incluso, lo llevaron a atravesar por ",
+          bold: false,
+        },
+        { text: "3 quiebras", bold: true },
+        {
+          text: ". Finalmente, decidió cerrar el local en donde operaba The LAB, para adentrarse ",
+          bold: false,
+        },
+        { text: "más en la era digital y las redes sociales", bold: true },
+        { text: ".", bold: false },
+      ],
+      [
+        {
+          text: "En 2013 comenzó una nueva era: la digital. La apuesta era llevar la marca a un terreno fotográfico, con una premisa clara: ",
+          bold: false,
+        },
+        { text: "las imágenes se convirtieron en el puente", bold: true },
+        {
+          text: " para contar historias, transmitir sensaciones y acercar sus fragancias a un público global.",
+          bold: false,
+        },
+      ],
+      [
+        { text: "Con el tiempo, esa estrategia dio resultados. ", bold: false },
+        { text: "En 2017 llegaron los primeros contactos con el mercado árabe", bold: true },
+        {
+          text: ", un objetivo que la marca siempre había tenido, lo que condujo a ",
+          bold: false,
+        },
+        { text: "Dubái", bold: true },
+        {
+          text: ", donde actualmente The LAB tiene su oficina principal.",
+          bold: false,
+        },
+      ],
+    ],
+    instagramTitle: { before: "¿EN ", accent: "QUÉ", after: " ANDAMOS?" },
+    instagramText:
+      "Sigue la actividad diaria de THE LAB en Instagram: Últimos lanzamientos, workshops y talleres de perfumería, nuevos mercados, colaboraciones, nuevas boutiques y mucho más.",
+    timelineTitle: "LÍNEA DE TIEMPO",
+    timeline: [
       {
-        date: "Noviembre 2025",
-        title: "La tienda insignia, Dubai Mall",
-        alt: "Interior de la boutique de The Lab",
-        text: "Construir un espacio lo bastante oscuro para oler — luz, materia y la arquitectura de la atención.",
+        year: "2011",
+        title: "GRANADA",
+        place: "Cali, Colombia",
+        alt: "Barra de perfumería de The Lab en Granada, Cali",
+        text: [
+          "Todo comenzó con una idea clara: todos debemos oler único. En Granada, Cali, nació The LAB como un espacio de encuentro y experimentación, donde una barra de perfumería reunía aceites, ideas y curiosidad. Allí, cada combinación era una creación y crear fragancias únicas, convirtiendo el perfume en una forma personal de expresar identidad.",
+        ],
+      },
+      {
+        year: "2011 — 2014",
+        title: "EL PEÑÓN",
+        place: "Cali, Colombia",
+        alt: "Letrero de The Lab en El Peñón, Cali",
+        text: [
+          "En una casa republicana en el oeste de Cali nació una nueva versión de The LAB: un concepto multimarca donde la perfumería de autor convivía con el lujo y las propuestas más interesantes de la cultura y la filosofía de la marca.",
+          "El perfume tuvo sus primeros avances en presentación y accesorios para la botella, la caja de madera que después fue el gran gancho visual del producto se desarrolló y se empezó a producir en esta época.",
+        ],
+      },
+      {
+        year: "2014 — 2018",
+        title: "HOTEL SPIWAK",
+        place: "Cali, Colombia",
+        alt: "Fachada del Hotel Spiwak en Cali",
+        text: [
+          "En el Hotel Spiwak, The LAB llevó su experiencia a un nuevo público con un pequeño centro de experimentación y una cooperación más estructurada con el cliente. Fue una época de negocios: mantener las sedes físicas se hacía cada vez más difícil. La continuidad del modelo presencial estaba en riesgo y la marca debía encontrar nuevas formas de conectar con el mercado, un nuevo capítulo en la historia de The LAB.",
+          "En paralelo, el marketing olfativo se convirtió en una nueva línea de negocio, impulsando el desarrollo de colonias, fragancias para vehículos, ambientación y experiencias, marcando el inicio de una firma de moda. Así, The LAB amplió su campo de investigación y llevó su conocimiento de la perfumería a la medida. La división corporativa continúa activa.",
+        ],
+      },
+      {
+        year: "2013",
+        title: "ETAPA DIGITAL",
+        place: "The Lab",
+        alt: "Mesa de laboratorio de The Lab",
+        text: [
+          "La fotografía se convirtió en el puente de The LAB hacia nuevos mercados y culturas. La pasión por capturar las fragancias a través del lente de grandes fotógrafos permitió construir un universo visual propio y mantener vivo el vínculo con la comunidad de la marca, en una época en la que las plataformas digitales de venta aún no tenían el protagonismo de hoy.",
+          "Fue también una etapa de evolución en la investigación, formulación y consolidación técnica de la marca, con bases científicas más sólidas que le permitieron desarrollar una colección pensada en los mercados más exigentes.",
+        ],
+      },
+      {
+        year: "2017 — HOY",
+        title: "DUBAI",
+        place: "Oficina principal",
+        alt: "Burj Khalifa, Dubái",
+        text: [
+          "Con una cadena logística consolidada, The LAB dio un paso decisivo hacia su expansión internacional. La capacidad de exportar fragancias e importar materias primas permitió fortalecer la estructura de la empresa, desarrollar la colección y establecer relaciones comerciales con boutiques de prestigio en distintos países. Dubái se convirtió en el punto de partida para materializar una de las grandes metas de la marca: perfumería colombiana con presencia internacional.",
+          "Hoy, The LAB alterna su operación entre Colombia y los Emiratos Árabes Unidos, mientras trabaja en su gran objetivo: incorporar materias primas colombianas a la creación de sus fragancias. Ese propósito ya comienza a tomar forma en Private Blend 50 ml y en la colección 100 ml: fragancias que llevan el origen al mundo. Una apuesta por descubrir nuevos ingredientes, investigar su potencial olfativo y convertirlos en experiencias que conecten el origen con la perfumería de autor.",
+        ],
       },
     ],
   },
@@ -248,7 +356,7 @@ export const en: Dictionary = {
     fragrances: "Collection",
     house: "The Founder",
     stockists: "Presence",
-    journal: "Journal",
+    journal: "Past & Present",
     bag: "Bag",
     home: "The Lab Perfumes — home",
     openMenu: "Open menu",
@@ -262,6 +370,8 @@ export const en: Dictionary = {
   footer: {
     location: "Colombia · UAE",
     instagram: "The Lab Perfumes on Instagram",
+    contact: "Contacto",
+    newsletter: "Newsletter",
   },
   cart: {
     aria: "Shopping bag",
@@ -290,14 +400,14 @@ export const en: Dictionary = {
   home: {
     founderName: "Mario Galindo",
     founderAlt: "Mario Galindo, founder of The Lab Perfumes",
-    heroEyebrow: ["AUTHOR PERFUMES", "MADE IN COLOMBIA."],
+    heroEyebrow: ["WELCOME TO THE ORIGINAL AUTHOR PERFUMERY HOUSE."],
     heroTitle: "THE LAB PERFUMES",
-    heroFounded: "AN AUTHOR PERFUMERY HOUSE. SINCE 2011.",
-    purposeEyebrow: "OUR PURPOSE",
-    purposeTitle: ["REPRESENTING COLOMBIA", "TO THE WORLD"],
+    heroFounded: "ESTABLISHED IN 2011 CALI, COLOMBIA BY MARIO GALINDO",
+    purposeEyebrow: "A PROUDLY COLOMBIAN BRAND",
+    purposeTitle: ["PERFUME IS A WAY TO EXPRESS", "IDENTITY, MEMORY AND ORIGIN."],
     purposeBody:
-      "Fragrances connect people, their stories and their cultures, bringing Colombian author perfumery to a global audience.",
-    footerOrigin: ["CALI, COLOMBIA", "MMXI"],
+      "WE CREATE UNIQUE FRAGRANCES THAT TRANSFORM OUR VISION OF THE WORLD INTO OLFACTORY EXPERIENCES, CARRYING THE CHARACTER OF OUR PERFUMERY TO NEW TERRITORIES.",
+    footerOrigin: ["COLOMBIA-UAE"],
     footerBrand: "THE LAB™",
     footerLinks: ["INSTAGRAM", "CONTACT", "NEWSLETTER"],
     heroTagline: ["NOT A NICHE HOUSE FROM COLOMBIA."],
@@ -392,6 +502,8 @@ export const en: Dictionary = {
     ],
     founderProfile: {
       title: ["THE", "FOUNDER"],
+      quote:
+        "Have you ever felt as if you were born to do what you do?",
       body: [
         "Mario Galindo learned the art of perfumery in the United States, guided by a mentor who introduced him to the discipline, sensitivity and technical foundations behind fragrance creation.",
         "From that moment, he dedicated himself to building a Colombian perfume project with a clear purpose: to represent his country before the world through originality quality and authorship.",
@@ -405,18 +517,119 @@ export const en: Dictionary = {
     },
   },
   journal: {
-    label: "Journal",
-    titleStart: "Field ",
-    titleEm: "notes",
-    follow: "Follow along",
-    followText:
-      "Behind-the-scenes from the atelier, sourcing trips and new releases — on Instagram.",
-    entries: [
+    label: "Past & Present",
+    titleTop: "PAST &",
+    titleBottom: "PRESENT",
+    story: [
+      [
+        {
+          text: "From a very young age, the world of fragrance was already part of his life. In 2011, in the ",
+          bold: false,
+        },
+        { text: "Granada neighborhood of Cali", bold: true },
+        {
+          text: ", The LAB was born: an author perfumery house that was beginning to take shape.",
+          bold: false,
+        },
+      ],
+      [
+        { text: "Its second location was in the ", bold: false },
+        { text: "El Peñón", bold: true },
+        { text: " neighborhood, where it operated for three years before moving to the ", bold: false },
+        { text: "Hotel Spiwak", bold: true },
+        { text: ".", bold: false },
+      ],
+      [
+        {
+          text: "Those first years were not free of difficulties, which even led him through ",
+          bold: false,
+        },
+        { text: "3 bankruptcies", bold: true },
+        {
+          text: ". In the end, he decided to close the space where The LAB operated and go ",
+          bold: false,
+        },
+        { text: "deeper into the digital era and social media", bold: true },
+        { text: ".", bold: false },
+      ],
+      [
+        {
+          text: "In 2013 a new era began: the digital one. The bet was to take the brand into photography, with one clear premise: ",
+          bold: false,
+        },
+        { text: "images became the bridge", bold: true },
+        {
+          text: " to tell stories, convey sensations and bring its fragrances closer to a global audience.",
+          bold: false,
+        },
+      ],
+      [
+        { text: "Over time, that strategy paid off. ", bold: false },
+        { text: "In 2017 the first contacts with the Arab market arrived", bold: true },
+        {
+          text: ", a goal the brand had always had, which led to ",
+          bold: false,
+        },
+        { text: "Dubai", bold: true },
+        {
+          text: ", where The LAB currently has its main office.",
+          bold: false,
+        },
+      ],
+    ],
+    instagramTitle: { before: "WHAT ARE ", accent: "WE", after: " UP TO?" },
+    instagramText:
+      "Follow THE LAB's daily activity on Instagram: latest launches, perfumery workshops, new markets, collaborations, new boutiques and much more.",
+    timelineTitle: "TIMELINE",
+    timeline: [
       {
-        date: "November 2025",
-        title: "The flagship, Dubai Mall",
-        alt: "The Lab boutique interior",
-        text: "Building a room dark enough to smell in — light, material and the architecture of attention.",
+        year: "2011",
+        title: "GRANADA",
+        place: "Cali, Colombia",
+        alt: "The Lab perfume bar in Granada, Cali",
+        text: [
+          "It all began with a clear idea: we should all smell unique. In Granada, Cali, The LAB was born as a space for encounter and experimentation, where a perfume bar gathered oils, ideas and curiosity. There, every combination was a creation, turning fragrance into a personal way of expressing identity.",
+        ],
+      },
+      {
+        year: "2011 — 2014",
+        title: "EL PEÑÓN",
+        place: "Cali, Colombia",
+        alt: "The Lab sign in El Peñón, Cali",
+        text: [
+          "In a republican house in western Cali, a new version of The LAB was born: a multi-brand concept where author perfumery lived alongside luxury and the most interesting proposals in culture and the philosophy of the brand.",
+          "Fragrance took its first steps in presentation and bottle accessories; the wooden box that later became the product's great visual hook was developed and began production in this era.",
+        ],
+      },
+      {
+        year: "2014 — 2018",
+        title: "HOTEL SPIWAK",
+        place: "Cali, Colombia",
+        alt: "Hotel Spiwak facade in Cali",
+        text: [
+          "At Hotel Spiwak, The LAB brought its experience to a new audience with a small center for experimentation and a more structured collaboration with the client. It was a time of business: keeping physical locations open grew harder every year. The continuity of the in-person model was at risk and the brand had to find new ways to connect with the market, a new chapter in the history of The LAB.",
+          "In parallel, olfactory marketing became a new business line, driving the development of colognes, car fragrances, ambient scenting and experiences, marking the beginning of a signature fashion line. The LAB thus broadened its field of research and brought its perfumery knowledge made to measure. The corporate division remains active today.",
+        ],
+      },
+      {
+        year: "2013",
+        title: "DIGITAL ERA",
+        place: "The Lab",
+        alt: "The Lab laboratory table",
+        text: [
+          "Photography became The LAB's bridge to new markets and cultures. The passion for capturing fragrances through the lens of great photographers made it possible to build a visual universe of its own and keep the bond with the brand's community alive, at a time when digital sales platforms did not yet have the prominence they have today.",
+          "It was also a stage of evolution in research, formulation and technical consolidation of the brand, with stronger scientific foundations that allowed it to develop a collection designed for the most demanding markets.",
+        ],
+      },
+      {
+        year: "2017 — TODAY",
+        title: "DUBAI",
+        place: "Main office",
+        alt: "Burj Khalifa, Dubai",
+        text: [
+          "With a consolidated logistics chain, The LAB took a decisive step toward international expansion. The ability to export fragrances and import raw materials strengthened the company's structure, developed the collection and established commercial relationships with prestige boutiques in different countries. Dubai became the starting point for materializing one of the brand's great goals: Colombian perfumery with international presence.",
+          "Today, The LAB alternates its operation between Colombia and the United Arab Emirates while working on its great objective: incorporating Colombian raw materials into the creation of its fragrances. That purpose is already beginning to take shape in Private Blend 50 ml and the 100 ml collection: fragrances that carry the origin to the world. A commitment to discovering new ingredients, researching their olfactory potential and turning them into experiences that connect origin with author perfumery.",
+        ],
       },
     ],
   },

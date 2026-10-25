@@ -260,7 +260,7 @@ export default function StockistMapRotating({
   return (
     <div
       ref={boxRef}
-      className={`relative mx-auto aspect-[1145.4/1791.79] w-full max-w-[430px] overflow-hidden lg:aspect-auto lg:h-[720px] ${className}`}
+      className={`relative mx-auto aspect-[1145.4/1791.79] w-full max-w-[500px] overflow-visible lg:aspect-auto lg:h-[820px] ${className}`}
     >
       {/* Ambient glow behind the bottle */}
       <div
@@ -332,6 +332,19 @@ export default function StockistMapRotating({
           className="h-full w-full overflow-hidden"
         />
       </div>
+
+      {/* Black shadow/outline behind the bottle */}
+      <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
+        <path
+          d={BOTTLE_PATH}
+          transform={`scale(${sx} ${sy})`}
+          fill="none"
+          stroke="#000000"
+          strokeWidth={8}
+          vectorEffect="non-scaling-stroke"
+          opacity={0.9}
+        />
+      </svg>
 
       {/* Thin gold outline over the bottle silhouette, same color as the logo */}
       <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">

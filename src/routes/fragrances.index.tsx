@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCart } from "@/context/CartContext";
 import { getProducts, formatAED } from "@/lib/products";
 import { useLanguage } from "@/context/LanguageContext";
-import fondoExtra from "@/assets/fragrances-bg.webp";
+import fondoExtra from "@/assets/fragrances-bg-new.png";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 export const Route = createFileRoute("/fragrances/")({
@@ -39,7 +39,7 @@ function FragrancesPage() {
   return (
     <main className="relative isolate min-h-screen bg-background px-6 pb-24 pt-40 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
-      <FilmBackdrop src={fondoExtra} position="70% 40%" />
+      <FilmBackdrop src={fondoExtra} position="50% 50%" sharp fixed />
 
       <div className="mb-4 h-px w-14 bg-primary/40" />
 
@@ -51,56 +51,63 @@ function FragrancesPage() {
       </h1>
 
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-baseline sm:gap-8">
-        <p className="label-caps text-muted-on-photo">{t.fragrances.sideLabel}</p>
+        <p className="label-caps text-xl text-primary-on-photo">{t.fragrances.sideLabel}</p>
         <p aria-hidden="true" className="label-caps hidden text-primary/60 sm:block">
           /
         </p>
-        <p className="label-caps text-muted-on-photo">{t.fragrances.meta}</p>
+        <p className="label-caps text-xl text-primary-on-photo">{t.fragrances.meta}</p>
       </div>
       <Rule />
 
-      <p className="font-display text-2xl leading-snug text-cream sm:text-3xl">
+      <p className="font-display text-3xl leading-snug text-cream sm:text-4xl tracking-[0.35em]">
         {t.fragrances.pullQuote}
       </p>
       <Rule />
 
-      <div className="max-w-2xl space-y-5">
+      <div className="w-3/5 space-y-5">
         {t.fragrances.body.map((paragraph) => (
-          <p key={paragraph} className="text-sm leading-relaxed text-muted-on-photo">
+          <p key={paragraph} className="text-base leading-relaxed text-primary-on-photo">
             {paragraph}
           </p>
         ))}
       </div>
 
-      <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((p) => (
-          <article key={p.slug} className="glass-surface group flex flex-col rounded-[26px] p-6">
-            <Link
-              to="/fragrances/$slug"
-              params={{ slug: p.slug }}
-              className="plate-media overflow-hidden rounded-[20px]"
-            >
-              <img
-                src={p.image}
-                alt={t.fragrances.bottleAlt(p.name)}
-                loading="lazy"
-                width={900}
-                height={1100}
-                className="h-80 w-full object-contain transition-transform duration-700 group-hover:scale-105"
-              />
-            </Link>
-            <Link to="/fragrances/$slug" params={{ slug: p.slug }}>
-              <h2 className="mt-6 font-display text-2xl text-primary">{p.name}</h2>
-            </Link>
-            <p className="mt-2 label-caps text-muted-foreground">{p.notes.join(" · ")}</p>
-            <p className="mt-6 font-display text-xl text-cream">{formatAED(p.price)}</p>
-            <button
-              type="button"
-              onClick={() => add(p)}
-              className="mt-6 rounded-full border border-primary/60 py-3 label-caps text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-            >
-              {t.fragrances.addToBag}
-            </button>
+          <article key={p.slug} className="collection-card group flex h-auto flex-col rounded-[24px] p-2">
+            <div className="relative aspect-[4/5] w-full overflow-visible">
+              <Link
+                to="/fragrances/$slug"
+                params={{ slug: p.slug }}
+                className="absolute inset-0 flex items-center justify-center overflow-visible"
+              >
+                <img
+                  src={p.image}
+                  alt={t.fragrances.bottleAlt(p.name)}
+                  loading="lazy"
+                  width={900}
+                  height={1100}
+                  style={{ aspectRatio: "1080 / 1124" }}
+                  className="h-full w-auto max-w-none object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </Link>
+            </div>
+            <div className="mt-2 flex flex-1 flex-col items-start text-left">
+              <Link to="/fragrances/$slug" params={{ slug: p.slug }}>
+                <h2 className="founder-serif text-[1.5rem] leading-tight text-cream">{p.name}</h2>
+              </Link>
+              <p className="mt-1.5 min-h-[32px] label-caps leading-snug text-cream/80">
+                {p.notes.join(" · ")}
+              </p>
+              <p className="mt-2.5 mb-3 founder-serif text-xl text-cream">{formatAED(p.price)}</p>
+              <button
+                type="button"
+                onClick={() => add(p)}
+                className="mt-auto w-full rounded-full border border-primary/60 px-6 py-2 label-caps text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              >
+                {t.fragrances.addToBag}
+              </button>
+            </div>
           </article>
         ))}
       </div>

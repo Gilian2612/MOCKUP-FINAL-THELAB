@@ -15,7 +15,7 @@ import { CartProvider } from "@/context/CartContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { DEFAULT_LANG, LanguageProvider, useOptionalLanguage } from "@/context/LanguageContext";
 import SiteNav from "@/components/SiteNav";
-import SiteFooter from "@/components/SiteFooter";
+
 import CartDrawer from "@/components/CartDrawer";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -156,7 +156,6 @@ function RootComponent() {
             <GoldenSmoke />
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
             <Outlet />
-            <SiteFooter />
             <CartDrawer />
             <Toaster
               position="bottom-right"

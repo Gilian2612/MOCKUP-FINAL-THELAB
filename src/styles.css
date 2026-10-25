@@ -100,6 +100,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-gold: var(--gold);
+  --color-gold-bright: var(--gold-bright);
   --color-cream: var(--cream);
   --color-surface: var(--surface);
 }
@@ -111,6 +112,7 @@
   --foreground: oklch(0.89 0 0);
   --surface: oklch(0.16 0 0);
   --gold: oklch(0.68 0.05 75);
+  --gold-bright: oklch(0.83 0.16 88);
   --smoke-gold: oklch(0.72 0.09 75);
   --cream: oklch(0.89 0 0);
   --card: oklch(0.19 0 0);
@@ -147,6 +149,7 @@
   --foreground: oklch(0.22 0 0);
   --surface: oklch(0.93 0 0);
   --gold: oklch(0.56 0.06 75);
+  --gold-bright: oklch(0.64 0.14 82);
   --smoke-gold: oklch(0.62 0.09 75);
   --cream: oklch(0.22 0 0);
   --card: oklch(0.995 0 0);
@@ -226,6 +229,21 @@
     0 8px 24px -12px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 color-mix(in oklab, var(--cream) 14%, transparent),
     inset 0 0 0 1px color-mix(in oklab, var(--gold) 10%, transparent);
+}
+
+/* The collection plate. The photograph stays sharp on the page and behind
+   the card; everything read through the card's glass is softened by 10px, so
+   the bottle stays crisp while the shelf behind it melts away. */
+@utility collection-card {
+  position: relative;
+  background: color-mix(in oklab, var(--surface) 18%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--cream) 22%, transparent);
+  box-shadow:
+    0 30px 70px -30px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 color-mix(in oklab, var(--cream) 12%, transparent),
+    inset 0 0 0 1px color-mix(in oklab, var(--gold) 8%, transparent);
 }
 
 /* The photographic grade every backdrop carries. One place, so all five
@@ -365,6 +383,10 @@
     transparent 70%
   );
   mix-blend-mode: screen;
+}
+
+@utility founder-serif {
+  font-family: "Cabrito Didone", "La Presse", Georgia, serif;
 }
 
 @utility label-caps {

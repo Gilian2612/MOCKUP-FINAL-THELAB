@@ -10,8 +10,8 @@ import { useLanguage, type Lang } from "@/context/LanguageContext";
 const routes = [
   { key: "fragrances", to: "/fragrances" },
   { key: "house", to: "/house" },
-  { key: "stockists", to: "/stockists" },
   { key: "journal", to: "/journal" },
+  { key: "stockists", to: "/stockists" },
 ] as const;
 
 export function Logo() {
@@ -71,7 +71,7 @@ export function LanguageToggle({ size = "sm" }: { size?: "sm" | "lg" }) {
             onClick={() => setLang(o.code)}
             aria-pressed={lang === o.code}
             title={o.long}
-            className={`label-caps inline-flex h-7 items-center px-1 text-[10px] leading-none transition-colors ${
+            className={`label-caps inline-flex h-7 items-center px-1 text-[10px] leading-none transition-colors tap-target ${
               lang === o.code ? "text-primary" : inactive
             }`}
           >
@@ -126,8 +126,8 @@ export default function SiteNav() {
                 to={l.to}
                 className={
                   theme === "day"
-                    ? "label-caps inline-block py-2.5 text-neutral-700/80 transition-colors hover:text-primary"
-                    : "label-caps inline-block py-2.5 text-white/75 transition-colors hover:text-primary"
+                    ? "label-caps inline-block py-2.5 text-neutral-700/80 transition-colors hover:text-primary tap-target"
+                    : "label-caps inline-block py-2.5 text-white/75 transition-colors hover:text-primary tap-target"
                 }
                 activeProps={{ className: "label-caps text-primary!" }}
               >
@@ -146,14 +146,14 @@ export default function SiteNav() {
               type="button"
               onClick={toggleTheme}
               aria-label={theme === "day" ? t.nav.switchToNight : t.nav.switchToDay}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10 tap-target"
             >
               {theme === "day" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
             </button>
             <button
               type="button"
               onClick={() => setDrawerOpen(true)}
-              className="label-caps py-2 text-primary"
+              className="label-caps py-2 text-primary tap-target"
             >
               {t.nav.bag} ({count})
             </button>
