@@ -72,7 +72,7 @@ function FragrancesPage() {
         ))}
       </div>
 
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {products.map((p) => (
           <article key={p.slug} className="collection-card group flex h-auto flex-col rounded-[24px] p-2">
             <div className="relative aspect-[4/5] w-full overflow-visible">
@@ -88,7 +88,7 @@ function FragrancesPage() {
                   width={900}
                   height={1100}
                   style={{ aspectRatio: "1080 / 1124" }}
-                  className="h-full w-auto max-w-none object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </Link>
             </div>

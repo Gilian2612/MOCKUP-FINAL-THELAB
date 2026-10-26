@@ -10,6 +10,11 @@ type FilmBackdropProps = {
    * blow-up) and keeps the sharp subject behind the content.
    */
   fixed?: boolean;
+  /**
+   * On phones, pin the plate to the bottom of the screen and shrink it so the
+   * whole subject fits instead of being cropped by the narrow viewport.
+   */
+  mobilePlate?: boolean;
 };
 
 /**
@@ -36,6 +41,7 @@ export function FilmBackdrop({
   position = "center 15%",
   sharp = false,
   fixed = false,
+  mobilePlate = false,
 }: FilmBackdropProps) {
   const grade = sharp ? "film-grade-sharp" : "film-grade";
   return (
@@ -47,7 +53,11 @@ export function FilmBackdrop({
       <img
         src={src}
         alt=""
-        className={`${grade} absolute inset-0 h-full w-full object-cover`}
+        className={`${grade} absolute inset-0 h-full w-full object-cover ${
+          mobilePlate
+            ? "max-md:bottom-0 max-md:top-auto max-md:h-[72vh] max-md:[mask-image:linear-gradient(to_bottom,transparent_0%,black_22%)] max-md:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_22%)]"
+            : ""
+        }`}
         style={{ objectPosition: position }}
       />
       <div className="film-warm absolute inset-0" />

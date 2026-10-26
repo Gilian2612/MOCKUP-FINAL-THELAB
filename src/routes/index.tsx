@@ -43,59 +43,65 @@ function Home() {
   const isDark = theme === "night";
 
   return (
-    <main className="relative flex min-h-screen flex-col">
+    <main className="relative flex min-h-svh flex-col">
       {/* Boticario ámbar: encuadre sobre la botella (derecha) para que mande ella. */}
-      <FilmBackdrop src={fondoLanding} position="75% center" sharp />
+      <FilmBackdrop src={fondoLanding} position="75% center" sharp mobilePlate />
 
-      <div className="flex flex-1 flex-col px-6 pb-10 pt-28 md:px-10 md:pt-32 lg:px-20">
+      <div className="flex flex-1 flex-col px-6 pb-6 pt-20 md:px-10 md:pt-20 lg:px-20">
         {/* ---------------- HERO ---------------- */}
-        <section aria-labelledby="hero-title">
-          <p className="label-caps text-primary-on-photo">
-            {t.home.heroEyebrow.map((line) => (
-              <span key={line} className="block">
+        <section
+          aria-labelledby="hero-title"
+          className="max-w-[21rem] md:ml-10 md:max-w-[32rem] lg:ml-20 xl:ml-28"
+        >
+          <p className="uppercase text-[0.95rem] leading-[1.7] text-cream/85">
+            {t.home.heroEyebrowLines.map((line) => (
+              <span
+                key={line}
+                className={line === "ORIGINAL" ? "block font-bold text-cream" : "block"}
+              >
                 {line}
               </span>
             ))}
           </p>
           <Rule />
-            <h1 id="hero-title">
-              <img
-                src={labLogoHorizontal}
-                alt="The Lab Perfumes"
-                className="h-10 w-auto object-contain brightness-0 invert md:h-12"
-              />
-            </h1>
-          <p className="label-caps mt-5 text-primary-on-photo">{t.home.heroFounded}</p>
+          <h1 id="hero-title">
+            <img
+              src={labLogoHorizontal}
+              alt="The Lab Perfumes"
+              className="h-12 w-auto object-contain brightness-0 invert md:h-20"
+            />
+          </h1>
+          <p className="mt-4 uppercase text-[0.95rem] leading-[1.9] text-cream/85">
+            {t.home.heroFoundedLines.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
+          </p>
         </section>
 
         {/* ---------------- NUESTRO PROPÓSITO ---------------- */}
-        <section aria-labelledby="purpose-title" className="mt-24 md:mt-[16vh]">
-          <p className="label-caps text-primary-on-photo">{t.home.purposeEyebrow}</p>
+        <section
+          aria-labelledby="purpose-title"
+          className="mt-6 max-w-[21rem] md:ml-10 md:mt-6 md:max-w-[32rem] lg:ml-20 xl:ml-28"
+        >
           <h2
             id="purpose-title"
-            className="mt-5 font-display text-4xl font-semibold leading-[0.95] text-cream md:text-5xl xl:text-6xl"
+            className="font-display text-[1.9rem] font-semibold leading-[1.05] tracking-tight text-cream md:text-[2.85rem]"
           >
-            {t.home.purposeTitle.map((line) => (
+            {t.home.purposeHeadingLines.map((line) => (
               <span key={line} className="block">
-                {line.split(" ").map((word, i) => (
-                  <span
-                    key={i}
-                    className={word === "MUNDO" ? "text-primary-on-photo" : undefined}
-                  >
-                    {word}{i < line.split(" ").length - 1 ? " " : ""}
-                  </span>
-                ))}
+                {line}
               </span>
             ))}
           </h2>
-          <Rule />
-          <p className="max-w-xl text-base leading-relaxed text-cream">
-            {t.home.purposeBody}
+          <p className="mt-5 text-[0.9rem] uppercase leading-[1.75] tracking-normal text-cream/90 md:text-[1.1rem]">
+            {t.home.purposeBodyFull}
           </p>
         </section>
 
         {/* ---------------- CIERRE ---------------- */}
-        <footer className="mt-24 border-t border-cream/25 pt-6 md:mt-auto">
+        <footer className="mt-6 border-t border-cream/25 pt-5 md:mt-auto">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               {t.home.footerOrigin.map((line) => (
