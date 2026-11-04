@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import houseBg from "@/assets/founder-portrait.jpg";
-import signature from "@/assets/signature-mario.png";
 import { useLanguage } from "@/context/LanguageContext";
 
 export const Route = createFileRoute("/house/")({
@@ -97,6 +96,15 @@ function HousePage() {
             “{profile.quote}”
           </blockquote>
 
+          <a
+            href="https://forbes.co/forbes-life/the-lab-perfumista-colombiano-que-cautiva-a-dubai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="founder-serif mt-4 inline-block text-[12px] text-cream/85 underline-offset-2 transition-colors hover:text-gold-bright hover:underline"
+          >
+            Artículo Forbes
+          </a>
+
           <div aria-hidden="true" className="mt-7 h-[2px] w-20 bg-gold-bright" />
 
           <div className="mt-7 max-w-[600px] space-y-3.5">
@@ -111,27 +119,6 @@ function HousePage() {
           </div>
 
           <div aria-hidden="true" className="mt-8 h-[2px] w-20 bg-gold-bright" />
-
-          <div
-            role="img"
-            aria-label={profile.signoffName}
-            className="mt-5 h-[104px] w-[156px] bg-cream"
-            style={{
-              maskImage: `url(${signature})`,
-              maskRepeat: "no-repeat",
-              maskSize: "contain",
-              WebkitMaskImage: `url(${signature})`,
-              WebkitMaskRepeat: "no-repeat",
-              WebkitMaskSize: "contain",
-            }}
-          />
-
-          <p className="founder-serif mt-3 text-lg text-cream sm:text-xl">
-            {profile.signoffName}
-          </p>
-          <p className="founder-serif text-lg text-cream/85 sm:text-xl">
-            {profile.signoffRole}
-          </p>
         </div>
       </div>
     </main>
