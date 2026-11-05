@@ -115,9 +115,9 @@ function JournalPage() {
           <section>
             <h1 className="font-display text-[clamp(2.6rem,5.4vw,5.4rem)] font-bold uppercase leading-[0.86] tracking-[-0.015em] text-cream">
               <span className="block">{journal.titleTop}</span>
-              <span className="mt-1 block text-gold-bright">{journal.titleBottom}</span>
+              <span className="mt-1 block text-primary-on-photo">{journal.titleBottom}</span>
             </h1>
-            <div aria-hidden="true" className="mt-6 h-[3px] w-28 bg-gold-bright" />
+            <div aria-hidden="true" className="mt-6 h-[3px] w-28 bg-primary-on-photo" />
 
             <div className="mt-8 max-w-[60ch] space-y-5">
               {journal.story.map((paragraph, i) => (
@@ -143,10 +143,10 @@ function JournalPage() {
           <section className="lg:pt-4">
             <h2 className="font-display text-[clamp(1.85rem,3.3vw,3.1rem)] font-bold uppercase leading-[0.95] tracking-[-0.01em] text-cream">
               {journal.instagramTitle.before}
-              <span className="text-gold-bright">{journal.instagramTitle.accent}</span>
+              <span className="text-primary-on-photo">{journal.instagramTitle.accent}</span>
               {journal.instagramTitle.after}
             </h2>
-            <div aria-hidden="true" className="mt-4 h-[2px] w-full bg-gold-bright/70" />
+            <div aria-hidden="true" className="mt-4 h-[2px] w-full bg-primary-on-photo/70" />
             <p className="mt-5 max-w-[52ch] founder-serif text-[1rem] leading-[1.6] text-cream/85">
               {journal.instagramText}
             </p>
