@@ -51,7 +51,9 @@ function FragrancesPage() {
       </h1>
 
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-baseline sm:gap-8">
-        <p className="label-caps text-xl text-primary-on-photo">{t.fragrances.sideLabel}</p>
+        <p className="label-caps text-xl text-primary-on-photo [word-spacing:-6px]">
+          {t.fragrances.sideLabel}
+        </p>
         <p aria-hidden="true" className="label-caps hidden text-primary/60 sm:block">
           /
         </p>
@@ -59,7 +61,7 @@ function FragrancesPage() {
       </div>
       <Rule />
 
-      <p className="font-display text-3xl leading-snug text-cream sm:text-4xl tracking-[0.35em]">
+      <p className="font-display text-3xl leading-snug text-cream sm:text-4xl tracking-[5px] [word-spacing:11px] sm:[word-spacing:15px]">
         {t.fragrances.pullQuote}
       </p>
       <Rule />

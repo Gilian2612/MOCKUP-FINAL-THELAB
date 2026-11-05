@@ -83,7 +83,7 @@ function HousePage() {
             {profile.title.map((line, i) => (
               <span
                 key={line}
-                className={`block ${i === 0 ? "text-cream" : "text-gold-bright"}`}
+                className={`block ${i === 0 ? "text-cream" : "text-primary-on-photo"}`}
               >
                 {line}
               </span>
