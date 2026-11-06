@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Instagram } from "lucide-react";
 
 import fondoLanding from "@/assets/landing-bottle.webp";
-import labLogoHorizontal from "@/assets/the-lab-logo-horizontal.svg";
+import labLogoHorizontal from "@/assets/the-lab-logo.svg";
 import { useLanguage } from "@/context/LanguageContext";
 import { useTheme } from "@/context/ThemeContext";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
