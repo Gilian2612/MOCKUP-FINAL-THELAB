@@ -37,19 +37,39 @@ function StockistsPage() {
     label: `${s.distributor} - ${s.city}`,
   }));
   return (
-    <main className="relative isolate min-h-screen bg-background px-6 pb-28 pt-24 lg:px-20">
+    <main className="relative isolate min-h-screen bg-background px-6 pb-28 pt-24 md:px-10 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
       <FilmBackdrop src={fondoStockists} position="center 50%" sharp />
 
       <div className="mb-4 h-3 w-3 border-l border-t border-primary/40" />
 
       <p className="label-caps text-primary-on-photo">{t.stockists.label}</p>
-      <h1 className="mt-6 font-display text-5xl text-cream sm:text-7xl">
-        {t.stockists.titleStart}
-        <span className="not-italic text-primary-on-photo">{t.stockists.titleEm}</span>
-        {t.stockists.titleEnd}
+      <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-primary-on-photo sm:text-5xl lg:text-6xl">
+        {t.stockists.titleLines.map((line) => (
+          <span key={line} className="block">
+            {line}
+          </span>
+        ))}
       </h1>
-      <p className="label-caps mt-3 text-muted-on-photo">{t.stockists.sub}</p>
+
+      <div className="mt-6 max-w-[46rem] space-y-4">
+        {t.stockists.intro.map((paragraph) => (
+          <p
+            key={paragraph}
+            className="text-[0.9rem] uppercase leading-[1.75] tracking-normal text-primary-on-photo md:text-[1.1rem]"
+          >
+            {paragraph}
+          </p>
+        ))}
+      </div>
+
+      <p className="mt-7 font-display text-2xl font-semibold leading-[1.15] tracking-tight text-primary-on-photo sm:text-3xl">
+        {t.stockists.closingLines.map((line) => (
+          <span key={line} className="block">
+            {line}
+          </span>
+        ))}
+      </p>
 
       <div className="mt-8 grid gap-16 lg:grid-cols-2 lg:items-center">
         <div className="space-y-4">
@@ -63,8 +83,8 @@ function StockistsPage() {
                     className="flex items-baseline justify-between gap-6 py-2"
                   >
                     <div>
-                      <p className="font-display text-2xl text-cream">{s.distributor}</p>
-                      <p className="mt-0 max-w-sm text-xs leading-relaxed text-muted-on-photo">
+                      <p className="font-display text-2xl text-primary-on-photo">{s.distributor}</p>
+                      <p className="mt-0 max-w-sm text-xs leading-relaxed text-primary-on-photo">
                         {s.address}
                       </p>
                     </div>

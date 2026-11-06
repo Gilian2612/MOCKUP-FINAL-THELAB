@@ -1,7 +1,11 @@
+import type { CSSProperties } from "react";
+
 type FilmBackdropProps = {
   src: string;
   /** CSS `object-position`: aligns the sharp plate inside the filled box. */
   position?: string;
+  /** Phone-only override for `object-position`, when the crop needs a different focal. */
+  mobilePosition?: string;
   /** Grade without blur, for plates that must read sharp. */
   sharp?: boolean;
   /**
@@ -11,8 +15,8 @@ type FilmBackdropProps = {
    */
   fixed?: boolean;
   /**
-   * On phones, pin the plate to the bottom of the screen and shrink it so the
-   * whole subject fits instead of being cropped by the narrow viewport.
+   * On phones, let the plate start at the top of the screen and fade out at the
+   * bottom, so the photograph reads first and the closing block sits on the fade.
    */
   mobilePlate?: boolean;
 };
@@ -39,6 +43,7 @@ type FilmBackdropProps = {
 export function FilmBackdrop({
   src,
   position = "center 15%",
+  mobilePosition,
   sharp = false,
   fixed = false,
   mobilePlate = false,
@@ -53,12 +58,17 @@ export function FilmBackdrop({
       <img
         src={src}
         alt=""
-        className={`${grade} absolute inset-0 h-full w-full object-cover ${
+        className={`${grade} absolute inset-0 h-full w-full object-cover [object-position:var(--plate-pos)] ${
           mobilePlate
-            ? "max-md:bottom-0 max-md:top-auto max-md:h-[72vh] max-md:[mask-image:linear-gradient(to_bottom,transparent_0%,black_22%)] max-md:[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_22%)]"
+            ? "max-md:top-0 max-md:bottom-auto max-md:h-[72vh] max-md:[object-position:var(--plate-pos-mobile)] max-md:[mask-image:linear-gradient(to_bottom,black_0%,black_68%,transparent_100%)] max-md:[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_68%,transparent_100%)]"
             : ""
         }`}
-        style={{ objectPosition: position }}
+        style={
+          {
+            "--plate-pos": position,
+            "--plate-pos-mobile": mobilePosition ?? position,
+          } as CSSProperties
+        }
       />
       <div className="film-warm absolute inset-0" />
       <div className="film-grain absolute inset-0" />

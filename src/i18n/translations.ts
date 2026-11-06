@@ -110,7 +110,7 @@ export const es = {
     titleEm: "COLLECTION",
     titleEnd: "",
     sideLabel: "PERFUMES DE AUTOR HECHOS EN COLOMBIA",
-    pullQuote: "SCENTS TRAVEL FURTHER THAN BORDERS.",
+    pullQuote: "Fragrances connect people and cultures",
     meta: "CALI, 2011",
     body: [
       "Nuestra colección es el resultado de años de viajes, investigación y exploración olfativa. Cada fragancia comienza con un viaje: recorrer diferentes países, buscando materias primas, estudiando ingredientes y traduciendo lugares, memorias y encuentros en composiciones originales.",
@@ -303,10 +303,12 @@ export const es = {
   },
   stockists: {
     label: "PRESENCIA",
-    titleStart: "EN EL ",
-    titleEm: "MUNDO",
-    titleEnd: "",
-    sub: "NUESTRAS ALIANZAS, NUESTRAS PRAGANCIAS.",
+    titleLines: ["EN TODO EL MUNDO.", "PERO NO EN CUALQUIER LUGAR."],
+    intro: [
+      "The LAB llega a todo el mundo. Nuestras fragancias están disponibles con envío internacional, llevando nuestras creaciones olfativas más cerca de quienes buscan algo diferente.",
+      "Cuando se trata de presencia física, somos selectivos. Elegimos boutiques que comparten nuestra visión de la perfumería, nuestra apreciación por la artesanía y nuestro compromiso con la originalidad.",
+    ],
+    closingLines: ["Envíos internacionales.", "Boutiques seleccionadas."],
     origin: "CALI, COLOMBIA",
     numeral: "MXXXI",
     openInMaps: (name: string) => `Abrir ${name} en Google Maps`,
@@ -465,7 +467,7 @@ export const en: Dictionary = {
     titleEm: "COLLECTION",
     titleEnd: "",
     sideLabel: "PERFUMES DE AUTOR HECHOS EN COLOMBIA",
-    pullQuote: "SCENTS TRAVEL FURTHER THAN BORDERS.",
+    pullQuote: "Fragrances connect people and cultures",
     meta: "CALI, 2011",
     body: [
       "Nuestra colección es el resultado de años de viajes, investigación y exploración olfativa. Cada fragancia comienza con un viaje: recorrer diferentes países, buscando materias primas, estudiando ingredientes y traduciendo lugares, memorias y encuentros en composiciones originales.",
@@ -655,10 +657,12 @@ export const en: Dictionary = {
   },
   stockists: {
     label: "PRESENCIA",
-    titleStart: "EN EL ",
-    titleEm: "MUNDO",
-    titleEnd: "",
-    sub: "NUESTRAS ALIANZAS, NUESTRAS PRAGANCIAS.",
+    titleLines: ["ALL OVER THE WORLD.", "BUT NOT JUST ANYWHERE."],
+    intro: [
+      "The LAB reaches the whole world. Our fragrances ship internationally, bringing our olfactory creations closer to those looking for something different.",
+      "When it comes to physical presence, we are selective. We choose boutiques that share our vision of perfumery, our appreciation for craftsmanship and our commitment to originality.",
+    ],
+    closingLines: ["International shipping.", "Selected boutiques."],
     origin: "CALI, COLOMBIA",
     numeral: "MXXXI",
     openInMaps: (name: string) => `Open ${name} in Google Maps`,

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Instagram } from "lucide-react";
 
 import fondoLanding from "@/assets/landing-bottle.webp";
-import labLogoHorizontal from "@/assets/the-lab-logo.svg";
+import labLogoHorizontal from "@/assets/the-lab-logo-landing.png";
 import { useLanguage } from "@/context/LanguageContext";
 import { useTheme } from "@/context/ThemeContext";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
@@ -45,13 +45,13 @@ function Home() {
   return (
     <main className="relative flex min-h-svh flex-col">
       {/* Boticario ámbar: encuadre sobre la botella (derecha) para que mande ella. */}
-      <FilmBackdrop src={fondoLanding} position="75% center" sharp mobilePlate />
+      <FilmBackdrop src={fondoLanding} position="75% center" mobilePosition="68% center" sharp mobilePlate />
 
       <div className="flex flex-1 flex-col px-6 pb-6 pt-20 md:px-10 md:pt-20 lg:px-20">
         {/* ---------------- HERO ---------------- */}
         <section
           aria-labelledby="hero-title"
-          className="max-w-[21rem] md:ml-10 md:max-w-[32rem] lg:ml-20 xl:ml-28"
+          className="max-w-[21rem] md:max-w-[32rem]"
         >
           <p className="uppercase text-[0.95rem] leading-[1.7] text-primary-on-photo">
             {t.home.heroEyebrowLines.map((line) => (
@@ -68,7 +68,7 @@ function Home() {
             <img
               src={labLogoHorizontal}
               alt="The Lab Perfumes"
-              className="h-12 w-auto object-contain md:h-20"
+              className="h-9 w-auto object-contain md:h-15"
             />
           </h1>
           <p className="mt-4 uppercase text-[0.95rem] leading-[1.9] text-primary-on-photo">
@@ -83,7 +83,7 @@ function Home() {
         {/* ---------------- NUESTRO PROPÓSITO ---------------- */}
         <section
           aria-labelledby="purpose-title"
-          className="mt-6 max-w-[21rem] md:ml-10 md:mt-6 md:max-w-[32rem] lg:ml-20 xl:ml-28"
+          className="mt-6 max-w-[21rem] md:mt-6 md:max-w-[32rem]"
         >
           <h2
             id="purpose-title"

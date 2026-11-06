@@ -114,7 +114,7 @@ export default function SiteNav() {
           <Link
           to="/"
           aria-label={t.nav.home}
-          className="inline-flex shrink-0 items-center px-1 py-1.5"
+          className="inline-flex shrink-0 items-center py-1.5"
         >
           <Logo />
         </Link>

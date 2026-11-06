@@ -77,9 +77,9 @@ function HousePage() {
       </div>
 
       {/* Copy — set exactly as in the reference plate. */}
-      <div className="relative z-10 mx-auto flex w-full max-w-[1800px] flex-col lg:min-h-screen lg:flex-row lg:justify-start">
-        <div className="flex w-full flex-col px-6 pb-20 pt-[54vh] sm:px-10 sm:pt-[60vh] lg:w-[clamp(380px,32vw,560px)] lg:shrink-0 lg:justify-center lg:px-0 lg:pb-24 lg:pt-32 lg:pl-[clamp(2rem,5vw,6rem)]">
-          <h1 className="founder-serif text-[clamp(2.75rem,4vw,4.25rem)] leading-[0.95] text-cream">
+      <div className="relative z-10 flex w-full flex-col lg:min-h-screen lg:flex-row lg:justify-start">
+        <div className="flex w-full flex-col px-6 pb-20 pt-[54vh] md:px-10 md:pt-[60vh] lg:w-[clamp(380px,32vw,560px)] lg:shrink-0 lg:justify-center lg:px-0 lg:pb-24 lg:pt-32 lg:pl-20">
+          <h1 className="founder-serif text-[clamp(2.75rem,4vw,4.25rem)] leading-[0.95] text-primary-on-photo">
             {profile.title.map((line, i) => (
               <span
                 key={line}
