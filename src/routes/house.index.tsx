@@ -96,15 +96,6 @@ function HousePage() {
             “{profile.quote}”
           </blockquote>
 
-          <a
-            href="https://forbes.co/forbes-life/the-lab-perfumista-colombiano-que-cautiva-a-dubai"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="founder-serif mt-4 inline-block text-[12px] text-cream/85 underline-offset-2 transition-colors hover:text-gold-bright hover:underline"
-          >
-            Artículo Forbes
-          </a>
-
           <div aria-hidden="true" className="mt-7 h-[2px] w-20 bg-gold-bright" />
 
           <div className="mt-7 max-w-[600px] space-y-3.5">
@@ -119,6 +110,15 @@ function HousePage() {
           </div>
 
           <div aria-hidden="true" className="mt-8 h-[2px] w-20 bg-gold-bright" />
+
+          <a
+            href="https://forbes.co/forbes-life/the-lab-perfumista-colombiano-que-cautiva-a-dubai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="founder-serif mt-4 inline-block text-[12px] text-cream/85 underline-offset-2 transition-colors hover:text-gold-bright hover:underline"
+          >
+            Artículo Forbes
+          </a>
         </div>
       </div>
     </main>
