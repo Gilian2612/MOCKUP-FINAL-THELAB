@@ -53,11 +53,11 @@ function Home() {
           aria-labelledby="hero-title"
           className="max-w-[21rem] md:ml-10 md:max-w-[32rem] lg:ml-20 xl:ml-28"
         >
-          <p className="uppercase text-[0.95rem] leading-[1.7] text-cream/85">
+          <p className="uppercase text-[0.95rem] leading-[1.7] text-primary-on-photo">
             {t.home.heroEyebrowLines.map((line) => (
               <span
                 key={line}
-                className={line === "ORIGINAL" ? "block font-bold text-cream" : "block"}
+                className={line === "ORIGINAL" ? "block font-bold text-primary-on-photo" : "block text-primary-on-photo"}
               >
                 {line}
               </span>
@@ -68,12 +68,12 @@ function Home() {
             <img
               src={labLogoHorizontal}
               alt="The Lab Perfumes"
-              className="h-12 w-auto object-contain brightness-0 invert md:h-20"
+              className="h-12 w-auto object-contain md:h-20"
             />
           </h1>
-          <p className="mt-4 uppercase text-[0.95rem] leading-[1.9] text-cream/85">
+          <p className="mt-4 uppercase text-[0.95rem] leading-[1.9] text-primary-on-photo">
             {t.home.heroFoundedLines.map((line) => (
-              <span key={line} className="block">
+              <span key={line} className="block text-primary-on-photo">
                 {line}
               </span>
             ))}
@@ -87,7 +87,7 @@ function Home() {
         >
           <h2
             id="purpose-title"
-            className="font-display text-[1.9rem] font-semibold leading-[1.05] tracking-tight text-cream md:text-[2.85rem]"
+            className="font-display text-[1.9rem] font-semibold leading-[1.05] tracking-tight text-primary-on-photo md:text-[2.85rem]"
           >
             {t.home.purposeHeadingLines.map((line) => (
               <span key={line} className="block">
@@ -95,7 +95,7 @@ function Home() {
               </span>
             ))}
           </h2>
-          <p className="mt-5 text-[0.9rem] uppercase leading-[1.75] tracking-normal text-cream/90 md:text-[1.1rem]">
+          <p className="mt-5 text-[0.9rem] uppercase leading-[1.75] tracking-normal text-primary-on-photo md:text-[1.1rem]">
             {t.home.purposeBodyFull}
           </p>
         </section>
