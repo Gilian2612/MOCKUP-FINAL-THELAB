@@ -83,7 +83,7 @@ function HousePage() {
             {profile.title.map((line, i) => (
               <span
                 key={line}
-                className={`block ${i === 0 ? "text-cream" : "text-primary-on-photo"}`}
+                className={`block text-primary-on-photo`}
               >
                 {line}
               </span>
@@ -92,7 +92,7 @@ function HousePage() {
 
           <div aria-hidden="true" className="mt-3 h-[3px] w-24 bg-gold-bright" />
 
-          <blockquote className="founder-serif mt-8 max-w-[600px] text-2xl leading-[1.2] text-cream sm:text-3xl xl:text-4xl">
+          <blockquote className="founder-serif mt-8 max-w-[600px] text-2xl leading-[1.2] text-primary-on-photo sm:text-3xl xl:text-4xl">
             “{profile.quote}”
           </blockquote>
 
@@ -102,7 +102,7 @@ function HousePage() {
             {profile.body.map((paragraph) => (
               <p
                 key={paragraph}
-                className="founder-serif text-[0.95rem] leading-[1.6] text-cream/90 sm:text-base"
+                className="founder-serif text-[0.95rem] leading-[1.6] text-primary-on-photo sm:text-base"
               >
                 {paragraph}
               </p>
@@ -115,7 +115,7 @@ function HousePage() {
             href="https://forbes.co/forbes-life/the-lab-perfumista-colombiano-que-cautiva-a-dubai"
             target="_blank"
             rel="noopener noreferrer"
-            className="founder-serif mt-4 inline-block text-[12px] text-cream/85 underline-offset-2 transition-colors hover:text-gold-bright hover:underline"
+            className="founder-serif mt-4 inline-block text-[12px] text-primary-on-photo underline-offset-2 transition-colors hover:text-gold-bright hover:underline"
           >
             Artículo Forbes
           </a>
