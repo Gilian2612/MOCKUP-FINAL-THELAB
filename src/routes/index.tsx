@@ -43,7 +43,7 @@ function Home() {
   const isDark = theme === "night";
 
   return (
-    <main className="relative flex min-h-svh flex-col">
+    <main className="relative flex min-h-[calc(100svh-1.75rem)] flex-col">
       {/* Boticario ámbar: encuadre sobre la botella (derecha) para que mande ella. */}
       <FilmBackdrop src={fondoLanding} position="75% center" mobilePosition="68% center" sharp mobilePlate />
 

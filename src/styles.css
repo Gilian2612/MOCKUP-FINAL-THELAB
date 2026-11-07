@@ -171,6 +171,8 @@
   }
 
   body {
+    /* Room for the fixed "under construction" bar in SiteNav. */
+    padding-top: 1.75rem;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);

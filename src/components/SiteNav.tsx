@@ -143,6 +143,12 @@ export default function SiteNav() {
             : "border-b border-transparent bg-transparent"
         }`}
       >
+        <p
+          role="status"
+          className="flex h-7 items-center justify-center bg-primary px-4 text-center text-[0.75rem] font-semibold uppercase text-primary-foreground"
+        >
+          {t.nav.construction}
+        </p>
         <div className="flex w-full items-center justify-between gap-6 px-6 py-4 md:px-10 lg:px-20">
           <Link
           to="/"
