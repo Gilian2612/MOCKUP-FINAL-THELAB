@@ -79,7 +79,7 @@ function HousePage() {
       {/* Copy — set exactly as in the reference plate. */}
       <div className="relative z-10 flex w-full flex-col lg:min-h-screen lg:flex-row lg:justify-start">
         <div className="flex w-full flex-col px-6 pb-20 pt-[54vh] md:px-10 md:pt-[60vh] lg:w-[clamp(380px,32vw,560px)] lg:shrink-0 lg:justify-center lg:px-0 lg:pb-24 lg:pt-32 lg:pl-20">
-          <h1 className="founder-serif text-[clamp(2.75rem,4vw,4.25rem)] leading-[0.95] text-primary-on-photo">
+          <h1 className="founder-serif uppercase text-[clamp(2.75rem,4vw,4.25rem)] leading-[0.95] text-primary-on-photo">
             {profile.title.map((line, i) => (
               <span
                 key={line}
@@ -92,7 +92,7 @@ function HousePage() {
 
           <div aria-hidden="true" className="mt-3 h-[3px] w-24 bg-gold-bright" />
 
-          <blockquote className="founder-serif mt-8 max-w-[600px] text-2xl leading-[1.2] text-primary-on-photo sm:text-3xl xl:text-4xl">
+          <blockquote className="founder-serif mt-8 uppercase max-w-[600px] text-2xl leading-[1.2] text-primary-on-photo sm:text-3xl xl:text-4xl">
             “{profile.quote}”
           </blockquote>
 
@@ -102,7 +102,7 @@ function HousePage() {
             {profile.body.map((paragraph) => (
               <p
                 key={paragraph}
-                className="founder-serif text-[0.95rem] leading-[1.6] text-primary-on-photo sm:text-base"
+                className="founder-serif text-[0.95rem] uppercase leading-[1.6] text-primary-on-photo sm:text-base"
               >
                 {paragraph}
               </p>
@@ -115,7 +115,7 @@ function HousePage() {
             href="https://forbes.co/forbes-life/the-lab-perfumista-colombiano-que-cautiva-a-dubai"
             target="_blank"
             rel="noopener noreferrer"
-            className="founder-serif mt-4 inline-block text-[12px] text-primary-on-photo underline-offset-2 transition-colors hover:text-gold-bright hover:underline"
+            className="founder-serif mt-4 inline-block text-[12px] uppercase text-primary-on-photo underline-offset-2 transition-colors hover:text-gold-bright hover:underline"
           >
             Artículo Forbes
           </a>

@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "@/context/CartContext";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { DEFAULT_LANG, LanguageProvider, useOptionalLanguage } from "@/context/LanguageContext";
 import SiteNav from "@/components/SiteNav";
@@ -151,6 +152,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
         <ThemeProvider>
+          <CurrencyProvider>
           <CartProvider>
             <SiteNav />
             <GoldenSmoke />
@@ -168,6 +170,7 @@ function RootComponent() {
               }}
             />
           </CartProvider>
+          </CurrencyProvider>
         </ThemeProvider>
       </LanguageProvider>
     </QueryClientProvider>

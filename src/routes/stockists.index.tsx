@@ -37,7 +37,7 @@ function StockistsPage() {
     label: `${s.distributor} - ${s.city}`,
   }));
   return (
-    <main className="relative isolate min-h-screen bg-background px-6 pb-28 pt-24 md:px-10 lg:px-20">
+    <main className="relative isolate min-h-screen overflow-x-clip bg-background px-6 pb-28 pt-24 md:px-10 lg:px-20">
       {/* FULL-PAGE BACKDROP */}
       <FilmBackdrop src={fondoStockists} position="center 50%" sharp />
 

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Facebook, Instagram } from "lucide-react";
 
-import fondoLanding from "@/assets/landing-bottle.webp";
+import fondoLanding from "@/assets/landing-bottle-lab.jpeg";
 import labLogoHorizontal from "@/assets/the-lab-logo-landing.png";
 import { useLanguage } from "@/context/LanguageContext";
 import { useTheme } from "@/context/ThemeContext";
@@ -102,7 +102,7 @@ function Home() {
 
         {/* ---------------- CIERRE ---------------- */}
         <footer className="mt-6 border-t border-cream/25 pt-5 md:mt-auto">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
             <div>
               {t.home.footerOrigin.map((line) => (
                 <p key={line} className="label-caps text-muted-on-photo">

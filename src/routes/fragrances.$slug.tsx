@@ -4,7 +4,9 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { useCart } from "@/context/CartContext";
 import { useTheme } from "@/context/ThemeContext";
-import { getProduct, getAdjacent, formatAED } from "@/lib/products";
+import { getProduct, getAdjacent } from "@/lib/products";
+import { formatPrice } from "@/lib/currency";
+import { useCurrency } from "@/context/CurrencyContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { SpecAccordion, type SpecAccordionItem } from "@/components/SpecAccordion";
 
@@ -25,7 +27,7 @@ export const Route = createFileRoute("/fragrances/$slug")({
       };
     }
     const { product } = loaderData;
-    const description = `${product.name} — ${product.family}. ${product.notes.join(", ")}. ${formatAED(product.price)}.`;
+    const description = `${product.name} — ${product.family}. ${product.notes.join(", ")}. ${formatPrice(product.prices.AED, "AED")}.`;
     return {
       meta: [
         { title: `${product.name} — The Lab Perfumes` },
@@ -43,6 +45,7 @@ function ProductPage() {
   const { lang, t } = useLanguage();
   const product = getProduct(loaded.slug, lang) ?? loaded;
   const { add } = useCart();
+  const { currency, format } = useCurrency();
   const { theme } = useTheme();
   const [qty, setQty] = useState(1);
   const [accordionOpenId, setAccordionOpenId] = useState<string | null>(null);
@@ -51,7 +54,7 @@ function ProductPage() {
   const isDark = theme === "night";
   const storyImage = isDark ? product.storyImageDark : product.storyImageLight;
   const isNotes = accordionOpenId === "notes";
-  const activeImage = accordionOpenId === "story" ? storyImage : isNotes ? product.notesImage : product.image;
+  const activeImage = accordionOpenId === "story" ? storyImage : isNotes ? product.image : product.notesImage;
 
   const adj = getAdjacent(product.slug, lang);
   const prev = adj?.prev ?? product;
@@ -141,25 +144,6 @@ function ProductPage() {
     <main className="min-h-screen bg-background pb-24 pt-28 lg:pb-0">
       <div className="grid lg:grid-cols-2">
         <div className="relative isolate min-h-[520px] overflow-hidden lg:min-h-[calc(100vh-7rem)]">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-20 opacity-[0.05] mix-blend-overlay"
-            style={{
-              backgroundImage:
-                "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-            }}
-          />
-          <div aria-hidden="true" className="plate-backdrop absolute inset-0" />
-          <div
-            aria-hidden="true"
-            className="plate-frame pointer-events-none absolute inset-3 sm:inset-5"
-          />
-          {accordionOpenId === null && (
-            <div
-              aria-hidden="true"
-              className="plate-floor absolute bottom-[12%] left-1/2 h-[5%] w-[44%] -translate-x-1/2 rounded-full"
-            />
-          )}
           <motion.div
             initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -188,19 +172,6 @@ function ProductPage() {
                 className="absolute inset-0 h-full w-full object-contain"
               />
             </AnimatePresence>
-            <div
-              aria-hidden="true"
-              className="absolute inset-x-5 bottom-5 sm:inset-x-8 sm:bottom-7"
-            >
-              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5 border-t border-gold/25 pt-3">
-                <p className="label-caps text-gold/90">
-                  {product.chapter} · {product.family}
-                </p>
-                <p className="text-[0.6875rem] tracking-[0.22em] text-muted-foreground/90">
-                  {product.name}
-                </p>
-              </div>
-            </div>
           </motion.div>
         </div>
 
@@ -219,10 +190,16 @@ function ProductPage() {
             <PrevNext />
           </div>
 
-          <p className="mt-8 label-caps text-primary">
-            {product.chapter} · {product.family}
+          <p className="mt-8 label-caps !text-base font-semibold text-primary">{t.product.profile}</p>
+          <p className="mt-2 flex flex-wrap items-center gap-x-2.5 label-caps !text-sm leading-relaxed text-primary">
+            {product.profile.split(" · ").map((attribute) => (
+              <span key={attribute} className="inline-flex items-center gap-x-2.5">
+                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-primary" />
+                {attribute}
+              </span>
+            ))}
           </p>
-          <h1 className="mt-4 font-display text-5xl text-cream sm:text-6xl">{product.name}</h1>
+          <h1 className="mt-4 font-['La_Presse',Georgia,serif] text-5xl text-primary-on-photo sm:text-6xl">{product.name}</h1>
           <SpecAccordion items={specItems} onChange={(id) => setAccordionOpenId(id)} />
 
           <div className="mt-10 flex flex-wrap items-center gap-6">
@@ -245,7 +222,7 @@ function ProductPage() {
                 +
               </button>
             </div>
-            <p className="font-display text-3xl text-cream">{formatAED(product.price)}</p>
+            <p className="font-display text-3xl font-bold text-cream">{format(product.prices[currency])}</p>
           </div>
 
           <button

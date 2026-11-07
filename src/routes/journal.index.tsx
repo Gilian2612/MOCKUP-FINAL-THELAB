@@ -1,12 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-import collage from "@/assets/journal-collage.jpg";
+import collage from "@/assets/journal-collage-bloque.jpg";
 import dubai from "@/assets/journal-dubai.jpg";
 import etapaDigital from "@/assets/journal-etapa-digital.jpg";
 import granada from "@/assets/journal-granada.jpg";
 import penon from "@/assets/journal-penon.jpg";
 import spiwak from "@/assets/journal-spiwak.png";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { useLanguage } from "@/context/LanguageContext";
 
 const INSTAGRAM_URL = "https://www.instagram.com/thelabperfumes/";
@@ -16,8 +23,8 @@ const INSTAGRAM_POST_URL = "https://www.instagram.com/p/DadjIU0IuI2/";
 const timelineMedia = [
   { src: granada, position: "center 50%" },
   { src: penon, position: "center 50%" },
-  { src: spiwak, position: "center 45%" },
   { src: etapaDigital, position: "center 50%" },
+  { src: spiwak, position: "center 45%" },
   { src: dubai, position: "center 60%" },
 ];
 
@@ -90,7 +97,7 @@ function JournalPage() {
   const journal = t.journal;
 
   return (
-    <main className="relative isolate min-h-screen overflow-x-hidden bg-background pb-24 pt-[104px] lg:pt-[120px]">
+    <main className="relative isolate min-h-screen overflow-x-hidden bg-background pb-8 pt-[104px] lg:pt-[120px]">
       {/* The product collage is the plate; the scrim keeps the copy readable. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <img
@@ -113,7 +120,7 @@ function JournalPage() {
         <div className="grid gap-14 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16">
           {/* Masthead + story */}
           <section>
-            <h1 className="font-display text-[clamp(2.6rem,5.4vw,5.4rem)] font-bold uppercase leading-[0.86] tracking-[-0.015em] text-primary-on-photo">
+            <h1 className="font-display text-[1.9rem] font-semibold uppercase leading-[1.05] tracking-tight text-primary-on-photo md:text-[2.85rem]">
               <span className="block">{journal.titleTop}</span>
               <span className="mt-1 block text-primary-on-photo">{journal.titleBottom}</span>
             </h1>
@@ -123,7 +130,7 @@ function JournalPage() {
               {journal.story.map((paragraph, i) => (
                 <p
                   key={i}
-                  className="founder-serif text-[1rem] leading-[1.65] text-primary-on-photo sm:text-[1.06rem]"
+                  className="founder-serif text-justify text-[0.9rem] uppercase leading-[1.75] tracking-normal text-primary-on-photo md:text-[1.1rem]"
                 >
                   {paragraph.map((segment, j) =>
                     segment.bold ? (
@@ -141,13 +148,14 @@ function JournalPage() {
 
           {/* Instagram */}
           <section className="lg:pt-4">
-            <h2 className="font-display text-[clamp(1.85rem,3.3vw,3.1rem)] font-bold uppercase leading-[0.95] tracking-[-0.01em] text-primary-on-photo">
+            <div className="mx-auto w-full max-w-[460px] text-right">
+            <h2 className="font-display text-[1.9rem] font-semibold uppercase leading-[1.05] tracking-tight md:text-[2.85rem] text-primary-on-photo">
               {journal.instagramTitle.before}
               <span className="text-primary-on-photo">{journal.instagramTitle.accent}</span>
               {journal.instagramTitle.after}
             </h2>
             <div aria-hidden="true" className="mt-4 h-[2px] w-full bg-primary-on-photo/70" />
-            <p className="mt-5 max-w-[52ch] founder-serif text-[1rem] leading-[1.6] text-primary-on-photo">
+            <p className="mt-5 founder-serif text-justify text-[0.9rem] uppercase leading-[1.75] tracking-normal text-primary-on-photo md:text-[1.1rem]">
               {journal.instagramText}
             </p>
 
@@ -155,13 +163,14 @@ function JournalPage() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 text-[0.8rem] uppercase tracking-[0.22em] text-primary-on-photo transition-colors hover:text-cream"
+              className="mt-4 inline-flex items-center gap-2 text-[0.95rem] uppercase leading-[1.7] text-primary-on-photo transition-colors hover:text-cream"
             >
               <InstagramIcon className="h-4 w-4" />
               @thelabperfumes
             </a>
+            </div>
 
-            <div className="mx-auto mt-6 w-full max-w-[460px] rounded-[16px] bg-white p-2 shadow-[0_30px_60px_-25px_rgba(0,0,0,0.9)]">
+            <div className="mx-auto mt-6 w-full max-w-[460px] rounded-[16px] bg-white p-2 outline-2 outline-offset-6 outline-primary-on-photo shadow-[0_30px_60px_-25px_rgba(0,0,0,0.9)]">
               <div className="overflow-hidden rounded-[10px]">
                 <InstagramEmbed url={INSTAGRAM_POST_URL} />
               </div>
@@ -179,11 +188,13 @@ function JournalPage() {
             <span aria-hidden="true" className="hidden h-px flex-1 bg-gold-bright/40 sm:block" />
           </div>
 
-          <div className="mt-12 grid gap-x-7 gap-y-14 sm:grid-cols-2 lg:mt-14 lg:grid-cols-5">
+          <Carousel opts={{ align: "start", loop: true }} className="mt-12 lg:mt-14">
+            <CarouselContent className="-ml-7">
             {journal.timeline.map((stage, i) => {
               const media = timelineMedia[i] ?? { src: granada, position: "center 50%" };
               return (
-                <article key={stage.title} className="flex flex-col items-center text-center">
+                <CarouselItem key={stage.title} className="pl-7 sm:basis-1/2 lg:basis-1/3">
+                <article className="flex flex-col items-center text-center">
                   <p className="font-display text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-primary-on-photo">
                     {stage.year}
                   </p>
@@ -204,25 +215,29 @@ function JournalPage() {
                     />
                   </div>
 
-                  <h3 className="mt-4 founder-serif text-[1.35rem] uppercase leading-tight tracking-[0.05em] text-primary-on-photo">
+                  <h3 className="mt-4 founder-serif text-[1.35rem] font-bold uppercase leading-tight tracking-[0.05em] text-primary-on-photo">
                     {stage.title}
                   </h3>
-                  <p className="founder-serif text-[0.98rem] text-primary-on-photo">{stage.place}</p>
+                  <p className="founder-serif text-[0.98rem] uppercase text-primary-on-photo">{stage.place}</p>
 
                   <div className="mt-3 space-y-2.5">
                     {stage.text.map((paragraph, j) => (
                       <p
                         key={j}
-                        className="founder-serif text-[0.8rem] leading-[1.55] text-primary-on-photo"
+                        className="founder-serif text-justify text-[0.8rem] uppercase leading-[1.75] tracking-normal text-primary-on-photo"
                       >
                         {paragraph}
                       </p>
                     ))}
                   </div>
                 </article>
+                </CarouselItem>
               );
             })}
-          </div>
+            </CarouselContent>
+            <CarouselPrevious className="-left-6 top-[25%] border-primary/60 bg-transparent text-primary-on-photo hover:bg-primary/10 md:-left-9 lg:-left-12" />
+            <CarouselNext className="-right-6 top-[25%] border-primary/60 bg-transparent text-primary-on-photo hover:bg-primary/10 md:-right-9 lg:-right-12" />
+          </Carousel>
         </section>
       </div>
     </main>

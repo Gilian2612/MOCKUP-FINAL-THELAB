@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { useCart } from "@/context/CartContext";
-import { formatAED } from "@/lib/products";
+import { useCurrency } from "@/context/CurrencyContext";
 import { useLanguage } from "@/context/LanguageContext";
 
 export const Route = createFileRoute("/checkout/")({
@@ -27,9 +27,10 @@ export const Route = createFileRoute("/checkout/")({
 });
 
 const field =
-  "mt-2 w-full rounded-[14px] bg-background px-4 py-3 text-sm text-cream outline-none shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)] placeholder:text-muted-foreground/60 focus:ring-1 focus:ring-primary/50";
+  "mt-2 w-full rounded-[14px] bg-background px-4 py-3 text-sm text-primary-on-photo outline-none shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)] placeholder:text-muted-foreground/60 focus:ring-1 focus:ring-primary/50";
 
 function CheckoutPage() {
+  const { format } = useCurrency();
   const { lines, setQty, subtotal, shipping, tax, total, clear } = useCart();
   const [payment, setPayment] = useState<"card" | "tabby">("card");
   const { t } = useLanguage();
@@ -37,23 +38,23 @@ function CheckoutPage() {
 
   return (
     <main className="min-h-screen bg-background px-6 pb-28 pt-40 lg:px-20">
-      <p className="label-caps text-primary">{c.label}</p>
-      <h1 className="mt-6 font-display text-5xl text-cream sm:text-6xl">
+      <p className="text-[0.95rem] uppercase leading-[1.7] text-primary-on-photo">{c.label}</p>
+      <h1 className="mt-6 font-display text-[1.9rem] font-semibold uppercase leading-[1.05] tracking-tight text-primary-on-photo md:text-[2.85rem]">
         {c.titleStart}
-        <em className="italic text-primary">{c.titleEm}</em>
+        <em className="not-italic text-primary-on-photo">{c.titleEm}</em>
       </h1>
 
       <div className="mt-14 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         {/* ORDER SUMMARY */}
         <section className="clay h-fit p-7">
-          <h2 className="label-caps text-primary">{c.summary}</h2>
+          <h2 className="text-[0.95rem] uppercase leading-[1.7] text-primary-on-photo">{c.summary}</h2>
 
           {lines.length === 0 ? (
             <div className="mt-8">
-              <p className="font-display text-2xl text-muted-foreground">{c.empty}</p>
+              <p className="font-display text-[1.9rem] font-semibold uppercase leading-[1.05] tracking-tight text-primary-on-photo">{c.empty}</p>
               <Link
                 to="/fragrances"
-                className="mt-6 inline-block rounded-full border border-primary/60 px-8 py-3 label-caps text-primary"
+                className="mt-6 inline-block rounded-full border border-primary/60 px-8 py-3 label-caps text-primary-on-photo"
               >
                 {c.browse}
               </Link>
@@ -71,50 +72,50 @@ function CheckoutPage() {
                     className="plate-media h-24 w-20 rounded-[14px] object-contain"
                   />
                   <div className="flex-1">
-                    <p className="font-display text-xl text-primary">{l.name}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{formatAED(l.price)}</p>
+                    <p className="font-['La_Presse',Georgia,serif] text-[1.5rem] leading-tight text-primary-on-photo">{l.name}</p>
+                    <p className="mt-1 font-display text-[0.95rem] font-bold text-primary-on-photo">{format(l.price)}</p>
                     <div className="mt-3 inline-flex items-center gap-5 rounded-full bg-background px-4 py-1.5 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)]">
                       <button
                         type="button"
                         aria-label={c.decrease(l.name)}
                         onClick={() => setQty(l.slug, l.qty - 1)}
-                        className="text-primary"
+                        className="text-primary-on-photo"
                       >
                         −
                       </button>
-                      <span className="text-sm text-cream">{l.qty}</span>
+                      <span className="text-sm text-primary-on-photo">{l.qty}</span>
                       <button
                         type="button"
                         aria-label={c.increase(l.name)}
                         onClick={() => setQty(l.slug, l.qty + 1)}
-                        className="text-primary"
+                        className="text-primary-on-photo"
                       >
                         +
                       </button>
                     </div>
                   </div>
-                  <p className="font-display text-lg text-cream">{formatAED(l.price * l.qty)}</p>
+                  <p className="font-display text-[0.95rem] font-bold text-primary-on-photo">{format(l.price * l.qty)}</p>
                 </li>
               ))}
             </ul>
           )}
 
-          <dl className="mt-8 space-y-3 border-t border-border pt-6 text-sm">
-            <div className="flex justify-between text-muted-foreground">
+          <dl className="mt-8 space-y-3 border-t border-border pt-6 text-[0.9rem] uppercase leading-[1.75]">
+            <div className="flex justify-between text-primary-on-photo">
               <dt>{c.subtotal}</dt>
-              <dd>{formatAED(subtotal)}</dd>
+              <dd>{format(subtotal)}</dd>
             </div>
-            <div className="flex justify-between text-muted-foreground">
+            <div className="flex justify-between text-primary-on-photo">
               <dt>{c.shipping}</dt>
-              <dd>{shipping ? formatAED(shipping) : "—"}</dd>
+              <dd>{shipping ? format(shipping) : "—"}</dd>
             </div>
-            <div className="flex justify-between text-muted-foreground">
+            <div className="flex justify-between text-primary-on-photo">
               <dt>{c.vat}</dt>
-              <dd>{formatAED(tax)}</dd>
+              <dd>{format(tax)}</dd>
             </div>
-            <div className="flex justify-between border-t border-border pt-4 font-display text-2xl text-cream">
+            <div className="flex justify-between border-t border-border gap-4 pt-4 font-display text-[1.4rem] font-semibold leading-[1.05] tracking-tight text-primary-on-photo">
               <dt>{c.total}</dt>
-              <dd>{formatAED(total)}</dd>
+              <dd>{format(total)}</dd>
             </div>
           </dl>
         </section>
@@ -132,43 +133,43 @@ function CheckoutPage() {
               clear();
             }}
           >
-            <h2 className="label-caps text-primary">{c.contact}</h2>
+            <h2 className="text-[0.95rem] uppercase leading-[1.7] text-primary-on-photo">{c.contact}</h2>
             <div className="mt-5 grid gap-5 sm:grid-cols-2">
-              <label className="block text-xs text-muted-foreground">
+              <label className="block text-[0.8rem] uppercase text-primary-on-photo">
                 {c.fullName}
                 <input required className={field} placeholder={c.fullNamePlaceholder} />
               </label>
-              <label className="block text-xs text-muted-foreground">
+              <label className="block text-[0.8rem] uppercase text-primary-on-photo">
                 {c.email}
                 <input required type="email" className={field} placeholder={c.emailPlaceholder} />
               </label>
             </div>
 
-            <h2 className="mt-10 label-caps text-primary">{c.shippingSection}</h2>
+            <h2 className="mt-10 text-[0.95rem] uppercase leading-[1.7] text-primary-on-photo">{c.shippingSection}</h2>
             <div className="mt-5 grid gap-5 sm:grid-cols-2">
-              <label className="block text-xs text-muted-foreground sm:col-span-2">
+              <label className="block text-[0.8rem] uppercase text-primary-on-photo sm:col-span-2">
                 {c.address}
                 <input required className={field} placeholder={c.addressPlaceholder} />
               </label>
-              <label className="block text-xs text-muted-foreground">
+              <label className="block text-[0.8rem] uppercase text-primary-on-photo">
                 {c.city}
                 <input required className={field} placeholder={c.cityPlaceholder} />
               </label>
-              <label className="block text-xs text-muted-foreground">
+              <label className="block text-[0.8rem] uppercase text-primary-on-photo">
                 {c.region}
                 <input required className={field} placeholder={c.regionPlaceholder} />
               </label>
-              <label className="block text-xs text-muted-foreground">
+              <label className="block text-[0.8rem] uppercase text-primary-on-photo">
                 {c.postalCode}
                 <input className={field} placeholder={c.postalPlaceholder} />
               </label>
-              <label className="block text-xs text-muted-foreground">
+              <label className="block text-[0.8rem] uppercase text-primary-on-photo">
                 {c.country}
                 <input required className={field} placeholder={c.countryPlaceholder} />
               </label>
             </div>
 
-            <h2 className="mt-10 label-caps text-primary">{c.payment}</h2>
+            <h2 className="mt-10 text-[0.95rem] uppercase leading-[1.7] text-primary-on-photo">{c.payment}</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {(["card", "tabby"] as const).map((m) => (
                 <button
@@ -177,8 +178,8 @@ function CheckoutPage() {
                   onClick={() => setPayment(m)}
                   className={`rounded-[16px] border px-5 py-4 text-left label-caps transition-colors ${
                     payment === m
-                      ? "border-primary text-primary"
-                      : "border-border text-muted-foreground"
+                      ? "border-primary text-primary-on-photo"
+                      : "border-border text-primary-on-photo"
                   }`}
                 >
                   {m === "card" ? c.card : c.tabby}
@@ -188,23 +189,23 @@ function CheckoutPage() {
 
             {payment === "card" ? (
               <div className="mt-5 grid gap-5 sm:grid-cols-2">
-                <label className="block text-xs text-muted-foreground sm:col-span-2">
+                <label className="block text-[0.8rem] uppercase text-primary-on-photo sm:col-span-2">
                   {c.cardNumber}
                   <input required className={field} placeholder="4242 4242 4242 4242" />
                 </label>
-                <label className="block text-xs text-muted-foreground">
+                <label className="block text-[0.8rem] uppercase text-primary-on-photo">
                   {c.expiry}
                   <input required className={field} placeholder={c.expiryPlaceholder} />
                 </label>
-                <label className="block text-xs text-muted-foreground">
+                <label className="block text-[0.8rem] uppercase text-primary-on-photo">
                   {c.cvc}
                   <input required className={field} placeholder="123" />
                 </label>
               </div>
             ) : (
-              <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
+              <p className="mt-5 text-[0.9rem] uppercase leading-[1.75] text-primary-on-photo">
                 {c.tabbyTextStart}
-                <span className="text-cream">{formatAED(Math.round(total / 4))}</span>
+                <span className="text-primary-on-photo">{format(Math.round(total / 4))}</span>
                 {c.tabbyTextEnd}
               </p>
             )}
@@ -213,7 +214,7 @@ function CheckoutPage() {
               type="submit"
               className="mt-10 w-full rounded-full bg-primary py-4 label-caps text-primary-foreground"
             >
-              {c.pay(total.toLocaleString("en-US"))}
+              {c.pay(format(total))}
             </button>
           </form>
         </section>

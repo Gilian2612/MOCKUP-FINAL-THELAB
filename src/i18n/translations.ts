@@ -109,8 +109,8 @@ export const es = {
     titleStart: "THE ",
     titleEm: "COLLECTION",
     titleEnd: "",
-    sideLabel: "PERFUMES DE AUTOR HECHOS EN COLOMBIA",
-    pullQuote: "Fragrances connect people and cultures",
+    sideLabelLines: ["TODAS LAS", "FRAGANCIAS", "CREADAS POR", "MARIO GALINDO"],
+    pullQuote: "FRAGRANCES CONNECT PEOPLE AND CULTURES",
     meta: "CALI, 2011",
     body: [
       "Nuestra colección es el resultado de años de viajes, investigación y exploración olfativa. Cada fragancia comienza con un viaje: recorrer diferentes países, buscando materias primas, estudiando ingredientes y traduciendo lugares, memorias y encuentros en composiciones originales.",
@@ -122,8 +122,9 @@ export const es = {
     addToBag: "Añadir a la bolsa",
   },
   product: {
-    notes: "Notas",
-    story: "Historia",
+    notes: "Notas principales",
+    story: "Descripción",
+    profile: "PERFIL",
     allFragrances: "← Todas las fragancias",
     decreaseQty: "Disminuir cantidad",
     increaseQty: "Aumentar cantidad",
@@ -356,7 +357,7 @@ export const es = {
     cvc: "CVC",
     tabbyTextStart: "Divide en 4 cuotas sin intereses de ",
     tabbyTextEnd: ". Serás redirigido a Tabby para confirmar.",
-    pay: (amount: string) => `Pagar AED ${amount} →`,
+    pay: (amount: string) => `Pagar ${amount} →`,
   },
 };
 
@@ -466,8 +467,8 @@ export const en: Dictionary = {
     titleStart: "THE ",
     titleEm: "COLLECTION",
     titleEnd: "",
-    sideLabel: "PERFUMES DE AUTOR HECHOS EN COLOMBIA",
-    pullQuote: "Fragrances connect people and cultures",
+    sideLabelLines: ["ALL", "FRAGRANCES", "CREATED BY", "MARIO GALINDO"],
+    pullQuote: "FRAGRANCES CONNECT PEOPLE AND CULTURES",
     meta: "CALI, 2011",
     body: [
       "Nuestra colección es el resultado de años de viajes, investigación y exploración olfativa. Cada fragancia comienza con un viaje: recorrer diferentes países, buscando materias primas, estudiando ingredientes y traduciendo lugares, memorias y encuentros en composiciones originales.",
@@ -479,8 +480,9 @@ export const en: Dictionary = {
     addToBag: "Add to bag",
   },
   product: {
-    notes: "Notes",
-    story: "Story",
+    notes: "Key notes",
+    story: "Description",
+    profile: "PROFILE",
     allFragrances: "← All fragrances",
     decreaseQty: "Decrease quantity",
     increaseQty: "Increase quantity",
@@ -710,7 +712,7 @@ export const en: Dictionary = {
     cvc: "CVC",
     tabbyTextStart: "Split into 4 interest-free payments of ",
     tabbyTextEnd: ". You will be redirected to Tabby to confirm.",
-    pay: (amount: string) => `Pay AED ${amount} →`,
+    pay: (amount: string) => `Pay ${amount} →`,
   },
 };
 

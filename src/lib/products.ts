@@ -46,6 +46,7 @@ import karmaScotchStoryLight from "@/assets/story/light/karma-scotch.svg";
 import corintoKushStoryLight from "@/assets/story/light/corinto-kush.svg";
 import lotoStoryLight from "@/assets/story/light/loto.svg";
 
+import { COP_PER_USD, type Prices } from "@/lib/currency";
 import type { Lang } from "@/i18n/translations";
 
 /** A string that exists in both site languages. */
@@ -56,8 +57,9 @@ export type Product = {
   name: string;
   chapter: string;
   family: string;
-  price: number;
-  notes: [string, string, string];
+  profile: string;
+  prices: Prices;
+  notes: string[];
   story: string;
   ingredients: string;
   origin: string;
@@ -71,16 +73,19 @@ export type Product = {
 
 type ProductSource = Omit<
   Product,
-  "chapter" | "family" | "notes" | "story" | "ingredients" | "origin" | "concentration"
+  "chapter" | "family" | "profile" | "notes" | "story" | "ingredients" | "origin" | "concentration"
 > & {
   chapter: L;
   family: L;
-  notes: [L, L, L];
+  profile: L;
+  notes: L[];
   story: L;
   ingredients: L;
   origin: L;
   concentration: L;
 };
+
+const prices = (AED: number, USD: number): Prices => ({ AED, USD, COP: USD * COP_PER_USD });
 
 const productSources: ProductSource[] = [
   {
@@ -88,15 +93,18 @@ const productSources: ProductSource[] = [
     name: "Neroli Negro",
     chapter: { es: "Capítulo I", en: "Chapter I" },
     family: { es: "Floral Noir", en: "Floral Noir" },
-    price: 590,
+    profile: { es: "Potente · Cítrico · Floral · Denso · Duradero", en: "Powerful · Citrus · Floral · Dense · Long-lasting" },
+    prices: prices(1140, 330),
     notes: [
       { es: "Neroli", en: "Neroli" },
-      { es: "Pimienta Negra", en: "Black Pepper" },
-      { es: "Almizcle", en: "Musk" },
+      { es: "Whisky", en: "Whisky" },
+      { es: "Rosa", en: "Rose" },
+      { es: "Oud", en: "Oud" },
+      { es: "Incienso", en: "Incense" },
     ],
     story: {
-      es: "Azahar arrastrado a la oscuridad. Neroli Negro abre luminoso y se vuelve opaco en minutos — una flor blanca fotografiada a medianoche, puro contraste y sin disculpas.",
-      en: "Orange blossom pulled into the dark. Neroli Negro opens luminous and turns opaque within minutes — a white flower photographed at midnight, all contrast and no apology.",
+      es: "Considerado el rey de la colección, Neroli Negro es conocido por su potencia y persistencia. Abre con neroli y whisky, seguido de un corazón de rosa y una base densa de oud e incienso.",
+      en: "Regarded as the king of the collection, Neroli Negro is known for its power and persistence. It opens with neroli and whisky, followed by a heart of rose and a dense base of oud and incense.",
     },
     ingredients: {
       es: "Absoluto de neroli destilado al vapor, pimienta negra quebrada y una base limpia de almizcle blanco, en capas para mantener el corazón floral nítido en lugar de dulce.",
@@ -107,7 +115,7 @@ const productSources: ProductSource[] = [
       en: "The neroli is harvested from bitter orange groves along Tunisia's Cap Bon peninsula, distilled within hours of picking to preserve its green, almost bitter edge.",
     },
     concentration: { es: "Extrait de Parfum · 22%", en: "Extrait de Parfum · 22%" },
-    size: "50 ml",
+    size: "100 ml",
     image: neroliNegro,
     notesImage: neroliNegroNotes,
     storyImageDark: neroliNegroStoryDark,
@@ -118,15 +126,19 @@ const productSources: ProductSource[] = [
     name: "Tobacco Blanco",
     chapter: { es: "Capítulo II", en: "Chapter II" },
     family: { es: "Ámbar Tabaco", en: "Amber Tobacco" },
-    price: 640,
+    profile: { es: "Tabaco · Fresco · Seco · Unisex · Distintivo", en: "Tobacco · Fresh · Dry · Unisex · Distinctive" },
+    prices: prices(980, 280),
     notes: [
-      { es: "Tabaco Rubio", en: "Blond Tobacco" },
-      { es: "Tonka", en: "Tonka" },
-      { es: "Higo Seco", en: "Dried Fig" },
+      { es: "Toronja", en: "Grapefruit" },
+      { es: "Café", en: "Coffee" },
+      { es: "Palo santo", en: "Palo Santo" },
+      { es: "Vainilla", en: "Vanilla" },
+      { es: "Tabaco", en: "Tobacco" },
+      { es: "Corteza de roble", en: "Oak bark" },
     ],
     story: {
-      es: "La calidez de la hoja curada sin el humo. Tobacco Blanco es una dulzura pálida y empolvada que permanece en la lana y en la piel mucho después de que la sala se ha vaciado.",
-      en: "The warmth of cured leaf without the smoke. Tobacco Blanco is a pale, powdered sweetness that lingers on wool and skin long after the room has emptied.",
+      es: "Construida sobre el contraste entre el tabaco profundo y la frescura frutal de la toronja. El café aporta un sutil toque de apertura, mientras que el palo santo, la vainilla, el tabaco y la corteza de roble crean una estela masculina, seca y distintiva.",
+      en: "Built on the contrast between deep tobacco and the fruity freshness of grapefruit. Coffee adds a subtle opening touch, while palo santo, vanilla, tobacco and oak bark create a masculine, dry and distinctive trail.",
     },
     ingredients: {
       es: "Absoluto de hoja de tabaco rubio Virginia, haba tonka rica en cumarina y un acorde de higo seco para una nota frutal que nunca se vuelve empalagosa.",
@@ -137,7 +149,7 @@ const productSources: ProductSource[] = [
       en: "The tobacco leaf is cured in the Cibao valley of the Dominican Republic, aged slowly before distillation to soften it into something closer to hay than smoke.",
     },
     concentration: { es: "Eau de Parfum · 20%", en: "Eau de Parfum · 20%" },
-    size: "50 ml",
+    size: "100 ml",
     image: tobaccoBlanco,
     notesImage: tobaccoBlancoNotes,
     storyImageDark: tobaccoBlancoStoryDark,
@@ -148,15 +160,18 @@ const productSources: ProductSource[] = [
     name: "Fresh Vetiver",
     chapter: { es: "Capítulo III", en: "Chapter III" },
     family: { es: "Amaderado Verde", en: "Woody Green" },
-    price: 620,
+    profile: { es: "Fresco · Verde · Amaderado · Elegante · Seco", en: "Fresh · Green · Woody · Elegant · Dry" },
+    prices: prices(780, 220),
     notes: [
-      { es: "Vetiver de Haití", en: "Haitian Vetiver" },
-      { es: "Pomelo", en: "Grapefruit" },
-      { es: "Cedro Seco", en: "Dry Cedar" },
+      { es: "Cítricos", en: "Citrus" },
+      { es: "Hierbas aromáticas", en: "Aromatic Herbs" },
+      { es: "Vetiver", en: "Vetiver" },
+      { es: "Madera de cedro", en: "Cedarwood" },
+      { es: "Almizcle", en: "Musk" },
     ],
     story: {
-      es: "Raíces lavadas hasta quedar limpias. Un golpe cítrico brillante sobre tierra aún húmeda de lluvia, hecho para el calor y las tardes largas.",
-      en: "Roots washed clean. A bright citrus strike over earth still damp from rain, built for heat and long afternoons.",
+      es: "Una reinterpretación contemporánea del vetiver: limpia, luminosa y elegante. Fresh Vetiver se aleja del perfil terroso tradicional para revelar una composición fresca, seca y sofisticada.",
+      en: "A contemporary reinterpretation of vetiver: clean, luminous and elegant. Fresh Vetiver moves away from the traditional earthy profile to reveal a fresh, dry and sophisticated composition.",
     },
     ingredients: {
       es: "Aceite de raíz de vetiver extraída a mano, pomelo rosado prensado en frío y un acorde de cedro seco que evita que la composición se vuelva dulce.",
@@ -167,7 +182,7 @@ const productSources: ProductSource[] = [
       en: "The vetiver root is dug and hand-washed near Les Cayes, Haiti, still regarded as the finest terroir for the grass anywhere in the world.",
     },
     concentration: { es: "Eau de Parfum · 18%", en: "Eau de Parfum · 18%" },
-    size: "50 ml",
+    size: "100 ml",
     image: freshVetiver,
     notesImage: freshVetiverNotes,
     storyImageDark: freshVetiverStoryDark,
@@ -178,15 +193,20 @@ const productSources: ProductSource[] = [
     name: "Koshu",
     chapter: { es: "Capítulo IV", en: "Chapter IV" },
     family: { es: "Té Verde Almizcle", en: "Green Tea Musk" },
-    price: 660,
+    profile: { es: "Frutal · Cálido · Ambarado · Sofisticado · Elegante", en: "Fruity · Warm · Ambery · Sophisticated · Elegant" },
+    prices: prices(1060, 280),
     notes: [
-      { es: "Té Verde", en: "Green Tea" },
-      { es: "Yuzu", en: "Yuzu" },
-      { es: "Almizcle Blanco", en: "White Musk" },
+      { es: "Cereza", en: "Cherry" },
+      { es: "Mandarina", en: "Mandarin" },
+      { es: "Ambroxan", en: "Ambroxan" },
+      { es: "Rosa", en: "Rose" },
+      { es: "Bálsamo de Sumatra", en: "Sumatra balsam" },
+      { es: "Castóreo", en: "Castoreum" },
+      { es: "Oud", en: "Oud" },
     ],
     story: {
-      es: "El minimalismo como disciplina. Koshu es una composición silenciosa — hoja infusionada, cítrico frío y un almizcle que se lee como piel y no como perfume.",
-      en: "Minimalism as a discipline. Koshu is a quiet composition — steeped leaf, cold citrus, and a musk that reads as skin rather than perfume.",
+      es: "Una fragancia unisex y versátil, construida sobre el equilibrio entre frescura y profundidad. La cereza abre con un dulzor jugoso, la mandarina aporta luminosidad, y la rosa y el ambroxan conducen a una base cálida de bálsamos, castóreo y oud.",
+      en: "A unisex and versatile fragrance built on the balance between freshness and depth. Cherry opens with juicy sweetness, mandarin adds brightness, while rose and ambroxan lead into a warm base of balsams, castoreum and oud.",
     },
     ingredients: {
       es: "Té verde sencha cultivado a la sombra, cáscara de yuzu prensada en frío y un almizcle blanco transparente creado para desaparecer en el aroma propio de quien lo lleva.",
@@ -197,7 +217,7 @@ const productSources: ProductSource[] = [
       en: "The tea leaf is grown in the misted hillsides of Koshu, in Japan's Yamanashi prefecture, hand-picked in the first spring flush.",
     },
     concentration: { es: "Eau de Parfum · 18%", en: "Eau de Parfum · 18%" },
-    size: "50 ml",
+    size: "100 ml",
     image: koshu,
     notesImage: koshuNotes,
     storyImageDark: koshuStoryDark,
@@ -208,15 +228,18 @@ const productSources: ProductSource[] = [
     name: "Mang Oud",
     chapter: { es: "Capítulo V", en: "Chapter V" },
     family: { es: "Oud Frutal", en: "Fruity Oud" },
-    price: 690,
+    profile: { es: "Natural · Exótico · Oud · Frutal · Artístico", en: "Natural · Exotic · Oud · Fruity · Artistic" },
+    prices: prices(980, 280),
     notes: [
-      { es: "Oud de Camboya", en: "Cambodian Oud" },
       { es: "Mango", en: "Mango" },
-      { es: "Azafrán", en: "Saffron" },
+      { es: "Oud natural certificado", en: "Certified natural oud" },
+      { es: "Oud de Camboya", en: "Cambodian oud" },
+      { es: "Oud hindi", en: "Hindi oud" },
+      { es: "Oud Prashine", en: "Prashine oud" },
     ],
     story: {
-      es: "Fruta tropical contra madera resinosa — la colisión que define a la casa. La dulzura colombiana se encuentra con la gravedad emiratí en un solo acorde.",
-      en: "Tropical fruit against resinous wood — the collision that defines the house. Colombian sweetness meets Emirati gravity in a single accord.",
+      es: "Mangoud abre la línea de private blends de The Lab: una dirección más natural y artística, enfocada en materias primas exóticas, aceites puros y una calidad de ingredientes sin concesiones. Su composición se define por un oud natural certificado, que aporta profundidad, autenticidad y carácter, combinado con la presencia jugosa del mango latino.",
+      en: "Mangoud opens The Lab's private blends line: a more natural and artistic direction focused on exotic raw materials, pure oils and uncompromising ingredient quality. Its composition is defined by certified natural oud, bringing depth, authenticity and character, combined with the juicy presence of Latin mango.",
     },
     ingredients: {
       es: "Aceite de oud camboyano de recolección silvestre, acorde de mango maduro y un hilo de azafrán de Cachemira para dar calidez sin volverse medicinal.",
@@ -227,7 +250,7 @@ const productSources: ProductSource[] = [
       en: "The oud is distilled in Cambodia's Pursat forests, then aged and blended in Dubai, where the house tests every batch against the region's heat.",
     },
     concentration: { es: "Extrait de Parfum · 24%", en: "Extrait de Parfum · 24%" },
-    size: "50 ml",
+    size: "100 ml",
     image: mangOud,
     notesImage: mangOudNotes,
     storyImageDark: mangOudStoryDark,
@@ -238,15 +261,18 @@ const productSources: ProductSource[] = [
     name: "OMG",
     chapter: { es: "Capítulo VI", en: "Chapter VI" },
     family: { es: "Especiado Ambarado", en: "Ambery Spice" },
-    price: 640,
+    profile: { es: "Dulce · Terroso · Amaderado · Elegante · Moderno", en: "Sweet · Earthy · Woody · Elegant · Modern" },
+    prices: prices(780, 220),
     notes: [
-      { es: "Ámbar", en: "Amber" },
-      { es: "Canela", en: "Cinnamon" },
-      { es: "Benjuí", en: "Benzoin" },
+      { es: "Miel", en: "Honey" },
+      { es: "Vetiver", en: "Vetiver" },
+      { es: "Vainilla", en: "Vanilla" },
+      { es: "Oud", en: "Oud" },
+      { es: "Rosa", en: "Rose" },
     ],
     story: {
-      es: "Ruidoso, a propósito. OMG es la casa a todo volumen: especia, resina y una curva de proyección que llena una sala en menos de un minuto.",
-      en: "Loud, on purpose. OMG is the house at full volume: spice, resin and a projection curve that fills a room in under a minute.",
+      es: "Una fragancia unisex de vanguardia con una estructura sofisticada. La miel aporta un dulzor envolvente, mientras que el vetiver y el oud suman profundidad terrosa y estructura. La vainilla suaviza la composición con un dulzor delicado, y la rosa refuerza una estela elegante y moderna.",
+      en: "A vanguard unisex fragrance with a sophisticated structure. Honey brings enveloping sweetness, while vetiver and oud add earthy depth and structure. Vanilla softens the composition with delicate sweetness, and rose reinforces an elegant, modern trail.",
     },
     ingredients: {
       es: "Resina de ámbar mineral, corteza de canela de Ceilán y benjuí de Laos, llevados a concentraciones que la mayoría de las casas reservan solo para su línea extrait.",
@@ -257,7 +283,7 @@ const productSources: ProductSource[] = [
       en: "The cinnamon bark is sourced from Sri Lanka's Kandy hills and the benzoin resin tapped from Laotian styrax trees, then resolved in the house lab.",
     },
     concentration: { es: "Extrait de Parfum · 22%", en: "Extrait de Parfum · 22%" },
-    size: "50 ml",
+    size: "100 ml",
     image: omg,
     notesImage: omgNotes,
     storyImageDark: omgStoryDark,
@@ -268,15 +294,20 @@ const productSources: ProductSource[] = [
     name: "Amber Chocolat",
     chapter: { es: "Capítulo VII", en: "Chapter VII" },
     family: { es: "Ámbar Gourmand", en: "Gourmand Amber" },
-    price: 650,
+    profile: { es: "Gourmand · Sensual · Ambarado · Oriental · Envolvente", en: "Gourmand · Sensual · Ambery · Oriental · Enveloping" },
+    prices: prices(925, 260),
     notes: [
-      { es: "Cacao", en: "Cacao" },
-      { es: "Ámbar", en: "Amber" },
-      { es: "Café Colombiano", en: "Colombian Coffee" },
+      { es: "Chocolate", en: "Chocolate" },
+      { es: "Tabaco", en: "Tobacco" },
+      { es: "Ámbar gris", en: "Ambergris" },
+      { es: "Notas ambaradas", en: "Ambery notes" },
+      { es: "Ambroxan", en: "Ambroxan" },
+      { es: "Benjuí", en: "Benzoin" },
+      { es: "Clavo", en: "Cloves" },
     ],
     story: {
-      es: "Bogotá a las 6 de la mañana — cacao amargo, tueste oscuro y ámbar derritiéndose por debajo. Gourmand sin convertirse nunca en postre.",
-      en: "Bogotá at 6am — bitter cacao, dark roast, and amber melting underneath. Gourmand without ever turning to dessert.",
+      es: "El segundo gourmand de la colección y su fragancia más sensual, pensada para momentos especiales, la noche y la intimidad. El chocolate amargo abre con un toque de dulzor de tabaco, mientras que el ámbar gris y las notas ambaradas aportan profundidad, sensualidad y un fondo complejo.",
+      en: "The collection's second gourmand and most sensual fragrance, designed for special moments, nighttime and intimacy. Bitter chocolate opens with a touch of tobacco sweetness, while ambergris and ambery notes bring depth, sensuality and a complex dry-down.",
     },
     ingredients: {
       es: "Absoluto de cacao de tueste oscuro, extracto de café colombiano de origen único y una base de ámbar mineral que mantiene la dulzura contenida.",
@@ -287,7 +318,7 @@ const productSources: ProductSource[] = [
       en: "Cacao and coffee are both sourced from smallholder farms in Colombia's Huila department, roasted locally before extraction.",
     },
     concentration: { es: "Extrait de Parfum · 22%", en: "Extrait de Parfum · 22%" },
-    size: "50 ml",
+    size: "100 ml",
     image: amberChocolat,
     notesImage: amberChocolatNotes,
     storyImageDark: amberChocolatStoryDark,
@@ -298,15 +329,18 @@ const productSources: ProductSource[] = [
     name: "C'est La Vie",
     chapter: { es: "Capítulo VIII", en: "Chapter VIII" },
     family: { es: "Chipre de Rosa", en: "Rose Chypre" },
-    price: 610,
+    profile: { es: "Amaderado · Fresco · Terroso · Resinoso · Sofisticado", en: "Woody · Fresh · Earthy · Resinous · Sophisticated" },
+    prices: prices(780, 220),
     notes: [
-      { es: "Rosa de Damasco", en: "Damask Rose" },
+      { es: "Azahar", en: "Orange blossom" },
+      { es: "Manzana", en: "Apple" },
+      { es: "Cáscara de naranja", en: "Orange peel" },
       { es: "Pachulí", en: "Patchouli" },
-      { es: "Pimienta Rosa", en: "Pink Pepper" },
+      { es: "Oud", en: "Oud" },
     ],
     story: {
-      es: "Una rosa que se encoge de hombros. Pimentada, terrosa y nada sentimental — el antídoto contra todo floral educado que hayas llevado antes.",
-      en: "A rose that shrugs. Peppered, earthy and unsentimental — the antidote to every polite floral you have worn before.",
+      es: "Una fragancia unisex amaderada, construida sobre una apertura fresca de azahar y manzana, realzada por la luminosidad cítrica de la cáscara de naranja.",
+      en: "A woody unisex fragrance built on a fresh opening of orange blossom and apple, enhanced by the citrus brightness of orange peel.",
     },
     ingredients: {
       es: "Absoluto de rosa de Damasco destilado al vapor, pachulí oscuro de Indonesia y aceite de pimienta rosa para un rasguño en las notas de salida.",
@@ -317,7 +351,7 @@ const productSources: ProductSource[] = [
       en: "The rose is harvested at dawn in Bulgaria's Rose Valley, before the sun burns off the oils that give the absolute its depth.",
     },
     concentration: { es: "Eau de Parfum · 20%", en: "Eau de Parfum · 20%" },
-    size: "50 ml",
+    size: "100 ml",
     image: cestLaVie,
     notesImage: cestLaVieNotes,
     storyImageDark: cestLaVieStoryDark,
@@ -328,15 +362,18 @@ const productSources: ProductSource[] = [
     name: "Karma Scotch",
     chapter: { es: "Capítulo IX", en: "Chapter IX" },
     family: { es: "Maderas Licorosas", en: "Boozy Woods" },
-    price: 670,
+    profile: { es: "Ámbar · Licoroso · Cálido · Suave · Elegante", en: "Amber · Boozy · Warm · Smooth · Elegant" },
+    prices: prices(780, 220),
     notes: [
-      { es: "Whisky Turbado", en: "Peated Whisky" },
-      { es: "Roble", en: "Oak" },
-      { es: "Absoluto de Vainilla", en: "Vanilla Absolute" },
+      { es: "Whisky", en: "Whisky" },
+      { es: "Amaretto", en: "Amaretto" },
+      { es: "Vainilla", en: "Vanilla" },
+      { es: "Ámbar", en: "Amber" },
+      { es: "Corteza de roble", en: "Oak bark" },
     ],
     story: {
-      es: "Destilado de una hora tardía. Barrica ahumada, espíritu dulce y vainilla sin diluir — una fragancia con la temperatura de un trago recién servido.",
-      en: "Distilled from a late hour. Smoked barrel, sweet spirit and vanilla left uncut — a fragrance with the temperature of a poured dram.",
+      es: "Una fragancia ambarada de perfil licoroso que evoca la calidez de un whisky fino. La vainilla aporta suavidad y redondez, mientras que el ámbar y la corteza de roble refuerzan un carácter elegante, denso y duradero.",
+      en: "An amber fragrance with a boozy profile that evokes the warmth of fine whisky. Vanilla adds smoothness and roundness, while amber and oak bark reinforce an elegant, dense and long-lasting character.",
     },
     ingredients: {
       es: "Un acorde de whisky turbado construido sobre malta ahumada, roble americano extraído de duelas de ex-bourbon y absoluto de vainilla entera de Madagascar.",
@@ -347,7 +384,7 @@ const productSources: ProductSource[] = [
       en: "The peat character is modeled on barrels aged on Scotland's Islay coast, where sea spray and smoke are inseparable from the spirit.",
     },
     concentration: { es: "Extrait de Parfum · 22%", en: "Extrait de Parfum · 22%" },
-    size: "50 ml",
+    size: "100 ml",
     image: karmaScotch,
     notesImage: karmaScotchNotes,
     storyImageDark: karmaScotchStoryDark,
@@ -358,15 +395,17 @@ const productSources: ProductSource[] = [
     name: "Corinto Kush",
     chapter: { es: "Capítulo X", en: "Chapter X" },
     family: { es: "Resina Verde", en: "Green Resin" },
-    price: 680,
+    profile: { es: "Verde · Punzante · Resinoso · Denso · Magnético", en: "Green · Sharp · Resinous · Dense · Magnetic" },
+    prices: prices(925, 250),
     notes: [
-      { es: "Hoja de Cáñamo", en: "Hemp Leaf" },
-      { es: "Gálbano", en: "Galbanum" },
-      { es: "Ládano", en: "Labdanum" },
+      { es: "Maracuyá", en: "Passion fruit" },
+      { es: "Cannabis", en: "Cannabis" },
+      { es: "Resinas balsámicas", en: "Balsamic resins" },
+      { es: "Bálsamo de Tolú", en: "Tolu balsam" },
     ],
     story: {
-      es: "Verde crudo triturado entre los dedos. Corinto Kush es herbáceo y resinoso, un valle colombiano convertido en absoluto.",
-      en: "Raw green crushed between fingers. Corinto Kush is herbaceous and resinous, a Colombian valley rendered in absolute.",
+      es: "Una fragancia distintiva construida alrededor del cannabis, inspirada en los paisajes montañosos de Colombia. La maracuyá aporta acidez exótica y frescura, mientras que el cannabis ofrece un carácter verde y resinoso, y profundidad aromática.",
+      en: "A distinctive fragrance built around cannabis, inspired by the mountainous landscapes of Colombia. Passion fruit adds exotic acidity and freshness, while cannabis brings green, resinous character and aromatic depth.",
     },
     ingredients: {
       es: "Un acorde de hoja de cáñamo, resina de gálbano verde-amarga y absoluto de ládano para una base que se vuelve ambarina y cálida al asentarse.",
@@ -377,7 +416,7 @@ const productSources: ProductSource[] = [
       en: "Modeled on the Cauca valley around Corinto, Colombia, where the house first noted the exact bite of crushed leaf against wet stone.",
     },
     concentration: { es: "Extrait de Parfum · 22%", en: "Extrait de Parfum · 22%" },
-    size: "50 ml",
+    size: "100 ml",
     image: corintoKush,
     notesImage: corintoKushNotes,
     storyImageDark: corintoKushStoryDark,
@@ -388,15 +427,18 @@ const productSources: ProductSource[] = [
     name: "Loto",
     chapter: { es: "Capítulo XI", en: "Chapter XI" },
     family: { es: "Floral Acuático", en: "Aquatic Floral" },
-    price: 630,
+    profile: { es: "Floral limpio · Jugoso · Terroso · Sofisticado", en: "Clean floral · Juicy · Earthy · Sophisticated" },
+    prices: prices(780, 220),
     notes: [
-      { es: "Loto", en: "Lotus" },
-      { es: "Nenúfar", en: "Water Lily" },
-      { es: "Ambreta", en: "Ambrette" },
+      { es: "Flor de loto", en: "Lotus flower" },
+      { es: "Toronja", en: "Grapefruit" },
+      { es: "Granada", en: "Pomegranate" },
+      { es: "Orquídea", en: "Orchid" },
+      { es: "Vetiver", en: "Vetiver" },
     ],
     story: {
-      es: "Quietud embotellada. Loto flota — pétalos frescos sobre agua limpia, cerrando en una ambreta suave que nunca levanta la voz.",
-      en: "Stillness bottled. Loto floats — cool petals over clean water, closing on a soft ambrette that never raises its voice.",
+      es: "Una fragancia unisex construida alrededor de la flor de loto, con un carácter floral limpio y un equilibrio entre luminosidad y profundidad.",
+      en: "A unisex fragrance built around lotus flower, with a clean floral character and a balance between brightness and depth.",
     },
     ingredients: {
       es: "Absoluto de loto azul, un acorde transparente de nenúfar y extracto de semilla de ambreta en lugar del almizcle, sin ninguna nota animal.",
@@ -407,7 +449,7 @@ const productSources: ProductSource[] = [
       en: "The blue lotus is grown in shallow ponds along the Nile delta in Egypt, still harvested by hand at first light as the flowers open.",
     },
     concentration: { es: "Eau de Parfum · 18%", en: "Eau de Parfum · 18%" },
-    size: "50 ml",
+    size: "100 ml",
     image: loto,
     notesImage: lotoNotes,
     storyImageDark: lotoStoryDark,
@@ -420,8 +462,9 @@ const localize = (p: ProductSource, lang: Lang): Product => ({
   name: p.name,
   chapter: p.chapter[lang],
   family: p.family[lang],
-  price: p.price,
-  notes: [p.notes[0][lang], p.notes[1][lang], p.notes[2][lang]],
+  profile: p.profile[lang],
+  prices: p.prices,
+  notes: p.notes.map((note) => note[lang]),
   story: p.story[lang],
   ingredients: p.ingredients[lang],
   origin: p.origin[lang],
@@ -453,4 +496,3 @@ export const getAdjacent = (slug: string, lang: Lang) => {
   return { prev, next, index, total };
 };
 
-export const formatAED = (n: number) => `${n.toLocaleString("en-US")} AED`;

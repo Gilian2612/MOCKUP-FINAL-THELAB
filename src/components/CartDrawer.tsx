@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
 
 import { useCart } from "@/context/CartContext";
-import { formatAED } from "@/lib/products";
+import { useCurrency } from "@/context/CurrencyContext";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function CartDrawer() {
+  const { format } = useCurrency();
   const { lines, drawerOpen, setDrawerOpen, setQty, subtotal, shipping, total } = useCart();
   const { t } = useLanguage();
 
@@ -23,13 +24,13 @@ export default function CartDrawer() {
         }`}
       >
         <div className="flex items-center justify-between border-b border-border px-6 py-5">
-          <p className="label-caps text-primary">
+          <p className="text-[0.95rem] uppercase leading-[1.7] text-primary-on-photo">
             {t.cart.title} ({lines.length})
           </p>
           <button
             type="button"
             onClick={() => setDrawerOpen(false)}
-            className="label-caps -my-2.5 py-2.5 text-muted-foreground hover:text-primary tap-target"
+            className="-my-2.5 py-2.5 text-[0.95rem] uppercase text-primary-on-photo hover:text-primary tap-target"
           >
             {t.cart.close}
           </button>
@@ -37,7 +38,7 @@ export default function CartDrawer() {
 
         <div className="flex-1 overflow-y-auto px-6 py-6">
           {lines.length === 0 ? (
-            <p className="font-display text-2xl text-muted-foreground">{t.cart.empty}</p>
+            <p className="font-display text-[1.9rem] font-semibold uppercase leading-[1.05] tracking-tight text-primary-on-photo">{t.cart.empty}</p>
           ) : (
             <ul className="space-y-6">
               {lines.map((l) => (
@@ -51,8 +52,8 @@ export default function CartDrawer() {
                     className="plate-media h-24 w-20 rounded-[14px] object-contain"
                   />
                   <div className="flex-1">
-                    <p className="font-display text-xl text-primary">{l.name}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{formatAED(l.price)}</p>
+                    <p className="font-['La_Presse',Georgia,serif] text-[1.5rem] leading-tight text-primary-on-photo">{l.name}</p>
+                    <p className="mt-1 font-display text-[0.95rem] font-bold text-primary-on-photo">{format(l.price)}</p>
                     <div className="mt-3 inline-flex items-center gap-4 rounded-full border border-border px-3 py-1">
                       <button
                         type="button"
@@ -62,7 +63,7 @@ export default function CartDrawer() {
                       >
                         −
                       </button>
-                      <span className="text-sm text-cream">{l.qty}</span>
+                      <span className="text-sm text-primary-on-photo">{l.qty}</span>
                       <button
                         type="button"
                         aria-label={t.cart.increase(l.name)}
@@ -80,18 +81,18 @@ export default function CartDrawer() {
         </div>
 
         <div className="border-t border-border px-6 py-6">
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between text-muted-foreground">
+          <div className="space-y-2 text-[0.9rem] uppercase leading-[1.75]">
+            <div className="flex justify-between text-primary-on-photo">
               <span>{t.cart.subtotal}</span>
-              <span>{formatAED(subtotal)}</span>
+              <span>{format(subtotal)}</span>
             </div>
-            <div className="flex justify-between text-muted-foreground">
+            <div className="flex justify-between text-primary-on-photo">
               <span>{t.cart.shipping}</span>
-              <span>{shipping ? formatAED(shipping) : "—"}</span>
+              <span>{shipping ? format(shipping) : "—"}</span>
             </div>
-            <div className="flex justify-between pt-2 font-display text-2xl text-cream">
+            <div className="flex justify-between gap-4 pt-2 font-display text-[1.4rem] font-semibold leading-[1.05] tracking-tight text-primary-on-photo">
               <span>{t.cart.total}</span>
-              <span>{formatAED(total)}</span>
+              <span>{format(total)}</span>
             </div>
           </div>
           <Link

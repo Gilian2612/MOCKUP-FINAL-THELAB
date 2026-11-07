@@ -6,6 +6,8 @@ import labLogo from "@/assets/the-lab-logo.svg";
 import { useCart } from "@/context/CartContext";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage, type Lang } from "@/context/LanguageContext";
+import { useCurrency } from "@/context/CurrencyContext";
+import { CURRENCIES } from "@/lib/currency";
 
 const routes = [
   { key: "fragrances", to: "/fragrances" },
@@ -83,6 +85,37 @@ export function LanguageToggle({ size = "sm" }: { size?: "sm" | "lg" }) {
   );
 }
 
+function CurrencyToggle() {
+  const { currency, setCurrency } = useCurrency();
+  const { theme } = useTheme();
+  const inactive =
+    theme === "day" ? "text-neutral-700/60 hover:text-primary" : "text-white/55 hover:text-primary";
+
+  return (
+    <div
+      role="group"
+      aria-label="Currency"
+      className="flex h-7 items-center gap-1.5 rounded-full border border-primary/40 px-2.5"
+    >
+      {CURRENCIES.map((code, i) => (
+        <span key={code} className="flex items-center gap-1.5">
+          {i > 0 && <span className="text-[10px] text-primary/40">/</span>}
+          <button
+            type="button"
+            onClick={() => setCurrency(code)}
+            aria-pressed={currency === code}
+            className={`label-caps inline-flex h-7 items-center px-1 text-[10px] leading-none transition-colors tap-target ${
+              currency === code ? "text-primary" : inactive
+            }`}
+          >
+            {code}
+          </button>
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export default function SiteNav() {
   const { count, setDrawerOpen } = useCart();
   const { theme, toggleTheme } = useTheme();
@@ -119,7 +152,7 @@ export default function SiteNav() {
           <Logo />
         </Link>
 
-          <nav className="hidden items-center gap-12 lg:flex">
+          <nav className="hidden items-center gap-12 xl:flex">
             {links.map((l) => (
               <Link
                 key={l.to}
@@ -139,8 +172,11 @@ export default function SiteNav() {
           <div className="flex items-center gap-4 -translate-x-5">
             {/* The ES/EN switch is only in the hamburger menu below `lg`; showing
                 both at once crowded the bar on a phone. */}
-            <div className="hidden lg:block">
+            <div className="hidden xl:block">
               <LanguageToggle />
+            </div>
+            <div className="hidden xl:block">
+              <CurrencyToggle />
             </div>
             <button
               type="button"
@@ -162,7 +198,7 @@ export default function SiteNav() {
               onClick={() => setMobileMenuOpen(true)}
               aria-label={t.nav.openMenu}
               aria-expanded={mobileMenuOpen}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10 lg:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10 xl:hidden"
             >
               <Menu className="h-4 w-4" />
             </button>
@@ -171,7 +207,7 @@ export default function SiteNav() {
       </header>
 
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[70] flex flex-col bg-background lg:hidden">
+        <div className="fixed inset-0 z-[70] flex flex-col bg-background xl:hidden">
           <div className="flex items-center justify-between px-6 py-4">
             <Link to="/" aria-label={t.nav.home} onClick={() => setMobileMenuOpen(false)}>
               <Logo />
@@ -200,8 +236,9 @@ export default function SiteNav() {
             ))}
           </nav>
 
-          <div className="flex justify-center px-6 pb-12">
+          <div className="flex flex-col items-center gap-4 px-6 pb-12">
             <LanguageToggle size="lg" />
+            <CurrencyToggle />
           </div>
         </div>
       )}

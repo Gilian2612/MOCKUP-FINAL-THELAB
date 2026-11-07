@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { useCart } from "@/context/CartContext";
-import { getProducts, formatAED } from "@/lib/products";
+import { getProducts } from "@/lib/products";
+import { useCurrency } from "@/context/CurrencyContext";
 import { useLanguage } from "@/context/LanguageContext";
-import fondoExtra from "@/assets/fragrances-bg-lab.jpeg";
+import fondoExtra from "@/assets/fragrances-bg-loto-lab.jpeg";
 import { FilmBackdrop } from "@/components/FilmBackdrop";
 
 export const Route = createFileRoute("/fragrances/")({
@@ -13,7 +14,7 @@ export const Route = createFileRoute("/fragrances/")({
       {
         name: "description",
         content:
-          "Eleven independent extraits and eaux de parfum from The Lab Perfumes, composed between Bogotá and Dubai. Prices in AED.",
+          "Eleven independent extraits and eaux de parfum from The Lab Perfumes, composed between Bogotá and Dubai.",
       },
       { property: "og:title", content: "Fragrances — The Lab Perfumes" },
       {
@@ -33,6 +34,7 @@ function Rule() {
 
 function FragrancesPage() {
   const { add } = useCart();
+  const { currency, format } = useCurrency();
   const { lang, t } = useLanguage();
   const products = getProducts(lang);
 
@@ -42,22 +44,33 @@ function FragrancesPage() {
       <FilmBackdrop src={fondoExtra} position="50% 50%" sharp fixed />
 
       {/* ---------------- HERO (misma arquitectura que la landing) ---------------- */}
-      <section aria-labelledby="collection-title" className="max-w-[21rem] md:max-w-[32rem]">
+      <section aria-labelledby="collection-title">
         <p className="uppercase text-[0.95rem] leading-[1.7] text-primary-on-photo">
           {t.fragrances.label}
         </p>
         <Rule />
-        <h1
-          id="collection-title"
-          className="font-display text-[2.25rem] leading-none text-primary-on-photo md:text-[3.75rem]"
-        >
-          {t.fragrances.titleStart}
-          {t.fragrances.titleEm}
-          {t.fragrances.titleEnd}
-        </h1>
+        <div className="flex flex-col items-start gap-3 sm:flex-row sm:justify-between sm:gap-6 md:gap-10">
+          <h1
+            id="collection-title"
+            className="font-display text-[2.25rem] sm:whitespace-nowrap font-semibold leading-none tracking-tight text-primary-on-photo md:text-[3.75rem]"
+          >
+            {t.fragrances.titleStart}
+            {t.fragrances.titleEm}
+            {t.fragrances.titleEnd}
+          </h1>
+          <div className="shrink-0 sm:-translate-x-5 lg:-translate-x-6">
+            <p className="whitespace-nowrap sm:-mr-[0.25em] sm:text-right text-[0.6rem] uppercase leading-[1.7] tracking-[0.25em] text-primary-on-photo md:text-[0.8rem]">
+              {t.fragrances.sideLabelLines.map((line) => (
+                <span key={line} className={line === "MARIO GALINDO" ? "block font-bold" : "block"}>
+                  {line}
+                </span>
+              ))}
+            </p>
+            <div aria-hidden="true" className="mt-2 h-px w-10 bg-primary/70 sm:ml-auto" />
+          </div>
+        </div>
         <p className="mt-4 uppercase text-[0.95rem] leading-[1.9] text-primary-on-photo">
-          <span className="block">{t.fragrances.sideLabel}</span>
-          <span className="block">{t.fragrances.meta}</span>
+          {t.fragrances.meta}
         </p>
       </section>
 
@@ -104,14 +117,14 @@ function FragrancesPage() {
                 />
               </Link>
             </div>
-            <div className="mt-2 flex flex-1 flex-col items-start text-left">
-              <Link to="/fragrances/$slug" params={{ slug: p.slug }}>
-                <h2 className="founder-serif text-[1.5rem] leading-tight text-primary-on-photo">{p.name}</h2>
+            <div className="mt-2 flex flex-1 flex-col items-center text-center">
+              <Link to="/fragrances/$slug" params={{ slug: p.slug }} className="w-full">
+                <h2 className="text-center font-['La_Presse',Georgia,serif] text-[1.5rem] leading-tight text-primary-on-photo">{p.name}</h2>
               </Link>
-              <p className="mt-1.5 min-h-[32px] label-caps leading-snug text-primary-on-photo">
+              <p className="mt-1.5 min-h-[32px] w-full label-caps leading-snug text-primary-on-photo">
                 {p.notes.join(" · ")}
               </p>
-              <p className="mt-2.5 mb-3 founder-serif text-xl text-primary-on-photo">{formatAED(p.price)}</p>
+              <p className="mt-2.5 mb-3 font-display text-xl font-bold text-primary-on-photo">{format(p.prices[currency])}</p>
               <button
                 type="button"
                 onClick={() => add(p)}

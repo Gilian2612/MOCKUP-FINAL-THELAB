@@ -3,14 +3,18 @@ import { toast } from "sonner";
 
 import type { Product } from "@/lib/products";
 import { useLanguage } from "@/context/LanguageContext";
+import { useCurrency } from "@/context/CurrencyContext";
+import { SHIPPING, type Prices } from "@/lib/currency";
 
-export type CartLine = {
+type StoredLine = {
   slug: string;
   name: string;
-  price: number;
+  prices: Prices;
   image: string;
   qty: number;
 };
+
+export type CartLine = StoredLine & { price: number };
 
 type CartValue = {
   lines: CartLine[];
@@ -30,9 +34,10 @@ type CartValue = {
 const CartContext = createContext<CartValue | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [lines, setLines] = useState<CartLine[]>([]);
+  const [lines, setLines] = useState<StoredLine[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { t } = useLanguage();
+  const { currency } = useCurrency();
   const addedToast = t.cart.addedToast;
 
   const add = useCallback(
@@ -47,7 +52,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           {
             slug: product.slug,
             name: product.name,
-            price: product.price,
+            prices: product.prices,
             image: product.image,
             qty,
           },
@@ -74,11 +79,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const clear = useCallback(() => setLines([]), []);
 
   const value = useMemo<CartValue>(() => {
-    const subtotal = lines.reduce((s, l) => s + l.price * l.qty, 0);
-    const shipping = subtotal > 0 ? 45 : 0;
+    const priced = lines.map((l) => ({ ...l, price: l.prices[currency] }));
+    const subtotal = priced.reduce((s, l) => s + l.price * l.qty, 0);
+    const shipping = subtotal > 0 ? SHIPPING[currency] : 0;
     const tax = Math.round(subtotal * 0.05);
     return {
-      lines,
+      lines: priced,
       count: lines.reduce((s, l) => s + l.qty, 0),
       subtotal,
       shipping,
@@ -91,7 +97,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       remove,
       clear,
     };
-  }, [lines, drawerOpen, add, setQty, remove, clear]);
+  }, [lines, currency, drawerOpen, add, setQty, remove, clear]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
