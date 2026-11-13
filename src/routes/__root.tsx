@@ -163,7 +163,7 @@ function RootComponent() {
               position="bottom-right"
               toastOptions={{
                 classNames: {
-                  toast: "!bg-popover !border !border-primary/60 !text-cream !rounded-[16px]",
+                  toast: "!bg-popover !border !border-[#b84a1e] !text-cream !rounded-[16px]",
                   title: "label-caps !text-primary",
                   description: "!text-muted-foreground",
                 },

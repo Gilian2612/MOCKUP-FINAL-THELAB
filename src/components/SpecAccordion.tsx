@@ -33,10 +33,8 @@ export function SpecAccordion({
           <div
             key={item.id}
             className={cn(
-              "overflow-hidden rounded-3xl border-l-[3px] border-y border-r transition-colors duration-300",
-              isOpen
-                ? "border-y-transparent border-r-transparent border-l-primary bg-primary/10"
-                : "border-y-border border-r-border border-l-border bg-transparent",
+              "overflow-hidden rounded-3xl border transition-colors duration-300",
+              isOpen ? "border-primary/50 bg-primary/10" : "border-border bg-transparent",
             )}
           >
             <button

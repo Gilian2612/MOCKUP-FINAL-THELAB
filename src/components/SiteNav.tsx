@@ -17,7 +17,18 @@ const routes = [
 ] as const;
 
 export function Logo() {
-  return <img src={labLogo} alt="The Lab Perfumes" className="h-8 w-auto object-contain" />;
+  return (
+    <span
+      role="img"
+      aria-label="The Lab Perfumes"
+      className="block h-8 logo-ember"
+      style={{
+        aspectRatio: "1133.79 / 659.89",
+        WebkitMask: `url(${labLogo}) center / contain no-repeat`,
+        mask: `url(${labLogo}) center / contain no-repeat`,
+      }}
+    />
+  );
 }
 
 /** ES | EN switch. `size="lg"` is the full-word version used in the mobile menu. */
@@ -73,7 +84,7 @@ export function LanguageToggle({ size = "sm" }: { size?: "sm" | "lg" }) {
             onClick={() => setLang(o.code)}
             aria-pressed={lang === o.code}
             title={o.long}
-            className={`label-caps inline-flex h-7 items-center px-1 text-[10px] leading-none transition-colors tap-target ${
+            className={`label-caps inline-flex h-7 items-center px-1 text-xs leading-none transition-colors tap-target ${
               lang === o.code ? "text-primary" : inactive
             }`}
           >
@@ -104,7 +115,7 @@ function CurrencyToggle() {
             type="button"
             onClick={() => setCurrency(code)}
             aria-pressed={currency === code}
-            className={`label-caps inline-flex h-7 items-center px-1 text-[10px] leading-none transition-colors tap-target ${
+            className={`label-caps inline-flex h-7 items-center px-1 text-xs leading-none transition-colors tap-target ${
               currency === code ? "text-primary" : inactive
             }`}
           >
@@ -188,7 +199,7 @@ export default function SiteNav() {
               type="button"
               onClick={toggleTheme}
               aria-label={theme === "day" ? t.nav.switchToNight : t.nav.switchToDay}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10 tap-target"
+              className="flex h-11 w-11 lg:h-9 lg:w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10 tap-target"
             >
               {theme === "day" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
             </button>
@@ -204,7 +215,7 @@ export default function SiteNav() {
               onClick={() => setMobileMenuOpen(true)}
               aria-label={t.nav.openMenu}
               aria-expanded={mobileMenuOpen}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10 xl:hidden"
+              className="flex h-11 w-11 lg:h-9 lg:w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10 xl:hidden"
             >
               <Menu className="h-4 w-4" />
             </button>
@@ -222,7 +233,7 @@ export default function SiteNav() {
               type="button"
               onClick={() => setMobileMenuOpen(false)}
               aria-label={t.nav.closeMenu}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
+              className="flex h-11 w-11 lg:h-9 lg:w-9 items-center justify-center rounded-full border border-primary/40 text-primary transition-colors hover:border-primary hover:bg-primary/10"
             >
               <X className="h-5 w-5" />
             </button>

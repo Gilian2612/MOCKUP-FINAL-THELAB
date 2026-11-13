@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { useCart } from "@/context/CartContext";
@@ -40,6 +40,9 @@ export const Route = createFileRoute("/fragrances/$slug")({
   component: ProductPage,
 });
 
+/** Tope de unidades por línea; evita pedidos absurdos mientras no hay backend. */
+const MAX_QTY = 10;
+
 function ProductPage() {
   const { product: loaded } = Route.useLoaderData();
   const { lang, t } = useLanguage();
@@ -48,13 +51,24 @@ function ProductPage() {
   const { currency, format } = useCurrency();
   const { theme } = useTheme();
   const [qty, setQty] = useState(1);
+  const [variant, setVariant] = useState<"full" | "mini">("full");
+  useEffect(() => setVariant("full"), [product.slug]);
   const [accordionOpenId, setAccordionOpenId] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
 
   const isDark = theme === "night";
   const storyImage = isDark ? product.storyImageDark : product.storyImageLight;
   const isNotes = accordionOpenId === "notes";
-  const activeImage = accordionOpenId === "story" ? storyImage : isNotes ? product.image : product.notesImage;
+  const mini = variant === "mini" ? product.mini : null;
+  const activeImage =
+    accordionOpenId === "story"
+      ? storyImage
+      : mini
+        ? mini.image
+        : isNotes
+          ? product.image
+          : product.notesImage;
+  const activePrices = mini ? mini.prices : product.prices;
 
   const adj = getAdjacent(product.slug, lang);
   const prev = adj?.prev ?? product;
@@ -114,7 +128,7 @@ function ProductPage() {
           </span>
         </Link>
 
-        <span className="label-caps shrink-0 text-muted-foreground/70">
+        <span className="label-caps shrink-0 tabular-nums text-muted-foreground">
           {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </span>
 
@@ -141,17 +155,22 @@ function ProductPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background pb-24 pt-28 lg:pb-0">
-      <div className="grid lg:grid-cols-2">
-        <div className="relative isolate min-h-[520px] overflow-hidden lg:min-h-[calc(100vh-7rem)]">
+    <main className="min-h-screen bg-background pb-24 pt-28 lg:pb-0 lg:[@media(min-height:760px)]:h-[calc(100dvh-1.75rem)] lg:[@media(min-height:760px)]:min-h-0 lg:[@media(min-height:760px)]:overflow-hidden">
+      <div className="grid lg:h-full lg:grid-cols-2">
+        <div className="relative isolate min-h-[520px] overflow-hidden lg:min-h-0">
           <motion.div
             initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="absolute inset-0 overflow-hidden"
           >
+            {!activeImage && (
+              <div className="absolute inset-8 flex items-center justify-center rounded-[24px] border border-dashed border-primary-on-photo/40">
+                <span className="label-caps text-primary-on-photo/70">Foto pendiente</span>
+              </div>
+            )}
             <AnimatePresence initial={false}>
-              <motion.img
+              {activeImage && <motion.img
                 key={activeImage}
                 src={activeImage}
                 alt={t.product.bottleAlt(product.name)}
@@ -170,12 +189,12 @@ function ProductPage() {
                 }
                 transition={{ duration: reduceMotion ? 0.3 : 0.9, ease: "easeInOut" }}
                 className="absolute inset-0 h-full w-full object-contain"
-              />
+              />}
             </AnimatePresence>
           </motion.div>
         </div>
 
-        <div className="relative flex flex-col justify-center px-6 py-16 lg:px-20">
+        <div className="relative flex flex-col justify-center px-6 py-16 lg:px-20 lg:pb-20 lg:pt-6">
           <Link to="/fragrances" className="label-caps text-muted-foreground hover:text-primary">
             {t.product.allFragrances}
           </Link>
@@ -190,8 +209,9 @@ function ProductPage() {
             <PrevNext />
           </div>
 
-          <p className="mt-8 label-caps !text-base font-semibold text-primary">{t.product.profile}</p>
-          <p className="mt-2 flex flex-wrap items-center gap-x-2.5 label-caps !text-sm leading-relaxed text-primary">
+          <h1 className="mt-8 font-['La_Presse',Georgia,serif] text-5xl text-primary-on-photo sm:text-6xl">{product.name}</h1>
+          <p className="sr-only">{t.product.profile}</p>
+          <p className="mt-3 flex flex-wrap items-center gap-x-2.5 label-caps !text-xs leading-relaxed text-primary-on-photo/85">
             {product.profile.split(" · ").map((attribute) => (
               <span key={attribute} className="inline-flex items-center gap-x-2.5">
                 <span aria-hidden="true" className="h-1 w-1 rounded-full bg-primary" />
@@ -199,36 +219,60 @@ function ProductPage() {
               </span>
             ))}
           </p>
-          <h1 className="mt-4 font-['La_Presse',Georgia,serif] text-5xl text-primary-on-photo sm:text-6xl">{product.name}</h1>
           <SpecAccordion items={specItems} onChange={(id) => setAccordionOpenId(id)} />
 
           <div className="mt-10 flex flex-wrap items-center gap-6">
-            <div className="inline-flex items-center gap-6 rounded-full bg-background px-5 py-3 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8),inset_0_-1px_0_rgba(182,170,132,0.16)]">
+            {product.mini && (
+              <div role="radiogroup" aria-label={t.product.size} className="flex gap-2">
+                {([
+                  ["full", product.size],
+                  ["mini", product.mini.size],
+                ] as const).map(([v, label]) => (
+                  <button
+                    key={v}
+                    type="button"
+                    role="radio"
+                    aria-checked={variant === v}
+                    onClick={() => setVariant(v)}
+                    className={`min-h-11 rounded-full border px-4 label-caps transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b84a1e] focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+                      variant === v
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-primary/40 text-primary-on-photo hover:border-primary"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+            <div className="inline-flex items-center rounded-full border border-primary/40">
               <button
                 type="button"
                 aria-label={t.product.decreaseQty}
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
-                className="text-lg text-primary"
+                disabled={qty <= 1}
+                className="flex h-11 w-11 items-center justify-center rounded-full text-lg text-primary transition-colors hover:bg-primary/10 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b84a1e] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 −
               </button>
-              <span className="text-cream">{qty}</span>
+              <span aria-live="polite" className="w-6 text-center tabular-nums text-cream">{qty}</span>
               <button
                 type="button"
                 aria-label={t.product.increaseQty}
-                onClick={() => setQty((q) => q + 1)}
-                className="text-lg text-primary"
+                onClick={() => setQty((q) => Math.min(MAX_QTY, q + 1))}
+                disabled={qty >= MAX_QTY}
+                className="flex h-11 w-11 items-center justify-center rounded-full text-lg text-primary transition-colors hover:bg-primary/10 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b84a1e] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 +
               </button>
             </div>
-            <p className="font-display text-3xl font-bold text-cream">{format(product.prices[currency])}</p>
+            <p className="font-display text-3xl font-bold text-cream">{format(activePrices[currency])}</p>
           </div>
 
           <button
             type="button"
-            onClick={() => add(product, qty)}
-            className="mt-8 w-full rounded-full bg-primary py-4 label-caps text-primary-foreground sm:w-auto sm:px-16"
+            onClick={() => add(product, qty, mini ? "mini" : "full")}
+            className="btn-ash mt-8 w-full rounded-full py-4 label-caps !text-sm font-semibold sm:w-auto sm:px-16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b84a1e] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {t.product.addToBag}
           </button>

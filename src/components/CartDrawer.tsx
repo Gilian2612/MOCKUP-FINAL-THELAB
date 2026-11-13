@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import PhotoSlot from "@/components/PhotoSlot";
 
 import { useCart } from "@/context/CartContext";
 import { useCurrency } from "@/context/CurrencyContext";
@@ -42,8 +43,8 @@ export default function CartDrawer() {
           ) : (
             <ul className="space-y-6">
               {lines.map((l) => (
-                <li key={l.slug} className="flex gap-4">
-                  <img
+                <li key={l.key} className="flex gap-4">
+                  <PhotoSlot
                     src={l.image}
                     alt={l.name}
                     loading="lazy"
@@ -53,22 +54,24 @@ export default function CartDrawer() {
                   />
                   <div className="flex-1">
                     <p className="font-['La_Presse',Georgia,serif] text-[1.5rem] leading-tight text-primary-on-photo">{l.name}</p>
+                    <p className="label-caps text-muted-foreground">{l.size}</p>
                     <p className="mt-1 font-display text-[0.95rem] font-bold text-primary-on-photo">{format(l.price)}</p>
-                    <div className="mt-3 inline-flex items-center gap-4 rounded-full border border-border px-3 py-1">
+                    <div className="mt-3 inline-flex items-center rounded-full border border-border">
                       <button
                         type="button"
                         aria-label={t.cart.decrease(l.name)}
-                        onClick={() => setQty(l.slug, l.qty - 1)}
-                        className="text-primary"
+                        onClick={() => setQty(l.key, l.qty - 1)}
+                        className="flex h-11 w-11 items-center justify-center rounded-full text-primary hover:bg-primary/10"
                       >
                         −
                       </button>
-                      <span className="text-sm text-primary-on-photo">{l.qty}</span>
+                      <span aria-live="polite" className="w-6 text-center text-sm tabular-nums text-primary-on-photo">{l.qty}</span>
                       <button
                         type="button"
                         aria-label={t.cart.increase(l.name)}
-                        onClick={() => setQty(l.slug, l.qty + 1)}
-                        className="text-primary"
+                        onClick={() => setQty(l.key, l.qty + 1)}
+                        disabled={l.qty >= 10}
+                        className="flex h-11 w-11 items-center justify-center rounded-full text-primary hover:bg-primary/10 disabled:opacity-40"
                       >
                         +
                       </button>

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import PhotoSlot from "@/components/PhotoSlot";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -27,7 +28,7 @@ export const Route = createFileRoute("/checkout/")({
 });
 
 const field =
-  "mt-2 w-full rounded-[14px] bg-background px-4 py-3 text-sm text-primary-on-photo outline-none shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)] placeholder:text-muted-foreground/60 focus:ring-1 focus:ring-primary/50";
+  "mt-2 w-full rounded-[14px] bg-background px-4 py-3 text-sm text-primary-on-photo outline-none shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)] placeholder:text-muted-foreground focus:ring-1 focus:ring-primary/50";
 
 function CheckoutPage() {
   const { format } = useCurrency();
@@ -62,8 +63,8 @@ function CheckoutPage() {
           ) : (
             <ul className="mt-8 space-y-6">
               {lines.map((l) => (
-                <li key={l.slug} className="flex gap-4">
-                  <img
+                <li key={l.key} className="flex gap-4">
+                  <PhotoSlot
                     src={l.image}
                     alt={l.name}
                     loading="lazy"
@@ -73,22 +74,24 @@ function CheckoutPage() {
                   />
                   <div className="flex-1">
                     <p className="font-['La_Presse',Georgia,serif] text-[1.5rem] leading-tight text-primary-on-photo">{l.name}</p>
+                    <p className="label-caps text-muted-foreground">{l.size}</p>
                     <p className="mt-1 font-display text-[0.95rem] font-bold text-primary-on-photo">{format(l.price)}</p>
-                    <div className="mt-3 inline-flex items-center gap-5 rounded-full bg-background px-4 py-1.5 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)]">
+                    <div className="mt-3 inline-flex items-center rounded-full border border-primary/40">
                       <button
                         type="button"
                         aria-label={c.decrease(l.name)}
-                        onClick={() => setQty(l.slug, l.qty - 1)}
-                        className="text-primary-on-photo"
+                        onClick={() => setQty(l.key, l.qty - 1)}
+                        className="flex h-11 w-11 items-center justify-center rounded-full text-primary hover:bg-primary/10"
                       >
                         −
                       </button>
-                      <span className="text-sm text-primary-on-photo">{l.qty}</span>
+                      <span aria-live="polite" className="w-6 text-center text-sm tabular-nums text-primary-on-photo">{l.qty}</span>
                       <button
                         type="button"
                         aria-label={c.increase(l.name)}
-                        onClick={() => setQty(l.slug, l.qty + 1)}
-                        className="text-primary-on-photo"
+                        onClick={() => setQty(l.key, l.qty + 1)}
+                        disabled={l.qty >= 10}
+                        className="flex h-11 w-11 items-center justify-center rounded-full text-primary hover:bg-primary/10 disabled:opacity-40"
                       >
                         +
                       </button>
@@ -120,8 +123,8 @@ function CheckoutPage() {
           </dl>
         </section>
 
-        {/* FORM */}
-        <section className="clay p-7 sm:p-10">
+        {/* FORM — sin productos no hay nada que pagar */}
+        <section className={lines.length === 0 ? "hidden" : "clay p-7 sm:p-10"}>
           <form
             onSubmit={(e) => {
               e.preventDefault();

@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import PhotoSlot from "@/components/PhotoSlot";
 
 import { useCart } from "@/context/CartContext";
 import { getProducts } from "@/lib/products";
@@ -37,6 +39,7 @@ function FragrancesPage() {
   const { currency, format } = useCurrency();
   const { lang, t } = useLanguage();
   const products = getProducts(lang);
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <main className="relative isolate min-h-screen bg-background px-6 pb-24 pt-20 md:px-10 lg:px-20">
@@ -86,18 +89,30 @@ function FragrancesPage() {
           {t.fragrances.pullQuote}
         </h2>
         <div className="mt-5 space-y-5">
-          {t.fragrances.body.map((paragraph) => (
+          {t.fragrances.body.map((paragraph, i) => (
             <p
               key={paragraph}
-              className="text-[0.9rem] uppercase leading-[1.75] tracking-normal text-primary-on-photo md:text-[1.1rem]"
+              className={`text-[0.9rem] uppercase leading-[1.75] tracking-normal text-primary-on-photo md:block md:text-[1.1rem] ${
+                i > 0 && !expanded ? "hidden" : ""
+              }`}
             >
               {paragraph}
             </p>
           ))}
         </div>
+        {t.fragrances.body.length > 1 && (
+          <button
+            type="button"
+            aria-expanded={expanded}
+            onClick={() => setExpanded((v) => !v)}
+            className="mt-4 min-h-11 label-caps text-primary-on-photo underline underline-offset-4 decoration-[#b84a1e] md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b84a1e]"
+          >
+            {expanded ? t.fragrances.readLess : t.fragrances.readMore}
+          </button>
+        )}
       </section>
 
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+      <div className="mt-8 grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {products.map((p) => (
           <article key={p.slug} className="collection-card group flex h-auto flex-col rounded-[24px] p-2">
             <div className="relative aspect-[4/5] w-full overflow-visible">
@@ -106,7 +121,7 @@ function FragrancesPage() {
                 params={{ slug: p.slug }}
                 className="absolute inset-0 flex items-center justify-center overflow-visible"
               >
-                <img
+                <PhotoSlot
                   src={p.image}
                   alt={t.fragrances.bottleAlt(p.name)}
                   loading="lazy"
@@ -119,16 +134,16 @@ function FragrancesPage() {
             </div>
             <div className="mt-2 flex flex-1 flex-col items-center text-center">
               <Link to="/fragrances/$slug" params={{ slug: p.slug }} className="w-full">
-                <h2 className="text-center font-['La_Presse',Georgia,serif] text-[1.5rem] leading-tight text-primary-on-photo">{p.name}</h2>
+                <h2 className="text-center font-['La_Presse',Georgia,serif] text-[1.15rem] sm:text-[1.5rem] leading-tight text-primary-on-photo">{p.name}</h2>
               </Link>
               <p className="mt-1.5 min-h-[32px] w-full label-caps leading-snug text-primary-on-photo">
                 {p.notes.join(" · ")}
               </p>
-              <p className="mt-2.5 mb-3 font-display text-xl font-bold text-primary-on-photo">{format(p.prices[currency])}</p>
+              <p className="mt-2.5 mb-3 whitespace-nowrap font-display text-base font-bold sm:text-xl text-primary-on-photo">{format(p.prices[currency])}</p>
               <button
                 type="button"
                 onClick={() => add(p)}
-                className="mt-auto w-full rounded-full border border-primary/60 px-6 py-2 label-caps text-primary-on-photo transition-colors hover:bg-primary hover:text-primary-foreground"
+                className="mt-auto w-full rounded-full border border-primary/60 px-2 py-2.5 sm:px-6 label-caps max-sm:tracking-[0.12em] text-primary-on-photo transition-colors hover:bg-primary hover:text-primary-foreground"
               >
                 {t.fragrances.addToBag}
               </button>

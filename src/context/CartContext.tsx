@@ -6,8 +6,13 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useCurrency } from "@/context/CurrencyContext";
 import { SHIPPING, type Prices } from "@/lib/currency";
 
+export type Variant = "full" | "mini";
+
 type StoredLine = {
+  /** slug + presentación: el mismo perfume en 100 ml y 25 ml son líneas distintas. */
+  key: string;
   slug: string;
+  size: string;
   name: string;
   prices: Prices;
   image: string;
@@ -25,9 +30,9 @@ type CartValue = {
   total: number;
   drawerOpen: boolean;
   setDrawerOpen: (open: boolean) => void;
-  add: (product: Product, qty?: number) => void;
-  setQty: (slug: string, qty: number) => void;
-  remove: (slug: string) => void;
+  add: (product: Product, qty?: number, variant?: Variant) => void;
+  setQty: (key: string, qty: number) => void;
+  remove: (key: string) => void;
   clear: () => void;
 };
 
@@ -41,38 +46,43 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addedToast = t.cart.addedToast;
 
   const add = useCallback(
-    (product: Product, qty = 1) => {
+    (product: Product, qty = 1, variant: Variant = "full") => {
+      const mini = variant === "mini" ? product.mini : null;
+      const key = mini ? `${product.slug}-mini` : product.slug;
+      const size = mini ? mini.size : product.size;
       setLines((prev) => {
-        const existing = prev.find((l) => l.slug === product.slug);
+        const existing = prev.find((l) => l.key === key);
         if (existing) {
-          return prev.map((l) => (l.slug === product.slug ? { ...l, qty: l.qty + qty } : l));
+          return prev.map((l) => (l.key === key ? { ...l, qty: Math.min(10, l.qty + qty) } : l));
         }
         return [
           ...prev,
           {
+            key,
             slug: product.slug,
+            size,
             name: product.name,
-            prices: product.prices,
-            image: product.image,
+            prices: mini ? mini.prices : product.prices,
+            image: mini ? mini.image : product.image,
             qty,
           },
         ];
       });
-      toast.success(addedToast, { description: product.name });
+      toast.success(addedToast, { description: `${product.name} · ${size}` });
     },
     [addedToast],
   );
 
-  const setQty = useCallback((slug: string, qty: number) => {
+  const setQty = useCallback((key: string, qty: number) => {
     setLines((prev) =>
       qty <= 0
-        ? prev.filter((l) => l.slug !== slug)
-        : prev.map((l) => (l.slug === slug ? { ...l, qty } : l)),
+        ? prev.filter((l) => l.key !== key)
+        : prev.map((l) => (l.key === key ? { ...l, qty: Math.min(10, qty) } : l)),
     );
   }, []);
 
   const remove = useCallback(
-    (slug: string) => setLines((prev) => prev.filter((l) => l.slug !== slug)),
+    (key: string) => setLines((prev) => prev.filter((l) => l.key !== key)),
     [],
   );
 

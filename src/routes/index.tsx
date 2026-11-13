@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Facebook, Instagram } from "lucide-react";
 
 import fondoLanding from "@/assets/landing-bottle-lab.jpeg";
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/")({
 
 /** The thin gold rule the design sets above and below the hero lines. */
 function Rule() {
-  return <div aria-hidden="true" className="my-6 h-px w-14 bg-primary/70" />;
+  return <div aria-hidden="true" className="my-6 h-px w-14 bg-[#b84a1e]" />;
 }
 
 function Home() {
@@ -65,10 +65,15 @@ function Home() {
           </p>
           <Rule />
           <h1 id="hero-title">
-            <img
-              src={labLogoHorizontal}
-              alt="The Lab Perfumes"
-              className="h-9 w-auto object-contain md:h-15"
+            <span
+              role="img"
+              aria-label="The Lab Perfumes"
+              className="logo-ember block h-9 md:h-15"
+              style={{
+                aspectRatio: "554 / 99",
+                WebkitMask: `url(${labLogoHorizontal}) center / contain no-repeat`,
+                mask: `url(${labLogoHorizontal}) center / contain no-repeat`,
+              }}
             />
           </h1>
           <p className="mt-4 uppercase text-[0.95rem] leading-[1.9] text-primary-on-photo">
@@ -87,7 +92,7 @@ function Home() {
         >
           <h2
             id="purpose-title"
-            className="font-display text-[1.9rem] font-semibold leading-[1.05] tracking-tight text-primary-on-photo md:text-[2.85rem]"
+            className="font-display text-[1.9rem] font-semibold leading-[1.05] tracking-tight text-ember md:text-[2.85rem]"
           >
             {t.home.purposeHeadingLines.map((line) => (
               <span key={line} className="block">
@@ -98,27 +103,33 @@ function Home() {
           <p className="mt-5 text-[0.9rem] uppercase leading-[1.75] tracking-normal text-primary-on-photo md:text-[1.1rem]">
             {t.home.purposeBodyFull}
           </p>
+          <Link
+            to="/fragrances"
+            className="mt-7 inline-flex items-center rounded-full bg-primary px-8 py-3.5 label-caps text-primary-foreground transition-colors btn-ash focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            {t.home.heroCta}
+          </Link>
         </section>
 
         {/* ---------------- CIERRE ---------------- */}
-        <footer className="mt-6 border-t border-cream/25 pt-5 md:mt-auto">
+        <footer className="mt-6 border-t border-[#b84a1e] pt-5 md:mt-auto">
           <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
             <div>
               {t.home.footerOrigin.map((line) => (
-                <p key={line} className="label-caps text-muted-on-photo">
+                <p key={line} className="label-caps text-[#e2cda4]">
                   {line}
                 </p>
               ))}
             </div>
             <div className="flex flex-col items-end gap-2">
-              <span className="label-caps text-cream">CONTACTO</span>
+              <span className="label-caps text-[#e2cda4]">CONTACTO</span>
               <div className="flex items-center gap-3">
                 <a
                   href={INSTAGRAM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-cream/40 text-cream transition-colors hover:border-primary hover:text-primary"
+                  className="flex h-11 w-11 md:h-8 md:w-8 items-center justify-center rounded-full border border-[#e2cda4] text-[#e2cda4] transition-colors hover:border-primary hover:text-primary"
                 >
                   <Instagram className="h-4 w-4" />
                 </a>
@@ -127,7 +138,7 @@ function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-cream/40 text-cream transition-colors hover:border-primary hover:text-primary"
+                  className="flex h-11 w-11 md:h-8 md:w-8 items-center justify-center rounded-full border border-[#e2cda4] text-[#e2cda4] transition-colors hover:border-primary hover:text-primary"
                 >
                   <Facebook className="h-4 w-4" />
                 </a>
@@ -136,7 +147,7 @@ function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-cream/40 text-cream transition-colors hover:border-primary hover:text-primary"
+                  className="flex h-11 w-11 md:h-8 md:w-8 items-center justify-center rounded-full border border-[#e2cda4] text-[#e2cda4] transition-colors hover:border-primary hover:text-primary"
                 >
                   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
@@ -147,7 +158,7 @@ function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="TikTok"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-cream/40 text-cream transition-colors hover:border-primary hover:text-primary"
+                  className="flex h-11 w-11 md:h-8 md:w-8 items-center justify-center rounded-full border border-[#e2cda4] text-[#e2cda4] transition-colors hover:border-primary hover:text-primary"
                 >
                   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
                     <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />

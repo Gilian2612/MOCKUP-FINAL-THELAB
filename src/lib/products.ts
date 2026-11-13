@@ -46,6 +46,19 @@ import karmaScotchStoryLight from "@/assets/story/light/karma-scotch.svg";
 import corintoKushStoryLight from "@/assets/story/light/corinto-kush.svg";
 import lotoStoryLight from "@/assets/story/light/loto.svg";
 
+import neroliNegroMini from "@/assets/minis/neroli-negro.webp";
+import tobaccoBlancoMini from "@/assets/minis/tobacco-blanco.webp";
+import freshVetiverMini from "@/assets/minis/fresh-vetiver.webp";
+import koshuMini from "@/assets/minis/koshu.webp";
+import mangOudMini from "@/assets/minis/mang-oud.webp";
+import omgMini from "@/assets/minis/omg.webp";
+import amberChocolatMini from "@/assets/minis/amber-chocolat.webp";
+import cestLaVieMini from "@/assets/minis/cest-la-vie.webp";
+import karmaScotchMini from "@/assets/minis/karma-scotch.webp";
+import corintoKushMini from "@/assets/minis/corinto-kush.webp";
+import arazaMini from "@/assets/minis/araza.webp";
+import lotoMini from "@/assets/minis/loto.webp";
+
 import { COP_PER_USD, type Prices } from "@/lib/currency";
 import type { Lang } from "@/i18n/translations";
 
@@ -69,11 +82,15 @@ export type Product = {
   notesImage: string;
   storyImageDark: string;
   storyImageLight: string;
+  /** Presentación pequeña de 25 ml; null si el perfume no la tiene. */
+  mini: ProductMini | null;
 };
+
+export type ProductMini = { size: string; prices: Prices; image: string };
 
 type ProductSource = Omit<
   Product,
-  "chapter" | "family" | "profile" | "notes" | "story" | "ingredients" | "origin" | "concentration"
+  "chapter" | "family" | "profile" | "notes" | "story" | "ingredients" | "origin" | "concentration" | "mini"
 > & {
   chapter: L;
   family: L;
@@ -455,7 +472,60 @@ const productSources: ProductSource[] = [
     storyImageDark: lotoStoryDark,
     storyImageLight: lotoStoryLight,
   },
+  {
+    // TODO Arazá: perfume nuevo. Textos y precios PROVISIONALES; faltan las fotos de 100 ml, notas e historia.
+    slug: "araza",
+    name: "Arazá",
+    chapter: { es: "Capítulo XII", en: "Chapter XII" },
+    family: { es: "Frutal Amazónico", en: "Amazonian Fruity" },
+    profile: { es: "Ácido · Frutal · Verde · Luminoso · Tropical", en: "Tart · Fruity · Green · Luminous · Tropical" },
+    prices: prices(780, 220),
+    notes: [
+      { es: "Arazá", en: "Arazá" },
+      { es: "Lima", en: "Lime" },
+      { es: "Hoja de guayaba", en: "Guava leaf" },
+      { es: "Flor de azahar", en: "Orange blossom" },
+      { es: "Maderas claras", en: "Light woods" },
+    ],
+    story: {
+      es: "Un homenaje a la Amazonía colombiana construido alrededor del arazá, una fruta ácida y aromática de la selva. Abre brillante y jugoso, con un corazón verde y un fondo suave de maderas claras.",
+      en: "A tribute to the Colombian Amazon built around arazá, a tart, fragrant fruit of the rainforest. It opens bright and juicy, with a green heart and a soft base of light woods.",
+    },
+    ingredients: {
+      es: "Acorde de arazá, aceite de lima prensado en frío y un fondo limpio de maderas claras que mantiene la fruta fresca y no dulce.",
+      en: "Arazá accord, cold-pressed lime oil and a clean light-wood base that keeps the fruit fresh rather than sweet.",
+    },
+    origin: {
+      es: "El arazá crece en la región amazónica de Colombia, en el Guaviare y el Caquetá, donde se cosecha a mano en temporada de lluvias.",
+      en: "Arazá grows in Colombia's Amazon region, in Guaviare and Caquetá, where it is harvested by hand in the rainy season.",
+    },
+    concentration: { es: "Eau de Parfum · 18%", en: "Eau de Parfum · 18%" },
+    size: "100 ml",
+    image: "",
+    notesImage: "",
+    storyImageDark: "",
+    storyImageLight: "",
+  },
 ];
+
+/**
+ * Presentación de 25 ml. TEMPORAL: los precios son de ejemplo hasta tener la lista real.
+ */
+const MINI_PRICES = prices(290, 80);
+const MINI_IMAGES: Record<string, string> = {
+  "neroli-negro": neroliNegroMini,
+  "tobacco-blanco": tobaccoBlancoMini,
+  "fresh-vetiver": freshVetiverMini,
+  "koshu": koshuMini,
+  "mang-oud": mangOudMini,
+  "omg": omgMini,
+  "amber-chocolat": amberChocolatMini,
+  "cest-la-vie": cestLaVieMini,
+  "karma-scotch": karmaScotchMini,
+  "corinto-kush": corintoKushMini,
+  "araza": arazaMini,
+  "loto": lotoMini,
+};
 
 const localize = (p: ProductSource, lang: Lang): Product => ({
   slug: p.slug,
@@ -474,6 +544,7 @@ const localize = (p: ProductSource, lang: Lang): Product => ({
   notesImage: p.notesImage,
   storyImageDark: p.storyImageDark,
   storyImageLight: p.storyImageLight,
+  mini: p.slug in MINI_IMAGES ? { size: "25 ml", prices: MINI_PRICES, image: MINI_IMAGES[p.slug]! } : null,
 });
 
 const cache: Record<Lang, Product[]> = {

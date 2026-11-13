@@ -69,6 +69,7 @@ export const es = {
     purposeHeadingLines: ["UNA MARCA", "ORGULLOSAMENTE", "COLOMBIANA"],
     purposeBodyFull:
       "EL PERFUME ES UNA FORMA DE EXPRESAR IDENTIDAD, MEMORIA Y ORIGEN. CREAMOS FRAGANCIAS ÚNICAS QUE TRANSFORMAN NUESTRA VISIÓN DEL MUNDO EN EXPERIENCIAS OLFATIVAS, LLEVANDO EL CARÁCTER DE NUESTRA PERFUMERÍA A NUEVOS TERRITORIOS.",
+    heroCta: "Descubre la colección",
     purposeEyebrow: "UNA MARCA ORGULLOSAMENTE COLOMBIANA",
     purposeTitle: ["EL PERFUME ES UNA FORMA DE EXPRESAR", "IDENTIDAD, MEMORIA Y ORIGEN."],
     purposeBody:
@@ -111,6 +112,8 @@ export const es = {
     titleEm: "COLLECTION",
     titleEnd: "",
     sideLabelLines: ["TODAS LAS", "FRAGANCIAS", "CREADAS POR", "MARIO GALINDO"],
+    readMore: "LEER MÁS",
+    readLess: "LEER MENOS",
     pullQuote: "FRAGRANCES CONNECT PEOPLE AND CULTURES",
     meta: "CALI, 2011",
     body: [
@@ -127,6 +130,7 @@ export const es = {
     story: "Descripción",
     profile: "PERFIL",
     allFragrances: "← Todas las fragancias",
+    size: "Presentación",
     decreaseQty: "Disminuir cantidad",
     increaseQty: "Aumentar cantidad",
     addToBag: "Añadir a la bolsa",
@@ -428,6 +432,7 @@ export const en: Dictionary = {
     purposeHeadingLines: ["A PROUDLY", "COLOMBIAN", "BRAND"],
     purposeBodyFull:
       "PERFUME IS A WAY TO EXPRESS IDENTITY, MEMORY AND ORIGIN. WE CREATE UNIQUE FRAGRANCES THAT TRANSFORM OUR VISION OF THE WORLD INTO OLFACTORY EXPERIENCES, CARRYING THE CHARACTER OF OUR PERFUMERY TO NEW TERRITORIES.",
+    heroCta: "Discover the collection",
     purposeEyebrow: "A PROUDLY COLOMBIAN BRAND",
     purposeTitle: ["PERFUME IS A WAY TO EXPRESS", "IDENTITY, MEMORY AND ORIGIN."],
     purposeBody:
@@ -470,6 +475,8 @@ export const en: Dictionary = {
     titleEm: "COLLECTION",
     titleEnd: "",
     sideLabelLines: ["ALL", "FRAGRANCES", "CREATED BY", "MARIO GALINDO"],
+    readMore: "READ MORE",
+    readLess: "READ LESS",
     pullQuote: "FRAGRANCES CONNECT PEOPLE AND CULTURES",
     meta: "CALI, 2011",
     body: [
@@ -486,6 +493,7 @@ export const en: Dictionary = {
     story: "Description",
     profile: "PROFILE",
     allFragrances: "← All fragrances",
+    size: "Size",
     decreaseQty: "Decrease quantity",
     increaseQty: "Increase quantity",
     addToBag: "Add to bag",
